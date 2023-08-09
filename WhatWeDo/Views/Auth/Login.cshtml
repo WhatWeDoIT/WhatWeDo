@@ -1,0 +1,58 @@
+﻿@model Usuario
+@{
+    Layout = "/Views/Auth/_AuthLayout.cshtml";
+    ViewData["Title"] = "Login";
+}
+
+<div class="row justify-content-center">
+    <div class="col-10">
+        <section>
+            <form asp-controller="Auth" asp-action="IniciarSesion" id="account" method="post">
+                <h2>¡Bienvenido!</h2>
+                <hr />
+                <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+                <div class="form-floating mb-3">
+                    <input asp-for="Email" class="form-control" autocomplete="username" aria-required="true" placeholder="nombre@ejemplo.com" />
+                    <label class="form-label">Email</label>
+                    <span class="text-danger"></span>
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <div class="form-floating mb-3">
+                    <input asp-for="Pass" type="password" class="form-control" autocomplete="contraseña-actual" aria-required="true" placeholder="Contraseña" />
+                    <label class="form-label">Contraseña</label>
+                    <span  class="text-danger"></span>
+                    <span asp-validation-for="Pass" class="text-danger"></span>
+                </div>
+                <div class="checkbox mb-3">
+                    <label  class="form-label">
+                        <input class="form-check-input" type="checkbox"/>
+                        <label class="form-label">Recuérdame</label>
+                    </label>
+                </div>
+                <div>
+                    <button id="login-submit" type="submit" class="w-100 btn btn-lg btn-primary">
+                        Log In
+                    </button>
+                    @if (ViewBag.Alert != null)
+                    {
+                        <div class="alert alert-dismissable alert-danger" style="margin-top:10px">
+                            <div class="row">
+                                <strong>¡Error!</strong>
+                            </div>
+                            <div class="row">
+                                <label class="form-label">@ViewBag.Alert</label>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </form>
+        </section>
+    </div>
+</div>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script type="text/javascript">
+    $("#linkLogIn").addClass("active");
+</script>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
