@@ -36,13 +36,13 @@ namespace WhatWeDo.Controllers
             {
                 oUsuario = await _Servicio.GetUsuario(usuario.Email, Utilidades.EncriptarPassword(usuario.Pass));
             }
-            
 
             if (oUsuario.IdUsuario == 0)
             {
                 ViewBag.Alert = "Email y/o contraseña inválidos.";
                 return View("Login");
             }
+
             string rol = "Usuario";
             
             if (oUsuario.Rol)
@@ -59,7 +59,7 @@ namespace WhatWeDo.Controllers
 
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Eventos", "Home");
         }
 
         public async Task<IActionResult> CrearUsuario(Usuario usuario)
@@ -78,7 +78,7 @@ namespace WhatWeDo.Controllers
         public async Task<IActionResult> CerrarSesion()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            return RedirectToAction("Todos", "Home");
+            return RedirectToAction("Eventos", "Home");
         }
 
     }
