@@ -8,35 +8,42 @@ namespace WhatWeDo.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Todos()
+
+        public IActionResult Eventos ()
         {
-            Evento oEvento = new Evento() 
+            Evento oEvento = new Evento()
             {
-                ImgSource= "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Burger_King_2020.svg/150px-Burger_King_2020.svg.png"
-                                          
-               ,TituloEvento= "Burger King: Comer en compañia"
-                                          
-               ,DescEvento= "No sabes que hacer para comer, ven con tu familia o amigos! \n " +
-                             "Obten un descuento del 20% en el total de la cuenta por venir acompañado de 5 personas"
+                ImgSource = "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Burger_King_2020.svg/150px-Burger_King_2020.svg.png"
+
+               ,
+                TituloEvento = "Burger King: Comer en compañia"
+
+               ,
+                DescEvento = "No sabes que hacer para comer, ven con tu familia o amigos! \n " +
+                             "Obtén un descuento del 20% en el total de la cuenta por venir acompañado de 5 personas"
             };
 
             Evento oEvento2 = new Evento()
             {
                 ImgSource = "https://rubricadigital.es/wp-content/uploads/2022/01/logo-Ibai.jpg"
-                
-               ,TituloEvento = "Telepizza: Comer en compañia"
-               
-               ,DescEvento = "No sabes que hacer para comer, ven con tu familia o amigos! \n " +
+
+               ,
+                TituloEvento = "Telepizza: Comer en compañia"
+
+               ,
+                DescEvento = "No sabes que hacer para comer, ven con tu familia o amigos! \n " +
                              "Obten un descuento del 20% en el total de la cuenta por venir acompañado de 5 personas"
             };
 
             Evento oEvento3 = new Evento()
             {
                 ImgSource = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRHQtU7j0ZHLqIisJkYEuLrwExbT1bMOw9XO5KwGW8N39JXqc7uh0lntOzs3l9qIHYnPQ0&usqp=CAU"
-               
-               ,TituloEvento = "McDonals: Comer en compañia"
-                                   
-               ,DescEvento = "No sabes que hacer para comer, ven con tu familia o amigos! \n " +
+
+               ,
+                TituloEvento = "McDonals: Comer en compañia"
+
+               ,
+                DescEvento = "No sabes que hacer para comer, ven con tu familia o amigos! \n " +
                              "Obten un descuento del 20% en el total de la cuenta por venir acompañado de 5 personas"
             };
 
