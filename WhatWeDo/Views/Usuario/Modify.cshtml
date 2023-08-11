@@ -1,0 +1,67 @@
+﻿@model Usuario
+@{
+    ViewData["Title"] = "Modify";
+}
+
+<form  id="registerForm" method="post">
+    <h2 class="text-warning">Modifica tus datos.</h2>
+    <hr />
+    <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+    <div class="row">
+        <div class="col-3">
+            <div class="form-floating mb-3">
+                <input asp-for="NombreUsuario" class="form-control rounded-pill" autocomplete="firstname" aria-required="true" placeholder="nombre" />
+                <label>Nombre</label>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-3">
+            <div class="form-floating mb-3">
+                <input asp-for="Email" class="form-control  rounded-pill" autocomplete="username" aria-required="true" placeholder="nombre@ejemplo.com" />
+                <label>Email</label>
+                <span class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-3">
+            <div class="form-floating mb-3">
+                <input class="form-control  rounded-pill" autocomplete="username" aria-required="true" placeholder="C/Avenue,23" />
+                <label>Direccion</label>
+                <span class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-3">
+            <div class="form-floating mb-3">
+                <input asp-for="Pass" type="password" class="form-control  rounded-pill" autocomplete="new-password" aria-required="true" placeholder="contraseña" />
+                <label>Contraseña</label>
+                <span class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-3">
+            <div class="form-floating mb-3">
+                <input asp-for="Pass" type="password" class="form-control  rounded-pill" autocomplete="new-password" aria-required="true" placeholder="contraseña" />
+                <label>Confirmar Contraseña</label>
+                <span class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-2">
+            <button id="changeSubmit" type="submit" class="w-100 btn btn-lg btn-primary rounded-pill">Aplicar</button>
+        </div>
+        <div class="col-2">
+            <button id="changeSubmit" type="submit" class="w-100 btn btn-lg btn-warning rounded-pill">Cancelar</button>
+        </div>
+    </div>
+</form>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script type="text/javascript">
+    $("#linkRegister").addClass("active");
+</script>
+
