@@ -8,7 +8,6 @@
         public string Direccion { get; set; }
         public string Mail { get; set; }
         public int Miembros { get; set; }
-
         public bool EsEmpresa { get; set; } 
     }
 }

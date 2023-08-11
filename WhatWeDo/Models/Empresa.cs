@@ -7,5 +7,20 @@
         public string Pass { get; set; }
         public string Direccion { get; set; }
         public string Mail { get; set; }
+
+        public Empresa()
+        {
+            
+        }
+
+        public Empresa(int idEmpresa, string nombre, string pass
+                      ,string direccion, string mail)
+        {
+            IdEmpresa = idEmpresa;
+            Nombre = nombre;    
+            Pass = pass;    
+            Direccion = direccion;  
+            Mail = mail;
+        }
     }
 }
