@@ -32,53 +32,59 @@ namespace WhatWeDo.Controllers
         {
             Usuario oUsuario = new Usuario();
 
-            if (usuario.Email!=null && usuario.Pass != null)
+            if (usuario.Mail!=null && usuario.Pass != null)
             {
-                oUsuario = await _Servicio.GetUsuario(usuario.Email, Utilidades.EncriptarPassword(usuario.Pass));
+                oUsuario = await _Servicio.LoginUsuario(usuario.Mail, Utilidades.EncriptarPassword(usuario.Pass));
             }
-            
 
             if (oUsuario.IdUsuario == 0)
             {
                 ViewBag.Alert = "Email y/o contraseña inválidos.";
                 return View("Login");
             }
-            string rol = "Usuario";
-            
-            if (oUsuario.Rol)
-                rol = "Empresa";
+
+            //Funcion para saber si es usuario o empresa aqui
 
             List<Claim> claims = new List<Claim>()
             {
-                new Claim(ClaimTypes.Name, oUsuario.NombreUsuario),
-                new Claim("Email", oUsuario.Email),
-                new Claim(ClaimTypes.Role, rol)
+                new Claim(ClaimTypes.Name, oUsuario.Nombre),
+                new Claim("Mail", oUsuario.Mail),
+                //new Claim(ClaimTypes.Role, rol)
             };
 
             ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
 
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Eventos", "Home");
         }
 
         public async Task<IActionResult> CrearUsuario(Usuario usuario)
         {            
             usuario.Pass = Utilidades.EncriptarPassword(usuario.Pass);
 
-            string sTransaccion = await _Servicio.CrearUsuario(usuario);
-            if (sTransaccion.Equals("NOK"))
+            if (!usuario.EsEmpresa)
             {
-                ViewBag.Alert = "El email proporcionado ya esta en uso.";
+                string sTransaccion = await _Servicio.InsertUsuario(usuario);
+                if (sTransaccion.Equals("NOK"))
+                {
+                    ViewBag.Alert = "El email proporcionado ya esta en uso.";
+                    return View("Register");
+                }               
+            }
+            else
+            {
+                ViewBag.Alert = "Usuario empresa falta por implementar";
                 return View("Register");
             }
+
             return Redirect("Login");
         }
 
         public async Task<IActionResult> CerrarSesion()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            return RedirectToAction("Todos", "Home");
+            return RedirectToAction("Eventos", "Home");
         }
 
     }
