@@ -41,6 +41,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Todos}");
+    pattern: "{controller=Home}/{action=Eventos}");
 
 app.Run();
