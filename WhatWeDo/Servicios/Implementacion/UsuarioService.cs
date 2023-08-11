@@ -18,58 +18,119 @@ namespace WhatWeDo.Servicios.Implementacion
             _conexion = conexion.Value;
         }
 
-        public async Task<Usuario> GetUsuario(string sEmail, string sPassword)
+        public async Task<Usuario> LoginUsuario(string sMail, string sPass)
         {
             Usuario oUsuario = new Usuario();
-
-            using (SqlConnection conexion = new SqlConnection(_conexion.CadenaBBDD))
+            try
             {
-                SqlCommand cmd = new SqlCommand("sp_LoginUsuario", conexion);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.Add(new SqlParameter("@Email", sEmail));
-                cmd.Parameters.Add(new SqlParameter("@Pass", sPassword));
-
-                conexion.Open();
-
-                using (SqlDataReader dr = await cmd.ExecuteReaderAsync())
+                using (SqlConnection conexion = new SqlConnection(_conexion.CadenaBBDD))
                 {
-                    while (await dr.ReadAsync())
+                    SqlCommand cmd = new SqlCommand("sp_LoginUsuario", conexion);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add(new SqlParameter("@Mail", sMail));
+                    cmd.Parameters.Add(new SqlParameter("@Pass", sPass));
+
+                    conexion.Open();
+
+                    using (SqlDataReader dr = await cmd.ExecuteReaderAsync())
                     {
-                        oUsuario.IdUsuario = Convert.ToInt32(dr["IdUsuario"]);
-                        oUsuario.NombreUsuario = dr["NombreUsuario"].ToString();                      
-                        oUsuario.Email = dr["Email"].ToString();
-                        oUsuario.Pass = dr["Pass"].ToString();
-                        oUsuario.Rol = bool.Parse(dr["Rol"].ToString());
+                        while (await dr.ReadAsync())
+                        {
+                            oUsuario.IdUsuario = Convert.ToInt32(dr["IdUsuario"]);
+                            oUsuario.Nombre = dr["Nombre"].ToString();
+                            oUsuario.Pass = dr["Pass"].ToString();
+                            oUsuario.Direccion = dr["Direccion"].ToString();
+                            oUsuario.Mail = dr["Mail"].ToString();
+                            oUsuario.Miembros = Convert.ToInt32(dr["Miembros"]);
+                        }
                     }
                 }
             }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message); 
+            }
+                       
             return oUsuario;
         }
 
-        public async Task<string> CrearUsuario(Usuario oUsuario)
+        public async Task<string> InsertUsuario(Usuario oUsuario)
         {
             string sTransaccion = null;
 
-            using (SqlConnection conexion = new SqlConnection(_conexion.CadenaBBDD))
+            try
             {
-                SqlCommand cmd = new SqlCommand("sp_CrearUsuario", conexion);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.Add(new SqlParameter("@NombreUsuario", oUsuario.NombreUsuario));               
-                cmd.Parameters.Add(new SqlParameter("@Email", oUsuario.Email));
-                cmd.Parameters.Add(new SqlParameter("@Pass", oUsuario.Pass));
-                cmd.Parameters.Add(new SqlParameter("@Rol", oUsuario.Rol));
-
-                conexion.Open();
-                using (SqlDataReader dr = await cmd.ExecuteReaderAsync())
+                using (SqlConnection conexion = new SqlConnection(_conexion.CadenaBBDD))
                 {
-                    while (await dr.ReadAsync())
+                    SqlCommand cmd = new SqlCommand("sp_InsertUsuario", conexion);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add(new SqlParameter("@Nombre", oUsuario.Nombre));
+                    cmd.Parameters.Add(new SqlParameter("@Pass", oUsuario.Pass));
+                    cmd.Parameters.Add(new SqlParameter("@Direccion", oUsuario.Direccion));
+                    cmd.Parameters.Add(new SqlParameter("@Mail", oUsuario.Mail));
+                    cmd.Parameters.Add(new SqlParameter("@Miembros", oUsuario.Miembros));
+
+                    conexion.Open();
+                    using (SqlDataReader dr = await cmd.ExecuteReaderAsync())
                     {
-                        sTransaccion = dr["Transaccion"].ToString();
+                        while (await dr.ReadAsync())
+                        {
+                            sTransaccion = dr["Transaccion"].ToString();
+                        }
                     }
                 }
             }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
 
             return sTransaccion;
+        }
+
+        public async void  UpdateUsuario(Usuario oUsuario)
+        {
+            try
+            {
+                using (SqlConnection conexion = new SqlConnection(_conexion.CadenaBBDD))
+                {
+                    SqlCommand cmd = new SqlCommand("sp_UpdateUsuario", conexion);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add(new SqlParameter("@id", oUsuario.IdUsuario));
+                    cmd.Parameters.Add(new SqlParameter("@Nombre", oUsuario.Nombre));
+                    cmd.Parameters.Add(new SqlParameter("@Pass", oUsuario.Pass));
+                    cmd.Parameters.Add(new SqlParameter("@Direccion", oUsuario.Direccion));
+                    cmd.Parameters.Add(new SqlParameter("@Mail", oUsuario.Mail));
+                    cmd.Parameters.Add(new SqlParameter("@Miembros", oUsuario.Miembros));
+
+                    conexion.Open();
+                    await cmd.ExecuteNonQueryAsync();    
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public async void DeleteUsuario(Usuario oUsuario)
+        {
+            try
+            {
+                using (SqlConnection conexion = new SqlConnection(_conexion.CadenaBBDD))
+                {
+                    SqlCommand cmd = new SqlCommand("sp_DeleteUsuario", conexion);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add(new SqlParameter("@id", oUsuario.IdUsuario));
+
+                    conexion.Open();
+                    await cmd.ExecuteNonQueryAsync();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
     }

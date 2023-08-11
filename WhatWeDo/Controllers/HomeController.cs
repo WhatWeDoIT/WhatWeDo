@@ -61,7 +61,7 @@ namespace WhatWeDo.Controllers
         public IActionResult Index()
         {
             Usuario usuario = new Usuario();
-            usuario.NombreUsuario = User.FindFirstValue(ClaimTypes.Name);            
+            usuario.Nombre = User.FindFirstValue(ClaimTypes.Name);            
             return View(usuario);
         }
 
