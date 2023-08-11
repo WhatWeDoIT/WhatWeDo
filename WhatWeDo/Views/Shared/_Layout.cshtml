@@ -109,7 +109,9 @@
                                     <li class="nav-item">
                                         <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Eventos">Eventos</a>
                                     </li>
-                                   
+                                    <li class="nav-item">
+                                        <a class="nav-link text-light" asp-area="" asp-controller="Usuario" asp-action="Modify">Usuario Modificar</a>
+                                    </li>
                                     @if (User.IsInRole("Empresa") || User.IsInRole("Usuario"))
                                     {
                                         <li class="nav-item">
