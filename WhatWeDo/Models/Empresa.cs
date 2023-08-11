@@ -1,14 +1,11 @@
 ﻿namespace WhatWeDo.Models
 {
-    public class Usuario
+    public class Empresa
     {
-        public int IdUsuario { get; set; }
+        public int IdEmpresa { get; set; }
         public string Nombre { get; set; }
         public string Pass { get; set; }
         public string Direccion { get; set; }
         public string Mail { get; set; }
-        public int Miembros { get; set; }
-
-        public bool EsEmpresa { get; set; } 
     }
 }
