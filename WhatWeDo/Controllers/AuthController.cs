@@ -32,8 +32,8 @@ namespace WhatWeDo.Controllers
 
         public async Task<IActionResult> IniciarSesion(Usuario usuario)
         {
-            string rol = null;
             Usuario oUsuario = new Usuario();
+            string rol;
             if (!usuario.EsEmpresa)
             {
                 if (usuario.Mail != null && usuario.Pass != null)
@@ -48,7 +48,7 @@ namespace WhatWeDo.Controllers
                     return View("Login");
                 }
                 rol = "Usuario";
-            } 
+            }
             else
             {
                 //Convertimos el usuario a empresa para hacer el insert a la tabla que toca
@@ -67,8 +67,6 @@ namespace WhatWeDo.Controllers
                 }
                 rol = "Empresa";
             }
-            
-
 
             List<Claim> claims = new List<Claim>()
             {
