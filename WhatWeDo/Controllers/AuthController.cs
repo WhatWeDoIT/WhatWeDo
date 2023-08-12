@@ -12,11 +12,13 @@ namespace WhatWeDo.Controllers
     
     public class AuthController : Controller
     {
-        private readonly IUsuarioService _Servicio;
+        private readonly IUsuarioService _ServicioUsuario;
+        private readonly IEmpresaService _ServicioEmpresa;
 
-        public AuthController(IUsuarioService servicio)
+        public AuthController(IUsuarioService servicioUsuario, IEmpresaService servicioEmpresa)
         {
-            _Servicio = servicio;                
+            _ServicioUsuario = servicioUsuario;
+            _ServicioEmpresa = servicioEmpresa;
         }
 
         public IActionResult Login()
@@ -32,25 +34,46 @@ namespace WhatWeDo.Controllers
         public async Task<IActionResult> IniciarSesion(Usuario usuario)
         {
             Usuario oUsuario = new Usuario();
-
-            if (usuario.Mail!=null && usuario.Pass != null)
+            string rol;
+            if (!usuario.EsEmpresa)
             {
-                oUsuario = await _Servicio.LoginUsuario(usuario.Mail, Utilidades.EncriptarPassword(usuario.Pass));
-            }
+                if (usuario.Mail != null && usuario.Pass != null)
+                {
+                    oUsuario = await _ServicioUsuario.LoginUsuario(usuario.Mail, Utilidades.EncriptarPassword(usuario.Pass));
+                    usuario.Nombre = oUsuario.Nombre;
+                }
 
-            if (oUsuario.IdUsuario == 0)
+                if (oUsuario.IdUsuario == 0)
+                {
+                    ViewBag.Alert = "Email y/o contraseña inválidos.";
+                    return View("Login");
+                }
+                rol = "Usuario";
+            }
+            else
             {
-                ViewBag.Alert = "Email y/o contraseña inválidos.";
-                return View("Login");
-            }
+                //Convertimos el usuario a empresa para hacer el insert a la tabla que toca
+                Empresa oEmpresa = new Empresa(0, usuario.Nombre, usuario.Pass, usuario.Direccion, usuario.Mail);
 
-            //Funcion para saber si es usuario o empresa aqui
+                if (usuario.Mail != null && usuario.Pass != null)
+                {
+                    oEmpresa = await _ServicioEmpresa.LoginEmpresa(oEmpresa.Mail, Utilidades.EncriptarPassword(oEmpresa.Pass));
+                    usuario.Nombre = oEmpresa.Nombre;
+                }
+
+                if (oEmpresa.IdEmpresa == 0)
+                {
+                    ViewBag.Alert = "Email y/o contraseña inválidos.";
+                    return View("Login");
+                }
+                rol = "Empresa";
+            }
 
             List<Claim> claims = new List<Claim>()
             {
-                new Claim(ClaimTypes.Name, oUsuario.Nombre),
-                new Claim("Mail", oUsuario.Mail),
-                //new Claim(ClaimTypes.Role, rol)
+                new Claim(ClaimTypes.Name, usuario.Nombre),
+                new Claim("Mail", usuario.Mail),
+                new Claim(ClaimTypes.Role, rol)
             };
 
             ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
@@ -61,15 +84,8 @@ namespace WhatWeDo.Controllers
         }
 
         public async Task<IActionResult> CrearUsuario(Usuario usuario)
-        {
-            //Comprobar que los campos no esten vacios
-            if (string.IsNullOrWhiteSpace(usuario.Nombre) || string.IsNullOrWhiteSpace(usuario.Direccion) ||
-                string.IsNullOrWhiteSpace(usuario.Mail) || string.IsNullOrWhiteSpace(usuario.Pass) ||
-                string.IsNullOrWhiteSpace(usuario.ConfirmPass))
-            {
-                ViewBag.Alert = "Por favor, complete todos los campos.";
-                return View("Register");
-            }
+        {            
+            usuario.Pass = Utilidades.EncriptarPassword(usuario.Pass);
 
             //Comprobar que todos los datos tengan un formato valido
             if (!ValidarRequisitosNombre(usuario.Nombre) || !ValidarRequisitosDireccion(usuario.Direccion) ||
@@ -84,7 +100,7 @@ namespace WhatWeDo.Controllers
 
             if (!usuario.EsEmpresa)
             {
-                string sTransaccion = await _Servicio.InsertUsuario(usuario);
+                string sTransaccion = await _ServicioUsuario.InsertUsuario(usuario);
                 if (sTransaccion.Equals("NOK"))
                 {
                     ViewBag.Alert = "El email proporcionado ya esta en uso.";
@@ -93,8 +109,15 @@ namespace WhatWeDo.Controllers
             }
             else
             {
-                ViewBag.Alert = "Usuario empresa falta por implementar";//TODO
-                return View("Register");
+                //Convertimos el usuario a empresa para hacer el insert a la tabla que toca
+                Empresa oEmpresa = new Empresa(0,usuario.Nombre, usuario.Pass, usuario.Direccion, usuario.Mail);
+
+                string sTransaccion = await _ServicioEmpresa.InsertEmpresa(oEmpresa);
+                if (sTransaccion.Equals("NOK"))
+                {
+                    ViewBag.Alert = "El email proporcionado ya esta en uso.";
+                    return View("Register");
+                }
             }
 
             return Redirect("Login");
