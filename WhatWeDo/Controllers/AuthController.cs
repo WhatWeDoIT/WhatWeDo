@@ -222,31 +222,6 @@ namespace WhatWeDo.Controllers
             return true;
         }
 
-
-
-
-        //public async Task<IActionResult> CrearUsuario(Usuario usuario)
-        //{            
-        //    usuario.Pass = Utilidades.EncriptarPassword(usuario.Pass);
-
-        //    if (!usuario.EsEmpresa)
-        //    {
-        //        string sTransaccion = await _Servicio.InsertUsuario(usuario);
-        //        if (sTransaccion.Equals("NOK"))
-        //        {
-        //            ViewBag.Alert = "El email proporcionado ya esta en uso.";
-        //            return View("Register");
-        //        }               
-        //    }
-        //    else
-        //    {
-        //        ViewBag.Alert = "Usuario empresa falta por implementar";
-        //        return View("Register");
-        //    }
-
-        //    return Redirect("Login");
-        //}
-
         public async Task<IActionResult> CerrarSesion()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
