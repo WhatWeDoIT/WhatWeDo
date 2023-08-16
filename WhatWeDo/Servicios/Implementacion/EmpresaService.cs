@@ -18,6 +18,39 @@ namespace WhatWeDo.Servicios.Implementacion
             _conexion = conexion.Value;
         }
 
+        public async Task<Empresa> GetEmpresa(Empresa oEmpresa)
+        {
+            try
+            {
+                using (SqlConnection conexion = new SqlConnection(_conexion.CadenaBBDD))
+                {
+                    SqlCommand cmd = new SqlCommand("sp_GetEmpresaPorMail", conexion);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add(new SqlParameter("@Mail", oEmpresa.Mail));
+
+                    conexion.Open();
+                    using (SqlDataReader dr = await cmd.ExecuteReaderAsync())
+                    {
+                        while (await dr.ReadAsync())
+                        {
+                            oEmpresa.IdEmpresa = Convert.ToInt32(dr["IdEmpresa"]);
+                            oEmpresa.Nombre = dr["Nombre"].ToString();
+                            oEmpresa.Pass = dr["Pass"].ToString();
+                            oEmpresa.Direccion = dr["Direccion"].ToString();
+                            oEmpresa.Mail = dr["Mail"].ToString();
+                        }
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+
+            }
+            return oEmpresa;
+        }
+
         public async Task<Empresa> LoginEmpresa(string sMail, string sPass)
         {
             Empresa oEmpresa = new Empresa();
@@ -130,5 +163,6 @@ namespace WhatWeDo.Servicios.Implementacion
             }
         }
 
+       
     }
 }

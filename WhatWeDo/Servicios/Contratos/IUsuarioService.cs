@@ -4,6 +4,8 @@ namespace WhatWeDo.Servicios.Contratos
 {
     public interface IUsuarioService
     {
+        Task<Usuario> GetUsuario(Usuario oUsuario);
+
         Task<Usuario> LoginUsuario(string sEmail, string sPassword);
 
         Task<string> InsertUsuario(Usuario oUsuario);
