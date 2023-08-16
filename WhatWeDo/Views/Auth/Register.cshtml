@@ -3,43 +3,268 @@
     Layout = "/Views/Auth/_AuthLayout.cshtml";
     ViewData["Title"] = "Registro";
 }
+
+    <!-- Iconos de 'Font Awesome' -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+<style>
+    .icon-container {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        right: 20px; /* Ajusta el valor para controlar la posición horizontal */
+    }
+    .icon-container i {
+        position: absolute;
+        top: 0;
+        left: 0;
+        transform: translate(-50%, -50%);
+        display:none;
+    }
+
+    /*Estilos del checkbox empresa*/
+
+    .checkbox-wrapper-35 .switch {
+      display: none;
+    }
+
+    .checkbox-wrapper-35 .switch + label {
+      -webkit-box-align: center;
+      -webkit-align-items: center;
+      -ms-flex-align: center;
+      align-items: center;
+      color: #78768d;
+      cursor: pointer;
+      display: -webkit-box;
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      display: flex;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      font-size: 12px;
+      line-height: 15px;
+      position: relative;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      width:max-content;
+    }
+
+    .checkbox-wrapper-35 .switch + label::before,
+      .checkbox-wrapper-35 .switch + label::after {
+      content: '';
+      display: block;
+    }
+
+    .checkbox-wrapper-35 .switch + label::before {
+      background-color: orange;
+      border-radius: 500px;
+      height: 15px;
+      margin-right: 8px;
+      -webkit-transition: background-color 0.125s ease-out;
+      transition: background-color 0.125s ease-out;
+      width: 40px;
+    }
+
+    .checkbox-wrapper-35 .switch + label::after {
+      background-color: white;
+      border-radius: 13px;
+      box-shadow: 0 3px 1px 0 rgba(37, 34, 71, 0.05), 0 2px 2px 0 rgba(37, 34, 71, 0.1), 0 3px 3px 0 rgba(37, 34, 71, 0.05);
+      height: 13px;
+      left: 1px;
+      position: absolute;
+      top: 1px;
+      -webkit-transition: -webkit-transform 0.125s ease-out;
+      transition: -webkit-transform 0.125s ease-out;
+      transition: transform 0.125s ease-out;
+      transition: transform 0.125s ease-out, -webkit-transform 0.125s ease-out;
+      width: 13px;
+    }
+
+    .checkbox-wrapper-35 .switch + label .switch-x-text {
+      display: block;
+      margin-right: .3em;
+      width:100px;
+    }
+
+    .checkbox-wrapper-35 .switch + label .switch-x-toggletext {
+      display: block;
+      font-weight: bold;
+      height: 15px;
+      overflow: hidden;
+      position: relative;
+      width: 100px;
+    }
+
+    .checkbox-wrapper-35 .switch + label .switch-x-unchecked,
+      .checkbox-wrapper-35 .switch + label .switch-x-checked {
+      left: 0;
+      position: absolute;
+      top: 0;
+      -webkit-transition: opacity 0.125s ease-out, -webkit-transform 0.125s ease-out;
+      transition: opacity 0.125s ease-out, -webkit-transform 0.125s ease-out;
+      transition: transform 0.125s ease-out, opacity 0.125s ease-out;
+      transition: transform 0.125s ease-out, opacity 0.125s ease-out, -webkit-transform 0.125s ease-out;
+    }
+
+    .checkbox-wrapper-35 .switch + label .switch-x-unchecked {
+      opacity: 1;
+      -webkit-transform: none;
+      transform: none;
+    }
+
+    .checkbox-wrapper-35 .switch + label .switch-x-checked {
+      opacity: 0;
+      -webkit-transform: translate3d(0, 100%, 0);
+      transform: translate3d(0, 100%, 0);
+    }
+
+    .checkbox-wrapper-35 .switch + label .switch-x-hiddenlabel {
+      position: absolute;
+      visibility: hidden;
+    }
+
+    .checkbox-wrapper-35 .switch:checked + label::before {
+      background-color: orangered;
+    }
+
+    .checkbox-wrapper-35 .switch:checked + label::after {
+      -webkit-transform: translate3d(25px, 0, 0);
+      transform: translate3d(25px, 0, 0);
+    }
+
+    .checkbox-wrapper-35 .switch:checked + label .switch-x-unchecked {
+      opacity: 0;
+      -webkit-transform: translate3d(0, -100%, 0);
+      transform: translate3d(0, -100%, 0);
+    }
+
+    .checkbox-wrapper-35 .switch:checked + label .switch-x-checked {
+      opacity: 1;
+      -webkit-transform: none;
+      transform: none;
+    }
+
+    /*Estilos para el boton*/
+    .btn {
+     position: relative;
+     font-size: 17px;
+     text-transform: uppercase;
+     text-decoration: none;
+     padding: 1em 2em;
+     display: inline-block;
+     border-radius: 5px;
+     transition: all .2s;
+     border: none;
+     font-family: inherit;
+     font-weight: 500;
+     color: black;
+     background-color: orange;
+    }
+
+    .btn:hover {
+     transform: translateY(-3px);
+     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .btn:active {
+     transform: translateY(-1px);
+     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .btn::after {
+     content: "";
+     display: inline-block;
+     height: 100%;
+     width: 100%;
+     border-radius: 5px;
+     position: absolute;
+     top: 0;
+     left: 0;
+     z-index: -1;
+     transition: all .4s;
+    }
+
+    .btn::after {
+     background-color: orange;
+    }
+
+    .btn:hover::after {
+     transform: scaleX(1.4) scaleY(1.6);
+     opacity: 0;
+    }
+</style>
+
 <form asp-controller="Auth" asp-action="CrearUsuario" id="registerForm" method="post">
     <h2>Crear una cuenta nueva.</h2>
     <hr />
     <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
-    <div class="row">
-        <div class="col-12">
-            <div class="form-floating mb-3">
-                <input asp-for="NombreUsuario" class="form-control" autocomplete="firstname" aria-required="true" placeholder="nombre" />
-                <label >Nombre</label>
-            </div>
+    <div class="form-floating mb-3 position-relative">
+        <input id="Nombre" asp-for="Nombre" class="form-control" aria-required="true" placeholder="nombre"/>
+        <label>Nombre</label>
+        <span class="text-danger"></span>
+        <div class="icon-container ">
+            <i id="checkNombre" class="fas fa-check-circle" style="color: green;" data-toggle="tooltip" data-placement="top" title="Nombre válido"></i>
+            <i id="exclamationNombre" class="fas fa-exclamation-circle" style="color: red;" data-toggle="tooltip" data-placement="top" title="El nombre debe tener entre 6 a 20 caracteres y contener solo letras y números"></i>
         </div>
-        
     </div>
     <div class="form-floating mb-3">
-        <input asp-for="Email" class="form-control" autocomplete="username" aria-required="true" placeholder="nombre@ejemplo.com" />
-        <label >Email</label>
+        <input asp-for="Direccion" class="form-control" aria-required="true" placeholder="direccion" />
+        <label>Direccion</label>
         <span class="text-danger"></span>
+        <div class="icon-container">
+            <i id="checkDireccion" class="fas fa-check-circle" style="color: green;" data-toggle="tooltip" data-placement="top" title="Dirección válida"></i>
+            <i id="exclamationDireccion" class="fas fa-exclamation-circle" style="color: red;" data-toggle="tooltip" data-placement="top" title="La dirección debe tener entre 10 y 50 caracteres"></i>
+        </div>
     </div>
     <div class="form-floating mb-3">
-        <input asp-for="Pass" type="password" class="form-control" autocomplete="new-password" aria-required="true" placeholder="contraseña" />
-        <label >Contraseña</label>
+        <input id="Mail" asp-for="Mail" class="form-control" aria-required="true" placeholder="nombre@ejemplo.com" />
+        <label>Email</label>
         <span class="text-danger"></span>
+        <div class="icon-container">
+            <i id="checkEmail" class="fas fa-check-circle" style="color: green;" data-toggle="tooltip" data-placement="top" title="Email válido"></i>
+            <i id="exclamationEmail" class="fas fa-exclamation-circle" style="color: red;" data-toggle="tooltip" data-placement="top" title="El formato del email no es válido"></i>
+        </div>
     </div>
-    <div class="form-floating mb-3">
-        <input asp-for="Pass" type="password" class="form-control" autocomplete="new-password" aria-required="true" placeholder="contraseña" />
+    <div class="form-floating">
+        <input asp-for="Pass" type="password" class="form-control" aria-required="true" placeholder="contraseña" />
+        <label>Contraseña</label>
+        <span class="text-danger"></span>
+        <div class="icon-container">
+            <i id="checkPass" class="fas fa-check-circle" style="color: green;" data-toggle="tooltip" data-placement="top" title="Contraseña válida"></i>
+            <i id="exclamationPass" class="fas fa-exclamation-circle" style="color: red;" data-toggle="tooltip" data-placement="top" title="La contraseña debe tener al menos 8 caracteres y contener al menos una letra y un número"></i>
+        </div>
+    </div>
+    <div class="form-floating mb-3 mt-3">
+        <input id="ConfirmPass" asp-for="ConfirmPass" type="password" class="form-control" aria-required="true" placeholder="contraseña" />
         <label>Confirmar Contraseña</label>
         <span class="text-danger"></span>
+        <div class="icon-container">
+            <i id="checkConfirmPass" class="fas fa-check-circle" style="color: green;" data-toggle="tooltip" data-placement="top" title="Las contraseñas coinciden"></i>
+            <i id="exclamationConfirmPass" class="fas fa-exclamation-circle" style="color: red;" data-toggle="tooltip" data-placement="top" title="Las contraseñas no coinciden"></i>
+        </div>
     </div>
-    <div class="col-12 align-self-center">
+    <div class="col-6 align-self-center mb-4 mt-4 me-0">
+        <div class="checkbox-wrapper-35">
+            <input asp-for="EsEmpresa" name="EsEmpresa" id="switch" type="checkbox" class="switch">
+            <label for="switch">
+                <span class="switch-x-text">Registrarse como  </span>
+                <span class="switch-x-toggletext">
+                    <span class="switch-x-unchecked"><span class="switch-x-hiddenlabel">Unchecked: </span>Usuario</span>
+                    <span class="switch-x-checked"><span class="switch-x-hiddenlabel">Checked: </span>Empresa</span>
+                </span>
+            </label>
+        </div>
+    </div>
+    <button id="registerSubmit" type="submit" class="w-100 btn btn-sm">Registrarse</button>
+    @*<div class="col-12 align-self-center">
         <div class="form-floating mb-3 ">
             <div class="form-check form-switch d-flex justify-content-center">
-                <input asp-for="Rol" class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                <input asp-for="EsEmpresa" class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
                 <label class="form-check-label" for="flexSwitchCheckDefault">Cuenta de empresa</label>
             </div>
         </div>
-    </div>
-    <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Registrarse</button>
+    </div>*@
+    @*<button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Registrarse</button>*@
     @if (ViewBag.Alert != null)
     {
         <div class="alert alert-dismissable alert-danger" style="margin-top:10px">
@@ -54,6 +279,7 @@
     }
 </form>
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/js/register.js"></script>
 <script type="text/javascript">
     $("#linkRegister").addClass("active");
 </script>
