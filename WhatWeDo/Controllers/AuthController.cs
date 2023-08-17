@@ -84,9 +84,26 @@ namespace WhatWeDo.Controllers
         }
 
         public async Task<IActionResult> CrearUsuario(Usuario usuario)
-        {            
-            usuario.Pass = Utilidades.EncriptarPassword(usuario.Pass);            
+        {
+            //Comprobar que los campos no esten vacios
+            if (string.IsNullOrWhiteSpace(usuario.Nombre) || string.IsNullOrWhiteSpace(usuario.Direccion) ||
+                string.IsNullOrWhiteSpace(usuario.Mail) || string.IsNullOrWhiteSpace(usuario.Pass) ||
+                string.IsNullOrWhiteSpace(usuario.ConfirmPass))
+            {
+                ViewBag.Alert = "Por favor, complete todos los campos.";
+                return View("Register");
+            }
 
+            //Comprobar que todos los datos tengan un formato valido
+            if (!ValidarRequisitosNombre(usuario.Nombre) || !ValidarRequisitosDireccion(usuario.Direccion) ||
+                !ValidarRequisitosEmail(usuario.Mail) || !ValidarRequisitosPassword(usuario.Pass) || usuario.Pass != usuario.ConfirmPass)
+            {
+                ViewBag.Alert = "Alguno de los campos no cumple con los requisitos.";
+                return View("Register");
+            }
+
+            //Añadir al usuario a la base de datos
+            usuario.Pass = Utilidades.EncriptarPassword(usuario.Pass);//Encriptar contraseña
             if (!usuario.EsEmpresa)
             {
                 string sTransaccion = await _ServicioUsuario.InsertUsuario(usuario);
@@ -94,12 +111,12 @@ namespace WhatWeDo.Controllers
                 {
                     ViewBag.Alert = "El email proporcionado ya esta en uso.";
                     return View("Register");
-                }               
+                }
             }
             else
             {
                 //Convertimos el usuario a empresa para hacer el insert a la tabla que toca
-                Empresa oEmpresa = new Empresa(0,usuario.Nombre, usuario.Pass, usuario.Direccion, usuario.Mail);
+                Empresa oEmpresa = new Empresa(0, usuario.Nombre, usuario.Pass, usuario.Direccion, usuario.Mail);
 
                 string sTransaccion = await _ServicioEmpresa.InsertEmpresa(oEmpresa);
                 if (sTransaccion.Equals("NOK"))
