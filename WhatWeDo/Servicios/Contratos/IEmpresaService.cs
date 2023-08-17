@@ -4,13 +4,15 @@ namespace WhatWeDo.Servicios.Contratos
 {
     public interface IEmpresaService
     {
+        Task<Empresa> GetEmpresa(Empresa oEmpresa);
+
         Task<Empresa> LoginEmpresa(string sEmail, string sPassword);
 
         Task<string> InsertEmpresa(Empresa oEmpresa);
 
-        void UpdateEmpresa(Empresa oEmpresa);
+        Task UpdateEmpresa(Empresa oEmpresa);
 
-        void DeleteEmpresa(Empresa oEmpresa);
+        Task DeleteEmpresa(Empresa oEmpresa);
 
     }
 }
