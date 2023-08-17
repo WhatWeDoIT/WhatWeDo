@@ -20,7 +20,7 @@ $(document).ready(function () {
             checkIconNombre.hide();
             exclamationIconNombre.hide();
         }
-        else if (nombreLength >= 6 && nombreLength <= 20 && validCharacters.test(nombreValue)) {
+        else if (nombreLength >= 3 && nombreLength <= 20 && validCharacters.test(nombreValue)) {
             checkIconNombre.show();
             exclamationIconNombre.hide();
         }

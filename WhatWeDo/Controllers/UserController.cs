@@ -1,95 +1,40 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using WhatWeDo.Servicios.Contratos;
+using System.Security.Claims;
+using System.Text.RegularExpressions;
 using WhatWeDo.Models;
 using WhatWeDo.Recursos;
-using System.Security.Claims;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication;
-using System.Text.RegularExpressions;
+using WhatWeDo.Servicios.Contratos;
+using WhatWeDo.Servicios.Implementacion;
 
 namespace WhatWeDo.Controllers
 {
-    
-    public class AuthController : Controller
+    public class UserController : Controller
     {
         private readonly IUsuarioService _ServicioUsuario;
         private readonly IEmpresaService _ServicioEmpresa;
 
-        public AuthController(IUsuarioService servicioUsuario, IEmpresaService servicioEmpresa)
+        public UserController(IUsuarioService servicioUsuario, IEmpresaService servicioEmpresa)
         {
             _ServicioUsuario = servicioUsuario;
             _ServicioEmpresa = servicioEmpresa;
         }
-
-        public IActionResult Login()
+        public async Task<IActionResult> MisDatosUsuario(Usuario usuario)
         {
-            return View();
+            usuario.Mail = User.FindFirstValue(ClaimTypes.Email);
+            await _ServicioUsuario.GetUsuario(usuario);
+
+            return View(usuario);
         }
 
-        public IActionResult Register()
+        public async Task<IActionResult> MisDatosEmpresa(Empresa empresa)
         {
-            return View();
+            empresa.Mail = User.FindFirstValue(ClaimTypes.Email);
+            await _ServicioEmpresa.GetEmpresa(empresa);
+
+            return View(empresa);
         }
 
-        public IActionResult Preferences()
-        {
-            // Supongamos que tienes una lista de categorías de eventos
-            //List<CategoriaEvento> categorias = ObtenerCategoriasDesdeLaBaseDeDatos(); //TODO
-            return View();
-        }
-        public async Task<IActionResult> IniciarSesion(Usuario usuario)
-        {
-            Usuario oUsuario = new Usuario();
-            string rol;
-            if (!usuario.EsEmpresa)
-            {
-                if (usuario.Mail != null && usuario.Pass != null)
-                {
-                    oUsuario = await _ServicioUsuario.LoginUsuario(usuario.Mail, Utilidades.EncriptarPassword(usuario.Pass));
-                    usuario.Nombre = oUsuario.Nombre;
-                }
-
-                if (oUsuario.IdUsuario == 0)
-                {
-                    ViewBag.Alert = "Email y/o contraseña inválidos.";
-                    return View("Login");
-                }
-                rol = "Usuario";
-            }
-            else
-            {
-                //Convertimos el usuario a empresa para hacer el insert a la tabla que toca
-                Empresa oEmpresa = new Empresa(0, usuario.Nombre, usuario.Pass, usuario.Direccion, usuario.Mail);
-
-                if (usuario.Mail != null && usuario.Pass != null)
-                {
-                    oEmpresa = await _ServicioEmpresa.LoginEmpresa(oEmpresa.Mail, Utilidades.EncriptarPassword(oEmpresa.Pass));
-                    usuario.Nombre = oEmpresa.Nombre;
-                }
-
-                if (oEmpresa.IdEmpresa == 0)
-                {
-                    ViewBag.Alert = "Email y/o contraseña inválidos.";
-                    return View("Login");
-                }
-                rol = "Empresa";
-            }
-
-            List<Claim> claims = new List<Claim>()
-            {
-                new Claim(ClaimTypes.Name, usuario.Nombre),
-                new Claim(ClaimTypes.Email, usuario.Mail),
-                new Claim(ClaimTypes.Role, rol)
-            };
-
-            ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-
-            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
-
-            return RedirectToAction("Eventos", "Home");
-        }
-
-        public async Task<IActionResult> CrearUsuario(Usuario usuario)
+        public async Task<IActionResult> ModificarUsuario(Usuario usuario)
         {
             //Comprobar que los campos no esten vacios
             if (string.IsNullOrWhiteSpace(usuario.Nombre) || string.IsNullOrWhiteSpace(usuario.Direccion) ||
@@ -97,7 +42,7 @@ namespace WhatWeDo.Controllers
                 string.IsNullOrWhiteSpace(usuario.ConfirmPass))
             {
                 ViewBag.Alert = "Por favor, complete todos los campos.";
-                return View("Register");
+                return View("MisDatosUsuario",usuario);
             }
 
             //Comprobar que todos los datos tengan un formato valido
@@ -105,36 +50,43 @@ namespace WhatWeDo.Controllers
                 !ValidarRequisitosEmail(usuario.Mail) || !ValidarRequisitosPassword(usuario.Pass) || usuario.Pass != usuario.ConfirmPass)
             {
                 ViewBag.Alert = "Alguno de los campos no cumple con los requisitos.";
-                return View("Register");
+                return View("MisDatosUsuario", usuario);
             }
-
-            //Añadir al usuario a la base de datos
-            usuario.Pass = Utilidades.EncriptarPassword(usuario.Pass);//Encriptar contraseña
-            if (!usuario.EsEmpresa)
-            {
-                string sTransaccion = await _ServicioUsuario.InsertUsuario(usuario);
-                if (sTransaccion.Equals("NOK"))
-                {
-                    ViewBag.Alert = "El email proporcionado ya esta en uso.";
-                    return View("Register");
-                }
-            }
-            else
-            {
-                //Convertimos el usuario a empresa para hacer el insert a la tabla que toca
-                Empresa oEmpresa = new Empresa(0, usuario.Nombre, usuario.Pass, usuario.Direccion, usuario.Mail);
-
-                string sTransaccion = await _ServicioEmpresa.InsertEmpresa(oEmpresa);
-                if (sTransaccion.Equals("NOK"))
-                {
-                    ViewBag.Alert = "El email proporcionado ya esta en uso.";
-                    return View("Register");
-                }
-            }
-
-            return Redirect("Login");
-
+            usuario.Pass = Utilidades.EncriptarPassword(usuario.Pass); //Encriptar contraseña
+            await _ServicioUsuario.UpdateUsuario(usuario);           
+            
+            return RedirectToAction("Eventos", "Home");
         }
+
+        public async Task<IActionResult> ModificarEmpresa(Empresa empresa)
+        {
+            //Comprobar que los campos no esten vacios
+            if (string.IsNullOrWhiteSpace(empresa.Nombre) || string.IsNullOrWhiteSpace(empresa.Direccion) ||
+                string.IsNullOrWhiteSpace(empresa.Mail) || string.IsNullOrWhiteSpace(empresa.Pass) ||
+                string.IsNullOrWhiteSpace(empresa.ConfirmPass))
+            {
+                ViewBag.Alert = "Por favor, complete todos los campos.";
+                return View("MisDatosEmpresa", empresa);
+            }
+
+            //Comprobar que todos los datos tengan un formato valido
+            if (!ValidarRequisitosNombre(empresa.Nombre) || !ValidarRequisitosDireccion(empresa.Direccion) ||
+                !ValidarRequisitosEmail(empresa.Mail) || !ValidarRequisitosPassword(empresa.Pass) || empresa.Pass != empresa.ConfirmPass)
+            {
+                ViewBag.Alert = "Alguno de los campos no cumple con los requisitos.";
+                return View("MisDatosEmpresa", empresa);
+            }
+            empresa.Pass = Utilidades.EncriptarPassword(empresa.Pass); //Encriptar contraseña
+            await _ServicioEmpresa.UpdateEmpresa(empresa);
+
+            return RedirectToAction("Eventos", "Home");
+        }
+
+        public IActionResult Cancelar()
+        {
+            return RedirectToAction("Eventos", "Home");
+        }
+
         private bool ValidarRequisitosNombre(string nombre)
         {
             // Verificar que el nombre no esté vacío
@@ -162,7 +114,6 @@ namespace WhatWeDo.Controllers
             return true;
         }
 
-
         private bool ValidarRequisitosDireccion(string direccion)
         {
             // Verificar que la dirección no esté vacía
@@ -182,7 +133,6 @@ namespace WhatWeDo.Controllers
 
             return true;
         }
-
 
         private bool ValidarRequisitosEmail(string email)
         {
@@ -227,12 +177,5 @@ namespace WhatWeDo.Controllers
 
             return true;
         }
-
-        public async Task<IActionResult> CerrarSesion()
-        {
-            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            return RedirectToAction("Eventos", "Home");
-        }
-
     }
 }
