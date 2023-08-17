@@ -183,3 +183,20 @@ $(document).ready(function () {
     confirmPassInput.trigger("input");
 });
 
+$("#switch").click(function() {
+    MostrarDireccion();
+});
+
+$(document).ready(function () {
+    MostrarDireccion();
+});
+
+function MostrarDireccion() {
+    if ($('#switch').prop('checked')) {
+        $("#divDireccion").removeClass("d-none");
+    }
+    else {
+        $("#divDireccion").addClass("d-none");
+    }
+
+}
