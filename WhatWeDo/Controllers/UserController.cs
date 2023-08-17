@@ -4,7 +4,6 @@ using System.Text.RegularExpressions;
 using WhatWeDo.Models;
 using WhatWeDo.Recursos;
 using WhatWeDo.Servicios.Contratos;
-using WhatWeDo.Servicios.Implementacion;
 
 namespace WhatWeDo.Controllers
 {
@@ -32,11 +31,6 @@ namespace WhatWeDo.Controllers
             await _ServicioEmpresa.GetEmpresa(empresa);
 
             return View(empresa);
-        }
-
-        public IActionResult Cancelar()
-        {
-            return RedirectToAction("Eventos", "Home");
         }
 
         public async Task<IActionResult> ModificarUsuario(Usuario usuario)
@@ -84,6 +78,11 @@ namespace WhatWeDo.Controllers
             empresa.Pass = Utilidades.EncriptarPassword(empresa.Pass); //Encriptar contraseña
             await _ServicioEmpresa.UpdateEmpresa(empresa);
 
+            return RedirectToAction("Eventos", "Home");
+        }
+
+        public IActionResult Cancelar()
+        {
             return RedirectToAction("Eventos", "Home");
         }
 

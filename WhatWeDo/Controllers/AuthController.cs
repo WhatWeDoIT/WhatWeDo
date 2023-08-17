@@ -5,6 +5,7 @@ using WhatWeDo.Recursos;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
+using System.Text.RegularExpressions;
 
 namespace WhatWeDo.Controllers
 {
@@ -71,7 +72,7 @@ namespace WhatWeDo.Controllers
             List<Claim> claims = new List<Claim>()
             {
                 new Claim(ClaimTypes.Name, usuario.Nombre),
-                new Claim("Mail", usuario.Mail),
+                new Claim(ClaimTypes.Email, usuario.Mail),
                 new Claim(ClaimTypes.Role, rol)
             };
 
@@ -123,7 +124,7 @@ namespace WhatWeDo.Controllers
             nombre = nombre.Trim();
 
             // Verificar la longitud del nombre
-            if (nombre.Length < 6 || nombre.Length > 20)
+            if (nombre.Length < 3 || nombre.Length > 20)
             {
                 return false;
             }
