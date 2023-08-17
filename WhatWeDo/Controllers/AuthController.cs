@@ -72,7 +72,8 @@ namespace WhatWeDo.Controllers
             List<Claim> claims = new List<Claim>()
             {
                 new Claim(ClaimTypes.Name, usuario.Nombre),
-                new Claim("Mail", usuario.Mail),
+                new Claim(ClaimTypes.Email, usuario.Mail),
+                //new Claim("Mail", usuario.Mail),
                 new Claim(ClaimTypes.Role, rol)
             };
 
