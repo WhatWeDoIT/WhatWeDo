@@ -36,7 +36,6 @@ namespace WhatWeDo.Servicios.Implementacion
                             oUsuario.IdUsuario = Convert.ToInt32(dr["IdUsuario"]);
                             oUsuario.Nombre = dr["Nombre"].ToString();
                             oUsuario.Pass = dr["Pass"].ToString();
-                            oUsuario.Direccion = dr["Direccion"].ToString();
                             oUsuario.Mail = dr["Mail"].ToString();
                             oUsuario.Miembros = Convert.ToInt32(dr["Miembros"]);
                         }
@@ -73,7 +72,6 @@ namespace WhatWeDo.Servicios.Implementacion
                             oUsuario.IdUsuario = Convert.ToInt32(dr["IdUsuario"]);
                             oUsuario.Nombre = dr["Nombre"].ToString();
                             oUsuario.Pass = dr["Pass"].ToString();
-                            oUsuario.Direccion = dr["Direccion"].ToString();
                             oUsuario.Mail = dr["Mail"].ToString();
                             oUsuario.Miembros = Convert.ToInt32(dr["Miembros"]);
                         }
@@ -100,7 +98,6 @@ namespace WhatWeDo.Servicios.Implementacion
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.Add(new SqlParameter("@Nombre", oUsuario.Nombre));
                     cmd.Parameters.Add(new SqlParameter("@Pass", oUsuario.Pass));
-                    cmd.Parameters.Add(new SqlParameter("@Direccion", oUsuario.Direccion));
                     cmd.Parameters.Add(new SqlParameter("@Mail", oUsuario.Mail));
                     cmd.Parameters.Add(new SqlParameter("@Miembros", oUsuario.Miembros));
 
@@ -134,7 +131,6 @@ namespace WhatWeDo.Servicios.Implementacion
                     cmd.Parameters.Add(new SqlParameter("@IdUsuario", oUsuario.IdUsuario));
                     cmd.Parameters.Add(new SqlParameter("@Nombre", oUsuario.Nombre));
                     cmd.Parameters.Add(new SqlParameter("@Pass", oUsuario.Pass));
-                    cmd.Parameters.Add(new SqlParameter("@Direccion", oUsuario.Direccion));
                     cmd.Parameters.Add(new SqlParameter("@Mail", oUsuario.Mail));
                     cmd.Parameters.Add(new SqlParameter("@Miembros", oUsuario.Miembros));
 

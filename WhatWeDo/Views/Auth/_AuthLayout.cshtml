@@ -1,45 +1,50 @@
-﻿@{
-    Layout = "/Views/Shared/_Layout.cshtml";
-}
-<div class="row justify-content-center" id="registerLayout">
-    <div class="col col-lg-5 col-md-9">
-        <div class="card login-logout-card">
-            <div class="card-header">
-                <ul class="nav nav-tabs card-header-tabs">
-                    <li class="nav-item">
-                        <a id ="linkLogIn" class="nav-link" href="/Auth/Login">
-                            Log In
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a id="linkRegister" class="nav-link" href="/Auth/Register">
-                            ¡Registrate!
-                        </a>
-                    </li>
-                </ul>
-            </div>
-            <div class="card-body">
-                <div class="row justify-content-center">
-                    <div class="col-10 my-4">
-                        @RenderBody()
+﻿@using Microsoft.AspNetCore.Identity
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - WhatWeDo</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/WhatWeDo.styles.css" asp-append-version="true" />
+</head>
+<body style="margin-bottom: 0px">
+    <div class="container-fluid">
+        <div class="row justify-content-center" id="registerLayout">
+            <div class="col col-lg-5 col-md-9">
+                <div class="card login-logout-card">
+                    <div class="card-header">
+                        <ul class="nav nav-tabs card-header-tabs">
+                            <li class="nav-item">
+                                <a id="linkLogIn" class="nav-link" href="/Auth/Login">
+                                    Log In
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a id="linkRegister" class="nav-link" href="/Auth/Register">
+                                    ¡Registrate!
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="card-body">
+                        <div class="row justify-content-center">
+                            <div class="col-10 my-4">
+                                @RenderBody()
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-
-@section Scripts{
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="/docs/5.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="sidebars.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
-    <script>
-        $(function () {
-            const currentPage = location.pathname;
-            $('.nav-tabs li a').each(function () {
-                const $this = $(this);
-                if (currentPage.toLowerCase().indexOf($this.attr('href').toLowerCase()) !== -1) {
-                    $this.addClass('active');
-                }
-            })
-        })
-    </script>
-}
+</body>
+</html>
