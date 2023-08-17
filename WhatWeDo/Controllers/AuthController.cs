@@ -31,6 +31,12 @@ namespace WhatWeDo.Controllers
             return View();
         }
 
+        public IActionResult Preferences()
+        {
+            // Supongamos que tienes una lista de categorías de eventos
+            //List<CategoriaEvento> categorias = ObtenerCategoriasDesdeLaBaseDeDatos(); //TODO
+            return View();
+        }
         public async Task<IActionResult> IniciarSesion(Usuario usuario)
         {
             Usuario oUsuario = new Usuario();
@@ -72,7 +78,8 @@ namespace WhatWeDo.Controllers
             List<Claim> claims = new List<Claim>()
             {
                 new Claim(ClaimTypes.Name, usuario.Nombre),
-                new Claim("Mail", usuario.Mail),
+                new Claim(ClaimTypes.Email, usuario.Mail),
+                //new Claim("Mail", usuario.Mail),
                 new Claim(ClaimTypes.Role, rol)
             };
 

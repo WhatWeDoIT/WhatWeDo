@@ -1,0 +1,50 @@
+﻿
+@{
+    ViewData["Title"] = "Preferences";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    ViewData["Title"] = "Preferences";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .categoria-checkbox {
+        width: 150px;
+        height: 150px;
+        background-color: white;
+        border-radius: 5px;
+        box-shadow: 8px 4px 8px rgba(0, 0, 0, 0.2);
+        transition: background-color 0.3s ease;
+        cursor: pointer;
+    }
+    .categoria-checkbox.selected {
+        background-color: orange;
+    }   
+</style>
+
+<form class="preferences-form p-3">
+
+    <div class="container px-5">
+        <div class="row mb-3">
+            <div class="col-md-3 p-2 d-flex justify-content-center align-content-center">
+                <div class="categoria-checkbox p-2" onclick="toggleCategoria(this)">
+                    <div class="image-card">
+                        <img src="../gastronomia.jpg" class="img-fluid" style="border-radius:5px 5px 0px 0px;" />
+                    </div>
+                    <div class="text-card bg-dark d-flex justify-content-center align-content-center">
+                        <h6 style="color:white;"> Gastronomía </h6>
+                    </div>
+                </div>
+            </div> 
+        </div>
+    </div>
+</form>
+
+<script>
+    function toggleCategoria(element) {
+        element.classList.toggle("selected");
+    }
+</script>
+
