@@ -8,7 +8,6 @@ namespace WhatWeDo.Controllers
 {
     public class HomeController : Controller
     {
-
         public IActionResult Eventos ()
         {
             Evento oEvento = new Evento()
