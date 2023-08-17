@@ -86,7 +86,7 @@ namespace WhatWeDo.Controllers
         public async Task<IActionResult> CrearUsuario(Usuario usuario)
         {
             //Comprobar que los campos no esten vacios
-            if (string.IsNullOrWhiteSpace(usuario.Nombre) || string.IsNullOrWhiteSpace(usuario.Direccion) ||
+            if (string.IsNullOrWhiteSpace(usuario.Nombre) || 
                 string.IsNullOrWhiteSpace(usuario.Mail) || string.IsNullOrWhiteSpace(usuario.Pass) ||
                 string.IsNullOrWhiteSpace(usuario.ConfirmPass))
             {
@@ -95,7 +95,7 @@ namespace WhatWeDo.Controllers
             }
 
             //Comprobar que todos los datos tengan un formato valido
-            if (!ValidarRequisitosNombre(usuario.Nombre) || !ValidarRequisitosDireccion(usuario.Direccion) ||
+            if (!ValidarRequisitosNombre(usuario.Nombre) || 
                 !ValidarRequisitosEmail(usuario.Mail) || !ValidarRequisitosPassword(usuario.Pass) || usuario.Pass != usuario.ConfirmPass)
             {
                 ViewBag.Alert = "Alguno de los campos no cumple con los requisitos.";
@@ -118,6 +118,12 @@ namespace WhatWeDo.Controllers
                 //Convertimos el usuario a empresa para hacer el insert a la tabla que toca
                 Empresa oEmpresa = new Empresa(0, usuario.Nombre, usuario.Pass, usuario.Direccion, usuario.Mail);
 
+                if (!ValidarRequisitosDireccion(usuario.Direccion))
+                {
+                    ViewBag.Alert = "Alguno de los campos no cumple con los requisitos.";
+                    return View("Register");
+                }
+                
                 string sTransaccion = await _ServicioEmpresa.InsertEmpresa(oEmpresa);
                 if (sTransaccion.Equals("NOK"))
                 {
