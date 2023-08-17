@@ -18,6 +18,40 @@ namespace WhatWeDo.Servicios.Implementacion
             _conexion = conexion.Value;
         }
 
+        public async Task<Usuario> GetUsuario(Usuario oUsuario)
+        {
+            try
+            {
+                using (SqlConnection conexion = new SqlConnection(_conexion.CadenaBBDD))
+                {
+                    SqlCommand cmd = new SqlCommand("sp_GetUsuarioPorMail", conexion);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add(new SqlParameter("@Mail", oUsuario.Mail));
+
+                    conexion.Open();
+                    using (SqlDataReader dr = await cmd.ExecuteReaderAsync())
+                    {
+                        while (await dr.ReadAsync())
+                        {
+                            oUsuario.IdUsuario = Convert.ToInt32(dr["IdUsuario"]);
+                            oUsuario.Nombre = dr["Nombre"].ToString();
+                            oUsuario.Pass = dr["Pass"].ToString();
+                            oUsuario.Direccion = dr["Direccion"].ToString();
+                            oUsuario.Mail = dr["Mail"].ToString();
+                            oUsuario.Miembros = Convert.ToInt32(dr["Miembros"]);
+                        }
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+
+            }
+            return oUsuario;
+        }
+
         public async Task<Usuario> LoginUsuario(string sMail, string sPass)
         {
             Usuario oUsuario = new Usuario();
@@ -78,6 +112,7 @@ namespace WhatWeDo.Servicios.Implementacion
                             sTransaccion = dr["Transaccion"].ToString();
                         }
                     }
+
                 }
             }
             catch (Exception ex)
@@ -88,7 +123,7 @@ namespace WhatWeDo.Servicios.Implementacion
             return sTransaccion;
         }
 
-        public async void  UpdateUsuario(Usuario oUsuario)
+        public async Task UpdateUsuario(Usuario oUsuario)
         {
             try
             {
@@ -96,7 +131,7 @@ namespace WhatWeDo.Servicios.Implementacion
                 {
                     SqlCommand cmd = new SqlCommand("sp_UpdateUsuario", conexion);
                     cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.Add(new SqlParameter("@id", oUsuario.IdUsuario));
+                    cmd.Parameters.Add(new SqlParameter("@IdUsuario", oUsuario.IdUsuario));
                     cmd.Parameters.Add(new SqlParameter("@Nombre", oUsuario.Nombre));
                     cmd.Parameters.Add(new SqlParameter("@Pass", oUsuario.Pass));
                     cmd.Parameters.Add(new SqlParameter("@Direccion", oUsuario.Direccion));
@@ -113,7 +148,7 @@ namespace WhatWeDo.Servicios.Implementacion
             }
         }
 
-        public async void DeleteUsuario(Usuario oUsuario)
+        public async Task DeleteUsuario(Usuario oUsuario)
         {
             try
             {

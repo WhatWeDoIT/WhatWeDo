@@ -18,6 +18,40 @@ namespace WhatWeDo.Servicios.Implementacion
             _conexion = conexion.Value;
         }
 
+        public async Task<Empresa> GetEmpresa(Empresa oEmpresa)
+        {
+            try
+            {
+                using (SqlConnection conexion = new SqlConnection(_conexion.CadenaBBDD))
+                {
+                    SqlCommand cmd = new SqlCommand("sp_GetEmpresaPorMail", conexion);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add(new SqlParameter("@Mail", oEmpresa.Mail));
+
+                    conexion.Open();
+                    using (SqlDataReader dr = await cmd.ExecuteReaderAsync())
+                    {
+                        while (await dr.ReadAsync())
+                        {
+                            oEmpresa.IdEmpresa = Convert.ToInt32(dr["IdEmpresa"]);
+                            oEmpresa.Nombre = dr["Nombre"].ToString();
+                            oEmpresa.Pass = dr["Pass"].ToString();
+                            oEmpresa.Direccion = dr["Direccion"].ToString();
+                            oEmpresa.Mail = dr["Mail"].ToString();
+                        }
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+
+            }
+            return oEmpresa;
+        }
+
+
         public async Task<Empresa> LoginEmpresa(string sMail, string sPass)
         {
             Empresa oEmpresa = new Empresa();
@@ -86,7 +120,7 @@ namespace WhatWeDo.Servicios.Implementacion
             return sTransaccion;
         }
 
-        public async void  UpdateEmpresa(Empresa oEmpresa)
+        public async Task UpdateEmpresa(Empresa oEmpresa)
         {
             try
             {
@@ -94,7 +128,7 @@ namespace WhatWeDo.Servicios.Implementacion
                 {
                     SqlCommand cmd = new SqlCommand("sp_UpdateEmpresa", conexion);
                     cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.Add(new SqlParameter("@id", oEmpresa.IdEmpresa));
+                    cmd.Parameters.Add(new SqlParameter("@IdEmpresa", oEmpresa.IdEmpresa));
                     cmd.Parameters.Add(new SqlParameter("@Nombre", oEmpresa.Nombre));
                     cmd.Parameters.Add(new SqlParameter("@Pass", oEmpresa.Pass));
                     cmd.Parameters.Add(new SqlParameter("@Direccion", oEmpresa.Direccion));
@@ -110,7 +144,7 @@ namespace WhatWeDo.Servicios.Implementacion
             }
         }
 
-        public async void DeleteEmpresa(Empresa oEmpresa)
+        public async Task DeleteEmpresa(Empresa oEmpresa)
         {
             try
             {
@@ -130,5 +164,6 @@ namespace WhatWeDo.Servicios.Implementacion
             }
         }
 
+       
     }
 }
