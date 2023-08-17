@@ -88,7 +88,7 @@ namespace WhatWeDo.Servicios.Implementacion
             return sTransaccion;
         }
 
-        public async void  UpdateUsuario(Usuario oUsuario)
+        public async Task UpdateUsuario(Usuario oUsuario)
         {
             try
             {
@@ -113,7 +113,7 @@ namespace WhatWeDo.Servicios.Implementacion
             }
         }
 
-        public async void DeleteUsuario(Usuario oUsuario)
+        public async Task DeleteUsuario(Usuario oUsuario)
         {
             try
             {

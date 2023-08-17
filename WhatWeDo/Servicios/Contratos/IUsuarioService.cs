@@ -8,9 +8,9 @@ namespace WhatWeDo.Servicios.Contratos
 
         Task<string> InsertUsuario(Usuario oUsuario);
 
-        void UpdateUsuario(Usuario oUsuario);
+        Task UpdateUsuario(Usuario oUsuario);
 
-        void DeleteUsuario(Usuario oUsuario);
+        Task DeleteUsuario(Usuario oUsuario);
 
     }
 }

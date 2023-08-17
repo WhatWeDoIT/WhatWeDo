@@ -11,6 +11,10 @@
         <input asp-for="Nombre" class="form-control" aria-required="true" placeholder="nombre" />
         <label>Nombre</label>
         <span class="text-danger"></span>
+        <div class="icon-container ">
+            <i id="checkNombre" class="fas fa-check-circle" style="color: green;" data-toggle="tooltip" data-placement="top" title="Nombre válido"></i>
+            <i id="exclamationNombre" class="fas fa-exclamation-circle" style="color: red;" data-toggle="tooltip" data-placement="top" title="El nombre debe tener entre 3 a 20 caracteres y contener solo letras y números"></i>
+        </div>
     </div>
     <div class="form-floating mb-3">
         <input asp-for="Direccion" class="form-control" aria-required="true" placeholder="direccion" />
@@ -31,16 +35,33 @@
         <input asp-for="Pass" type="password" class="form-control" aria-required="true" placeholder="contraseña" />
         <label>Confirmar Contraseña</label>
         <span class="text-danger"></span>
+        <div class="icon-container">
+            <i id="checkConfirmPass" class="fas fa-check-circle" style="color: green;" data-toggle="tooltip" data-placement="top" title="Las contraseñas coinciden"></i>
+            <i id="exclamationConfirmPass" class="fas fa-exclamation-circle" style="color: red;" data-toggle="tooltip" data-placement="top" title="Las contraseñas no coinciden"></i>
+        </div>
     </div>
-    <div class="col-12 align-self-center">
+    <div class="col-6 align-self-center mb-4 mt-4 me-0">
+        <div class="checkbox-wrapper-35">
+            <input asp-for="EsEmpresa" name="EsEmpresa" id="switch" type="checkbox" class="switch">
+            <label for="switch">
+                <span class="switch-x-text">Registrarse como  </span>
+                <span class="switch-x-toggletext">
+                    <span class="switch-x-unchecked"><span class="switch-x-hiddenlabel">Unchecked: </span>Usuario</span>
+                    <span class="switch-x-checked"><span class="switch-x-hiddenlabel">Checked: </span>Empresa</span>
+                </span>
+            </label>
+        </div>
+    </div>
+    <button id="registerSubmit" type="submit" class="w-100 btn btn-sm">Registrarse</button>
+    @*<div class="col-12 align-self-center">
         <div class="form-floating mb-3 ">
             <div class="form-check form-switch d-flex justify-content-center">
                 <input asp-for="EsEmpresa" class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
                 <label class="form-check-label" for="flexSwitchCheckDefault">Cuenta de empresa</label>
             </div>
         </div>
-    </div>
-    <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Registrarse</button>
+    </div>*@
+    @*<button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Registrarse</button>*@
     @if (ViewBag.Alert != null)
     {
         <div class="alert alert-dismissable alert-danger" style="margin-top:10px">
