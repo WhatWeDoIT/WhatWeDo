@@ -51,6 +51,7 @@ namespace WhatWeDo.Servicios.Implementacion
             return oEmpresa;
         }
 
+
         public async Task<Empresa> LoginEmpresa(string sMail, string sPass)
         {
             Empresa oEmpresa = new Empresa();
@@ -119,7 +120,7 @@ namespace WhatWeDo.Servicios.Implementacion
             return sTransaccion;
         }
 
-        public async void  UpdateEmpresa(Empresa oEmpresa)
+        public async Task UpdateEmpresa(Empresa oEmpresa)
         {
             try
             {
@@ -127,7 +128,7 @@ namespace WhatWeDo.Servicios.Implementacion
                 {
                     SqlCommand cmd = new SqlCommand("sp_UpdateEmpresa", conexion);
                     cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.Add(new SqlParameter("@id", oEmpresa.IdEmpresa));
+                    cmd.Parameters.Add(new SqlParameter("@IdEmpresa", oEmpresa.IdEmpresa));
                     cmd.Parameters.Add(new SqlParameter("@Nombre", oEmpresa.Nombre));
                     cmd.Parameters.Add(new SqlParameter("@Pass", oEmpresa.Pass));
                     cmd.Parameters.Add(new SqlParameter("@Direccion", oEmpresa.Direccion));
@@ -143,7 +144,7 @@ namespace WhatWeDo.Servicios.Implementacion
             }
         }
 
-        public async void DeleteEmpresa(Empresa oEmpresa)
+        public async Task DeleteEmpresa(Empresa oEmpresa)
         {
             try
             {

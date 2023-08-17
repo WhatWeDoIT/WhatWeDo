@@ -8,34 +8,41 @@ using WhatWeDo.Servicios.Implementacion;
 
 namespace WhatWeDo.Controllers
 {
-    public class UsuarioController : Controller
+    public class UserController : Controller
     {
         private readonly IUsuarioService _ServicioUsuario;
         private readonly IEmpresaService _ServicioEmpresa;
 
-        public UsuarioController(IUsuarioService servicioUsuario, IEmpresaService servicioEmpresa)
+        public UserController(IUsuarioService servicioUsuario, IEmpresaService servicioEmpresa)
         {
             _ServicioUsuario = servicioUsuario;
             _ServicioEmpresa = servicioEmpresa;
         }
-        public IActionResult Modify()
+        public async Task<IActionResult> MisDatosUsuario(Usuario usuario)
         {
-            return View();
+            usuario.Mail = User.FindFirstValue(ClaimTypes.Email);
+            await _ServicioUsuario.GetUsuario(usuario);
+
+            return View(usuario);
         }
-        public IActionResult Cancelar()
+
+        public async Task<IActionResult> MisDatosEmpresa(Empresa empresa)
         {
-            return RedirectToAction("Eventos", "Home");
+            empresa.Mail = User.FindFirstValue(ClaimTypes.Email);
+            await _ServicioEmpresa.GetEmpresa(empresa);
+
+            return View(empresa);
         }
+
         public async Task<IActionResult> ModificarUsuario(Usuario usuario)
         {
-
             //Comprobar que los campos no esten vacios
             if (string.IsNullOrWhiteSpace(usuario.Nombre) || string.IsNullOrWhiteSpace(usuario.Direccion) ||
                 string.IsNullOrWhiteSpace(usuario.Mail) || string.IsNullOrWhiteSpace(usuario.Pass) ||
                 string.IsNullOrWhiteSpace(usuario.ConfirmPass))
             {
                 ViewBag.Alert = "Por favor, complete todos los campos.";
-                return View("Modify");
+                return View("MisDatosUsuario",usuario);
             }
 
             //Comprobar que todos los datos tengan un formato valido
@@ -43,26 +50,43 @@ namespace WhatWeDo.Controllers
                 !ValidarRequisitosEmail(usuario.Mail) || !ValidarRequisitosPassword(usuario.Pass) || usuario.Pass != usuario.ConfirmPass)
             {
                 ViewBag.Alert = "Alguno de los campos no cumple con los requisitos.";
-                return View("Modify");
+                return View("MisDatosUsuario", usuario);
             }
-            //Comprobar si el usuario en sessión es una cuenta de empresa o una cuenta de usuario
-            if (User.IsInRole("Empresa"))
+            usuario.Pass = Utilidades.EncriptarPassword(usuario.Pass); //Encriptar contraseña
+            await _ServicioUsuario.UpdateUsuario(usuario);           
+            
+            return RedirectToAction("Eventos", "Home");
+        }
+
+        public async Task<IActionResult> ModificarEmpresa(Empresa empresa)
+        {
+            //Comprobar que los campos no esten vacios
+            if (string.IsNullOrWhiteSpace(empresa.Nombre) || string.IsNullOrWhiteSpace(empresa.Direccion) ||
+                string.IsNullOrWhiteSpace(empresa.Mail) || string.IsNullOrWhiteSpace(empresa.Pass) ||
+                string.IsNullOrWhiteSpace(empresa.ConfirmPass))
             {
-                Empresa oEmpresa = new Empresa();
-                oEmpresa.Mail = User.FindFirstValue(ClaimTypes.Email);
-                _ServicioEmpresa.UpdateEmpresa(await _ServicioEmpresa.GetEmpresa(oEmpresa));
-                
-            }
-            else 
-            {
-                Usuario oUsuario = await _ServicioUsuario.GetUsuario(usuario);
-                usuario.IdUsuario = oUsuario.IdUsuario;
-                _ServicioUsuario.UpdateUsuario(usuario);
+                ViewBag.Alert = "Por favor, complete todos los campos.";
+                return View("MisDatosEmpresa", empresa);
             }
 
+            //Comprobar que todos los datos tengan un formato valido
+            if (!ValidarRequisitosNombre(empresa.Nombre) || !ValidarRequisitosDireccion(empresa.Direccion) ||
+                !ValidarRequisitosEmail(empresa.Mail) || !ValidarRequisitosPassword(empresa.Pass) || empresa.Pass != empresa.ConfirmPass)
+            {
+                ViewBag.Alert = "Alguno de los campos no cumple con los requisitos.";
+                return View("MisDatosEmpresa", empresa);
+            }
+            empresa.Pass = Utilidades.EncriptarPassword(empresa.Pass); //Encriptar contraseña
+            await _ServicioEmpresa.UpdateEmpresa(empresa);
 
             return RedirectToAction("Eventos", "Home");
         }
+
+        public IActionResult Cancelar()
+        {
+            return RedirectToAction("Eventos", "Home");
+        }
+
         private bool ValidarRequisitosNombre(string nombre)
         {
             // Verificar que el nombre no esté vacío
@@ -75,7 +99,7 @@ namespace WhatWeDo.Controllers
             nombre = nombre.Trim();
 
             // Verificar la longitud del nombre
-            if (nombre.Length < 6 || nombre.Length > 20)
+            if (nombre.Length < 3 || nombre.Length > 20)
             {
                 return false;
             }
@@ -89,7 +113,6 @@ namespace WhatWeDo.Controllers
 
             return true;
         }
-
 
         private bool ValidarRequisitosDireccion(string direccion)
         {
@@ -110,7 +133,6 @@ namespace WhatWeDo.Controllers
 
             return true;
         }
-
 
         private bool ValidarRequisitosEmail(string email)
         {

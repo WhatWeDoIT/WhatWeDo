@@ -10,9 +10,9 @@ namespace WhatWeDo.Servicios.Contratos
 
         Task<string> InsertEmpresa(Empresa oEmpresa);
 
-        void UpdateEmpresa(Empresa oEmpresa);
+        Task UpdateEmpresa(Empresa oEmpresa);
 
-        void DeleteEmpresa(Empresa oEmpresa);
+        Task DeleteEmpresa(Empresa oEmpresa);
 
     }
 }

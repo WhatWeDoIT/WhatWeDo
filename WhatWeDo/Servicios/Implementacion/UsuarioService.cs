@@ -17,6 +17,7 @@ namespace WhatWeDo.Servicios.Implementacion
         {
             _conexion = conexion.Value;
         }
+
         public async Task<Usuario> GetUsuario(Usuario oUsuario)
         {
             try
@@ -122,7 +123,7 @@ namespace WhatWeDo.Servicios.Implementacion
             return sTransaccion;
         }
 
-        public async void  UpdateUsuario(Usuario oUsuario)
+        public async Task UpdateUsuario(Usuario oUsuario)
         {
             try
             {
@@ -147,7 +148,7 @@ namespace WhatWeDo.Servicios.Implementacion
             }
         }
 
-        public async void DeleteUsuario(Usuario oUsuario)
+        public async Task DeleteUsuario(Usuario oUsuario)
         {
             try
             {
