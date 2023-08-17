@@ -17,39 +17,6 @@ namespace WhatWeDo.Servicios.Implementacion
         {
             _conexion = conexion.Value;
         }
-        public async Task<Usuario> GetUsuario(Usuario oUsuario)
-        {
-            try
-            {
-                using (SqlConnection conexion = new SqlConnection(_conexion.CadenaBBDD))
-                {
-                    SqlCommand cmd = new SqlCommand("sp_GetUsuarioPorMail", conexion);
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.Add(new SqlParameter("@Mail", oUsuario.Mail));
-
-                    conexion.Open();
-                    using (SqlDataReader dr = await cmd.ExecuteReaderAsync())
-                    {
-                        while (await dr.ReadAsync())
-                        {
-                            oUsuario.IdUsuario = Convert.ToInt32(dr["IdUsuario"]);
-                            oUsuario.Nombre = dr["Nombre"].ToString();
-                            oUsuario.Pass = dr["Pass"].ToString();
-                            oUsuario.Direccion = dr["Direccion"].ToString();
-                            oUsuario.Mail = dr["Mail"].ToString();
-                            oUsuario.Miembros = Convert.ToInt32(dr["Miembros"]);
-                        }
-                    }
-                }
-
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-
-            }
-            return oUsuario;
-        }
 
         public async Task<Usuario> GetUsuario(Usuario oUsuario)
         {
