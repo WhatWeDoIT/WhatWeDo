@@ -12,138 +12,46 @@
 </head>
 <body style="margin-bottom: 0px">
     <div class="container-fluid">
-        <div class="row">
-            @*side bar*@
-            @if (User.IsInRole("Empresa") || User.IsInRole("Usuario"))
-            {
-                <div class="col-lg-2 d-none d-lg-block" style="padding: 0;">
-                    <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark " style="width: 100%; height:100vh">
-                        <div class="row">
-                            <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
-                                <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
-                                <span class="fs-4">WhatWeDo</span>
-                            </a>
-
-                        </div>
-                        <hr>
-                        <ul class="nav nav-pills flex-column mb-auto">
-                            <li class="nav-item">
-                                <a href="#" class="nav-link active" aria-current="page">
-                                    <svg class="bi me-2" width="16" height="16"><use xlink:href="#home"></use></svg>
-                                    Home
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" class="nav-link text-white">
-                                    <svg class="bi me-2" width="16" height="16"><use xlink:href="#speedometer2"></use></svg>
-                                    Dashboard
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" class="nav-link text-white">
-                                    <svg class="bi me-2" width="16" height="16"><use xlink:href="#table"></use></svg>
-                                    Orders
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" class="nav-link text-white">
-                                    <svg class="bi me-2" width="16" height="16"><use xlink:href="#grid"></use></svg>
-                                    Products
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" class="nav-link text-white">
-                                    <svg class="bi me-2" width="16" height="16"><use xlink:href="#people-circle"></use></svg>
-                                    Customers
-                                </a>
-                            </li>
-                        </ul>
-                        <hr>
-                        <div class="dropdown">
-                            <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-                                <img src="https://cdn-icons-png.flaticon.com/512/6861/6861326.png" alt="" width="32" height="32" class="rounded-circle me-2">
-                                <strong>Mi cuenta</strong>
-                            </a>
-                            <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1" style="">
-                                <li><a class="dropdown-item" href="#">New project...</a></li>
-                                <li><a class="dropdown-item" href="#">Settings</a></li>
-                                @if (User.IsInRole("Empresa"))
-                                {
-                                    <li>
-                                        <a class="dropdown-item" href="#">
-                                            <a class="nav-link text-light" asp-controller="User" asp-action="MisDatosEmpresa">Mis datos</a>
-                                        </a>
-                                    </li>
-                                }
-                                else
-                                {
-                                    <li>
-                                        <a class="dropdown-item" href="#">
-                                            <a class="nav-link text-light" asp-controller="User" asp-action="MisDatosUsuario">Mis datos</a>
-                                        </a>
-                                    </li>
-                                }                               
-                                <li><hr class="dropdown-divider"></li>
-                                <li>
-                                    <a class="dropdown-item" href="#">
-                                        <a class="nav-link text-light" asp-controller="Auth" asp-action="CerrarSesion">Cerrar sesión</a>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            }
+        <div class="row">           
             @*nav bar*@
             <div class="col" style="padding: 0;">
                 <header>
                     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar navbar-dark bg-dark border-bottom box-shadow mb-3">
-                        <div class="container-fluid" style="padding: 0px;">
-                            <div class="input-group navbar-toggler" style="border: none;">
-                                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">WhatWeDo</a>
-                                <input type="text" class="form-control" placeholder="Buscar..." aria-label="Buscar..." aria-describedby="basic-addon2">
-                                <div class="input-group-append">
-                                    <span class="input-group-text rounded-right" id="basic-addon2">
-                                        <img src="https://images.emojiterra.com/google/noto-emoji/unicode-15/bw/512px/1f50e.png" alt="Google (Noto Emoji - Unicode 15.0)" style="width: 25px;">
-                                    </span>
+                        <div class="container-fluid" style="padding: 0px;">       
+                            
+                             <div class="input-group navbar-toggler" style="border: none;">
+                                <div class="d-flex align-self-center">
+                                    <a class="navbar-brand" style="margin-left: 10%;" asp-area="" asp-controller="Home" asp-action="Eventos">WhatWeDo</a>
                                 </div>
-                                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                                        aria-expanded="false" aria-label="Toggle navigation" style="margin-left: 5px;">
-                                    <span class="navbar-toggler-icon"></span>
-                                </button>
+                                <div class="d-flex justify-content-end" style="width:75%;">
+                                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                                            aria-expanded="false" aria-label="Toggle navigation" style="margin-left: 5px;">
+                                        <span class="navbar-toggler-icon"></span>
+                                    </button>
+                                </div>                                
                             </div>
                           
                             <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">                               
-                                <ul class="navbar-nav flex-grow-1" style="margin-left: 5%;">
-                                    @if (!User.IsInRole("Empresa") && !User.IsInRole("Usuario"))
-                                    {
-                                        <li class="nav-item d-none d-sm-block">
-                                            <a class="nav-link text-ligh d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-nonet">WhatWeDo</a>
-                                        </li>                                        
-                                    }
-                                    <li class="nav-item">
-                                        <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Eventos">Eventos</a>
-                                    </li>                                   
-                                    @if (User.IsInRole("Empresa") || User.IsInRole("Usuario"))
-                                    {
-                                        <li class="nav-item">
-                                            <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index">Usuarios & Empresas</a>
-                                        </li>
-                                    }                                  
+                                <ul class="navbar-nav flex-grow-1" style="margin-left: 10%;">
+                                    <li class="nav-item d-flex align-self-center d-none d-sm-block">
+                                        <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Eventos">WhatWeDo</a>
+                                    </li>
                                     @if (User.IsInRole("Empresa"))
                                     {
                                         <li class="nav-item">
-                                            <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Privacy">Empresas</a>
+                                            <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index">Mis Eventos</a>
                                         </li>
-                                    }
-                                    
+                                        <li class="nav-item">
+                                            <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index">Crear Eventos</a>
+                                        </li>
+                                    }                                    
                                 </ul>
                                
-                                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                                    <div class="navbar-nav flex-grow-1 justify-content-end" style="margin-right: 5%;">
+                                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">                                    
+                                    <div class="navbar-nav flex-grow-1 justify-content-end" style="margin-right: 10%;margin-left: 10%;">
                                         <div class="dropdown">
                                             <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-                                                <img src="https://cdn-icons-png.flaticon.com/512/6861/6861326.png" alt="" width="32" height="32" class="rounded-circle me-2">
+                                                <img src="https://cdn-icons-png.flaticon.com/512/6861/6861326.png" alt="" width="32" height="32" class="rounded-circle me-2 d-none d-sm-block">
                                                 <strong>Mi cuenta</strong>
                                             </a>
                                             <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1" style="">
@@ -155,8 +63,6 @@
                                                 }
                                                 else
                                                 {
-                                                    <li><a class="dropdown-item" href="#">New project...</a></li>
-                                                    <li><a class="dropdown-item" href="#">Settings</a></li>
                                                     @if (User.IsInRole("Empresa"))
                                                     {
                                                         <li>
@@ -177,7 +83,7 @@
                                             </ul>
                                         </div>
                                     </div>
-                                </div>                                         
+                                </div>                                        
                                 
                             </div>
                            
