@@ -12,12 +12,13 @@ namespace WhatWeDo.Controllers
 {
     public class HomeController : Controller
     {
+
         private readonly IEventoService _ServicioEvento;
 
         public HomeController(IEventoService servicioEvento)
         {
             _ServicioEvento = servicioEvento;
-        }
+        }       
 
         public async Task <IActionResult> Eventos (List<Evento> lstEventos)
         {
@@ -30,7 +31,8 @@ namespace WhatWeDo.Controllers
         public IActionResult MisEventos()
         {
             Usuario usuario = new Usuario();
-            usuario.Nombre = User.FindFirstValue(ClaimTypes.Name);            
+            usuario.Nombre = User.FindFirstValue(ClaimTypes.Name);
+            usuario.Mail = User.FindFirstValue(ClaimTypes.Email);
             return View(usuario);
         }
 
