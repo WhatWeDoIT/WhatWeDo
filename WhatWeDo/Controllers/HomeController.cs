@@ -3,56 +3,25 @@ using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using System.Security.Claims;
 using WhatWeDo.Models;
+using Firebase.Auth;
+using Firebase.Storage;
+using System.Data.SqlClient;
+using WhatWeDo.Servicios.Contratos;
 
 namespace WhatWeDo.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly IEventoService _ServicioEvento;
 
-        public IActionResult Eventos ()
+        public HomeController(IEventoService servicioEvento)
         {
-            Evento oEvento = new Evento()
-            {
-                Imagen = "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Burger_King_2020.svg/150px-Burger_King_2020.svg.png"
+            _ServicioEvento = servicioEvento;
+        }
 
-               ,
-                Titulo = "Burger King: Comer en compañia"
-
-               ,
-                Descripcion = "No sabes que hacer para comer, ven con tu familia o amigos! \n " +
-                             "Obtén un descuento del 20% en el total de la cuenta por venir acompañado de 5 personas"
-            };
-
-            Evento oEvento2 = new Evento()
-            {
-                Imagen = "https://rubricadigital.es/wp-content/uploads/2022/01/logo-Ibai.jpg"
-
-               ,
-                Titulo = "Telepizza: Comer en compañia"
-
-               ,
-                Descripcion = "No sabes que hacer para comer, ven con tu familia o amigos! \n " +
-                             "Obten un descuento del 20% en el total de la cuenta por venir acompañado de 5 personas"
-            };
-
-            Evento oEvento3 = new Evento()
-            {
-                Imagen = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRHQtU7j0ZHLqIisJkYEuLrwExbT1bMOw9XO5KwGW8N39JXqc7uh0lntOzs3l9qIHYnPQ0&usqp=CAU"
-
-               ,
-                Titulo = "McDonals: Comer en compañia"
-
-               ,
-                Descripcion = "No sabes que hacer para comer, ven con tu familia o amigos! \n " +
-                             "Obten un descuento del 20% en el total de la cuenta por venir acompañado de 5 personas"
-            };
-
-            List<Evento> lstEventos = new List<Evento>
-            {
-                oEvento,
-                oEvento2,
-                oEvento3
-            };
+        public async Task <IActionResult> Eventos (List<Evento> lstEventos)
+        {
+            lstEventos = await _ServicioEvento.GetEventos();
 
             return View(lstEventos);
         }
@@ -68,13 +37,54 @@ namespace WhatWeDo.Controllers
         [Authorize(Roles = "Empresa")]
         public IActionResult CrearEvento()
         {
+            //Devuelve la vista del formulario
             return View();
         }
         
         [Authorize(Roles = "Empresa")]
-        public IActionResult InsertEvento()
+        public async Task<IActionResult> InsertEvento(Evento oEvento, IFormFile Imagen)
         {
-            return View();
+            //Accion de crear evento
+            Stream imagen = Imagen.OpenReadStream();
+            string sUrlImagen = await SubirImagen(imagen, Imagen.FileName);
+            oEvento.Imagen = sUrlImagen;
+            oEvento.PlazasActuales = oEvento.PlazasMaximas;
+
+
+            await _ServicioEvento.InsertEvento(oEvento);
+
+            return RedirectToAction("Eventos", "Home");
+        }
+
+        public async Task<string> SubirImagen(Stream archivo, string nombre)
+        {
+            //credenciales firebase
+            string sEmail = "whatwedo@gmail.com";
+            string sClave = "123454321";
+            string sRuta = "whatwedoimgs.appspot.com";
+            string sApiKey = "AIzaSyClTyWsO6enTmcRuElffSSUYzHYcpQuCP8";
+
+            var auth = new FirebaseAuthProvider(new FirebaseConfig(sApiKey));
+            var a = await auth.SignInWithEmailAndPasswordAsync(sEmail, sClave);
+
+            var cancellation = new CancellationTokenSource();
+
+            var task = new FirebaseStorage(
+                sRuta,
+                new FirebaseStorageOptions
+                {
+                    AuthTokenAsyncFactory = () => Task.FromResult(a.FirebaseToken),
+                    ThrowOnCancel = true
+
+                })
+                .Child("Fotos_Evento")
+                .Child(nombre)
+                .PutAsync(archivo, cancellation.Token);
+
+            var downloadURL = await task;
+
+            return downloadURL;
+
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
