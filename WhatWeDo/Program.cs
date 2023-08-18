@@ -21,6 +21,7 @@ builder.Services.Configure<ConfiguracionConexion>(builder.Configuration.GetSecti
 //Agregamos servicios por tabla
 builder.Services.AddScoped<IUsuarioService, UsuarioService>();
 builder.Services.AddScoped<IEmpresaService, EmpresaService>();
+builder.Services.AddScoped<IEventoService, EventoService>();
 
 var app = builder.Build();
 
