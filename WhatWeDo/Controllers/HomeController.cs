@@ -12,37 +12,37 @@ namespace WhatWeDo.Controllers
         {
             Evento oEvento = new Evento()
             {
-                ImgSource = "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Burger_King_2020.svg/150px-Burger_King_2020.svg.png"
+                Imagen = "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Burger_King_2020.svg/150px-Burger_King_2020.svg.png"
 
                ,
-                TituloEvento = "Burger King: Comer en compañia"
+                Titulo = "Burger King: Comer en compañia"
 
                ,
-                DescEvento = "No sabes que hacer para comer, ven con tu familia o amigos! \n " +
+                Descripcion = "No sabes que hacer para comer, ven con tu familia o amigos! \n " +
                              "Obtén un descuento del 20% en el total de la cuenta por venir acompañado de 5 personas"
             };
 
             Evento oEvento2 = new Evento()
             {
-                ImgSource = "https://rubricadigital.es/wp-content/uploads/2022/01/logo-Ibai.jpg"
+                Imagen = "https://rubricadigital.es/wp-content/uploads/2022/01/logo-Ibai.jpg"
 
                ,
-                TituloEvento = "Telepizza: Comer en compañia"
+                Titulo = "Telepizza: Comer en compañia"
 
                ,
-                DescEvento = "No sabes que hacer para comer, ven con tu familia o amigos! \n " +
+                Descripcion = "No sabes que hacer para comer, ven con tu familia o amigos! \n " +
                              "Obten un descuento del 20% en el total de la cuenta por venir acompañado de 5 personas"
             };
 
             Evento oEvento3 = new Evento()
             {
-                ImgSource = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRHQtU7j0ZHLqIisJkYEuLrwExbT1bMOw9XO5KwGW8N39JXqc7uh0lntOzs3l9qIHYnPQ0&usqp=CAU"
+                Imagen = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRHQtU7j0ZHLqIisJkYEuLrwExbT1bMOw9XO5KwGW8N39JXqc7uh0lntOzs3l9qIHYnPQ0&usqp=CAU"
 
                ,
-                TituloEvento = "McDonals: Comer en compañia"
+                Titulo = "McDonals: Comer en compañia"
 
                ,
-                DescEvento = "No sabes que hacer para comer, ven con tu familia o amigos! \n " +
+                Descripcion = "No sabes que hacer para comer, ven con tu familia o amigos! \n " +
                              "Obten un descuento del 20% en el total de la cuenta por venir acompañado de 5 personas"
             };
 
@@ -56,8 +56,8 @@ namespace WhatWeDo.Controllers
             return View(lstEventos);
         }
 
-        [Authorize(Roles = "Usuario, Empresa")]
-        public IActionResult Index()
+        [Authorize(Roles = "Empresa")]
+        public IActionResult MisEventos()
         {
             Usuario usuario = new Usuario();
             usuario.Nombre = User.FindFirstValue(ClaimTypes.Name);
@@ -66,11 +66,17 @@ namespace WhatWeDo.Controllers
         }
 
         [Authorize(Roles = "Empresa")]
-        public IActionResult Privacy()
+        public IActionResult CrearEvento()
         {
             return View();
         }
-       
+        
+        [Authorize(Roles = "Empresa")]
+        public IActionResult InsertEvento()
+        {
+            return View();
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

@@ -141,6 +141,7 @@ namespace WhatWeDo.Controllers
             return Redirect("Login");
 
         }
+
         private bool ValidarRequisitosNombre(string nombre)
         {
             // Verificar que el nombre no esté vacío
@@ -168,7 +169,6 @@ namespace WhatWeDo.Controllers
             return true;
         }
 
-
         private bool ValidarRequisitosDireccion(string direccion)
         {
             // Verificar que la dirección no esté vacía
@@ -188,7 +188,6 @@ namespace WhatWeDo.Controllers
 
             return true;
         }
-
 
         private bool ValidarRequisitosEmail(string email)
         {
