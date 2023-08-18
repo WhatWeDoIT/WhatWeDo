@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using System.Data;
 using System.Security.Claims;
 using System.Text.RegularExpressions;
 using WhatWeDo.Models;
@@ -18,6 +20,8 @@ namespace WhatWeDo.Controllers
             _ServicioUsuario = servicioUsuario;
             _ServicioEmpresa = servicioEmpresa;
         }
+
+        [Authorize(Roles = "Usuario")]
         public async Task<IActionResult> MisDatosUsuario(Usuario usuario)
         {
             usuario.Mail = User.FindFirstValue(ClaimTypes.Email);
@@ -26,6 +30,7 @@ namespace WhatWeDo.Controllers
             return View(usuario);
         }
 
+        [Authorize(Roles = "Empresa")]
         public async Task<IActionResult> MisDatosEmpresa(Empresa empresa)
         {
             empresa.Mail = User.FindFirstValue(ClaimTypes.Email);
@@ -34,6 +39,7 @@ namespace WhatWeDo.Controllers
             return View(empresa);
         }
 
+        [Authorize(Roles = "Usuario")]
         public async Task<IActionResult> ModificarUsuario(Usuario usuario)
         {
             //Comprobar que los campos no esten vacios
@@ -58,6 +64,7 @@ namespace WhatWeDo.Controllers
             return RedirectToAction("Eventos", "Home");
         }
 
+        [Authorize(Roles = "Empresa")]
         public async Task<IActionResult> ModificarEmpresa(Empresa empresa)
         {
             //Comprobar que los campos no esten vacios
@@ -82,6 +89,7 @@ namespace WhatWeDo.Controllers
             return RedirectToAction("Eventos", "Home");
         }
 
+        [Authorize(Roles = "Usuario, Empresa")]
         public IActionResult Cancelar()
         {
             return RedirectToAction("Eventos", "Home");
