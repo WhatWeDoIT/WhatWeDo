@@ -95,11 +95,7 @@
         </div>
         <div class="col-6 mb-2">
             <div class="form-floating mb-3">
-                <select class="form-select">
-                    <option value="1" selected>Barcelona</option>
-                    <option value="2">Terrassa</option>
-                    <option value="3">Girona</option>
-                </select>
+                @Html.DropDownList("direccion", null, "Seleccionar...", new{@class="form-select"} )
                 <label>Direccion</label>               
             </div>
         </div>        
@@ -128,8 +124,8 @@
                         <label>Fecha inicio</label>
                         <span class="text-danger"></span>
                         <div class="icon-container ">
-                            <i id="checkTitulo" class="fas fa-check-circle" style="color: green;" data-toggle="tooltip" data-placement="top" title="Fecha válida"></i>
-                            <i id="exclamationTitulo" class="fas fa-exclamation-circle" style="color: red;" data-toggle="tooltip" data-placement="top" title="La fecha de inicio no puede ser posterior a la fecha final"></i>
+                            <i id="checkFechaInicio" class="fas fa-check-circle" style="color: green;" data-toggle="tooltip" data-placement="top" title="Fecha válida"></i>
+                            <i id="exclamationFechaInicio" class="fas fa-exclamation-circle" style="color: red;" data-toggle="tooltip" data-placement="top" title="La fecha de inicio no puede ser posterior a la fecha final"></i>
                         </div>
                     </div>
                 </div>
@@ -139,8 +135,8 @@
                         <label>Fecha fin</label>
                         <span class="text-danger"></span>
                         <div class="icon-container">
-                            <i id="checkDireccion" class="fas fa-check-circle" style="color: green;" data-toggle="tooltip" data-placement="top" title="Fecha válida"></i>
-                            <i id="exclamationDireccion" class="fas fa-exclamation-circle" style="color: red;" data-toggle="tooltip" data-placement="top" title="La fecha de final no puede ser anterior a la fecha inicio"></i>
+                            <i id="checkFechaFin" class="fas fa-check-circle" style="color: green;" data-toggle="tooltip" data-placement="top" title="Fecha válida"></i>
+                            <i id="exclamationFechaFin" class="fas fa-exclamation-circle" style="color: red;" data-toggle="tooltip" data-placement="top" title="La fecha de final no puede ser anterior a la fecha inicio"></i>
                         </div>
                     </div>
                 </div>
@@ -171,14 +167,30 @@
             </div>
         </div>
         <div class="col d-flex justify-content-end">
-            <img src="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22200%22%20height%3D%22200%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20200%20200%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_18a08c308e1%20text%20%7B%20fill%3Argba(255%2C255%2C255%2C.75)%3Bfont-weight%3Anormal%3Bfont-family%3AHelvetica%2C%20monospace%3Bfont-size%3A10pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_18a08c308e1%22%3E%3Crect%20width%3D%22200%22%20height%3D%22200%22%20fill%3D%22%23777%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%2274.421875%22%20y%3D%22104.5%22%3E200x200%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E"
+            <img id="img" src="https://wpdirecto.com/wp-content/uploads/2017/08/alt-de-una-imagen.png" style="height: 200px; width: 200px;"
                  class="rounded float-right" alt="...">            
         </div>       
     </div>    
     <div class="col" style="margin-top:3%">
-        <input type="file" class="form-control" name="Imagen" />
+        <input id="subirImg" type="file" class="form-control" name="Imagen" />
     </div>
     <div class="row" style="margin-top:3%">
+        <div class="col-6 mb-2">
+            <div class="form-floating mb-3 position-relative">
+                <div class="form-floating mb-3">
+                    @Html.DropDownList("descuento", null, "Seleccionar...", new{@class="form-select"} )
+                    <label>Descuento</label>
+                </div>
+            </div>
+        </div>       
+        <div class="col-6 mb-2">
+            <div class="form-floating mb-3">
+                @Html.DropDownList("categoria", null, "Seleccionar...", new{@class="form-select"} )
+                <label>Categoria</label>
+            </div>
+        </div>
+    </div>
+    <div class="row" >
         <div class="input-group">
             <div class="col-lg-2 col d-flex justify-content-start">
                 <button id="insertEventoSubmit" type="submit" class="btn btn-sm btn-warning">Aceptar</button>
@@ -186,8 +198,7 @@
             <div class="col-lg-2 col d-flex justify-content-end ">
                 <a class="btn btn-sm btn-warning" asp-controller="User" asp-action="Cancelar">Cancelar</a>
             </div>
-        </div>
-       
+        </div>     
         
         @if (ViewBag.Alert != null)
         {

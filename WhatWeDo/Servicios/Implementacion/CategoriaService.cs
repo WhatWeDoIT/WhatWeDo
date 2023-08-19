@@ -34,6 +34,37 @@ namespace WhatWeDo.Servicios.Implementacion
                 throw new Exception(ex.Message);
             }
         }
+        public async Task<List<Categoria>> GetCategorias()
+        {
+            List<Categoria> lstCategorias = new List<Categoria>();
+            try
+            {
+                using (SqlConnection conexion = new SqlConnection(_conexion.CadenaBBDD))
+                {
+                    SqlCommand cmd = new SqlCommand("sp_GetCategorias", conexion);
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    conexion.Open();
+                    using (SqlDataReader dr = await cmd.ExecuteReaderAsync())
+                    {
+                        while (await dr.ReadAsync())
+                        {
+                            Categoria oCategoria = new Categoria();
+                            oCategoria.IdCategoria = Convert.ToInt32(dr["IdCategoria"]);
+                            oCategoria.Nombre = dr["Nombre"].ToString();
+                            lstCategorias.Add(oCategoria);
+                        }
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+
+            }
+            return lstCategorias;
+        }
 
         public async Task<Categoria> GetCategoria(Categoria oCategoria)
         {
