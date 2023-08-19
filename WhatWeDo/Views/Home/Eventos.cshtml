@@ -3,25 +3,26 @@
     ViewData["Title"] = "Eventos";
 }
 <style>
+    /*ocio*/
     .ocioButton{
         background: #acd8f3;
         color: white;
         border-color: #acd8f3;
     }
 
-    .ocioCardHeader {
+    .Header1 {
         background: linear-gradient(1deg, #acd8f3, #5586df24);
     }
 
-    .ocioCardBody {
+    .Body1 {
         background: linear-gradient(45deg, transparent, #acd8f3);
     }
 
-    .ocioCardFooter {
+    .Footer1 {
         background: linear-gradient(1deg, #acd8f3, #5586df24);
     }
 
-    .ocioCardButton {
+    .Button1 {
         background: linear-gradient(1deg, #acd8f3, #5586df24);
         border-color: #3f3c3c45 !important;
     }
@@ -33,20 +34,44 @@
         border-color: #FFB3BA;        
     }
 
-    .gastronomiaCardHeader {
+    .Header2 {
         background: linear-gradient(1deg, #FFB3BA, #5586df24);
     }
 
-    .gastronomiaCardBody {
+    .Body2 {
         background: linear-gradient(45deg, transparent, #FFB3BA);
     }
 
-    .gastronomiaCardFooter {
+    .Footer2 {
         background: linear-gradient(1deg, #FFB3BA, #5586df24);
     }
 
-    .gastronomiaCardButton {
+    .Button2 {
         background: linear-gradient(1deg, #FFB3BA, #5586df24);
+        border-color: #3f3c3c45 !important;
+    }
+
+    /*Deportes*/
+    .DeportesButton {
+        background: #FFE5B4;
+        color: white;
+        border-color: #FFE5B4;
+    }
+
+    .Header3 {
+        background: linear-gradient(1deg, #FFE5B4, #5586df24);
+    }
+
+    .Body3 {
+        background: linear-gradient(45deg, transparent, #FFE5B4);
+    }
+
+    .Footer3 {
+        background: linear-gradient(1deg, #FFE5B4, #5586df24);
+    }
+
+    .Button3 {
+        background: linear-gradient(1deg, #FFE5B4, #5586df24);
         border-color: #3f3c3c45 !important;
     }
 
@@ -57,19 +82,19 @@
         border-color: #85c19a;
     }
 
-    .aireLibreCardHeader {
+    .Header4 {
         background: linear-gradient(1deg, #85c19a, #5586df24);
     }
 
-    .aireLibreCardBody {
+    .Body4 {
         background: linear-gradient(45deg, transparent, #85c19a);
     }
 
-    .aireLibreCardFooter {
+    .Footer4 {
         background: linear-gradient(1deg, #85c19a, #5586df24);
     }
 
-    .aireLibreCardButton {
+    .Button4 {
         background: linear-gradient(1deg, #85c19a, #5586df24);
         border-color: #3f3c3c45 !important;
     }
@@ -82,19 +107,19 @@
         border-color: #CBB4D5;
     }
 
-    .arteCulturaCardHeader {
+    .Header5 {
         background: linear-gradient(1deg, #c2a5cf, #5586df24);
     }
 
-    .arteCulturaCardBody {
+    .Body5 {
         background: linear-gradient(45deg, transparent, #CBB4D5);
     }
 
-    .arteCulturaCardFooter {
+    .Footer5 {
         background: linear-gradient(1deg, #c2a5cf, #5586df24);
     }
 
-    .arteCulturaCardButton {
+    .Button5 {
         background: linear-gradient(1deg, #c2a5cf, #5586df24);
         border-color: #3f3c3c45 !important;
     }
@@ -106,46 +131,22 @@
         border-color: #f1a875;
     }
 
-    .tecnologiaCienciaCardHeader {
+    .Header6 {
         background: linear-gradient(1deg, #f1a875, #5586df24);
     }
 
-    .tecnologiaCienciaCardBody {
+    .Body6 {
         background: linear-gradient(45deg, transparent, #f1a875);
     }
 
-    .tecnologiaCienciaCardFooter {
+    .Footer6 {
         background: linear-gradient(1deg, #f1a875, #5586df24);
     }
 
-    .tecnologiaCienciaCardButton {
+    .Button6 {
         background: linear-gradient(1deg, #f1a875, #5586df24);
         border-color: #3f3c3c45 !important;
-    }
-
-    /*Deportes*/
-    .DeportesButton {
-        background: #FFE5B4;
-        color: white;
-        border-color: #FFE5B4;
-    }
-
-    .DeportesCardHeader {
-        background: linear-gradient(1deg, #FFE5B4, #5586df24);
-    }
-
-    .DeportesCardBody {
-        background: linear-gradient(45deg, transparent, #FFE5B4);
-    }
-
-    .DeportesCardFooter {
-        background: linear-gradient(1deg, #FFE5B4, #5586df24);
-    }
-
-    .DeportesCardButton {
-        background: linear-gradient(1deg, #FFE5B4, #5586df24);
-        border-color: #3f3c3c45 !important;
-    }
+    }   
 
     .buttonCaption {
         color: white;
@@ -175,376 +176,71 @@
 </div>
 <div class="row">
     @foreach (Evento oEvento in @Model)
-    {
-        @switch (oEvento.CategoriaNombre)
-        {
-            case "Ocio":
-                <div class="col-12 mb-2">
-                    <div class="card">
-                        <div class="card-header ocioCardHeader ">
-                            <h5 class="text-center card-title">
-                                @oEvento.Titulo -
-                                @if (oEvento.Precio == 0)
-                                {
-                                    <label class="form-label">Gratis</label>
-                                }
-                                else
-                                {
-                                    <label class="form-label">@oEvento.Precio €</label>
-                                }
-                                (@oEvento.ValorEnPuntos Ptos)
-                            </h5>
-                        </div>
-                        <div class="card-body ocioCardBody ">
-                            <div class="row">
-                                <img src=@oEvento.Imagen
-                                     class="rounded align-self-center" style="width: 155px;height: 155px;">
-
-                                <div class="col">
-                                    <p class="card-text"> @oEvento.Descripcion</p>
-                                </div>
-                                <div class="col-lg-1 col-md-1 col align-self-end">
-                                    <div class="d-flex justify-content-end">
-                                        <strong class="form-label" style="white-space:nowrap">Fecha de inicio: </strong>
-                                        <label class="form-label" style="margin-left:1%">@oEvento.FechaInicio.ToShortDateString()</label>
-                                    </div>
-                                    <div class="d-flex justify-content-end">
-                                        <strong class="form-label" style="white-space:nowrap">Fecha de finalizaci&oacute;n: </strong>
-                                        <label class="form-label" style="margin-left:1%">@oEvento.FechaFin.ToShortDateString()</label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        @if (User.IsInRole("Empresa") || User.IsInRole("Usuario"))
-                        {
-                            <div class="card-footer ocioCardFooter ">
-                                <div class="row">
-                                    <div class="col d-flex align-self-center">
-                                        <strong>Categoria: </strong>
-                                        <label class="form-label text-truncate" style="margin-left:1%">@oEvento.CategoriaNombre</label>
-                                        <strong style="margin-left:2%">Direcci&oacute;n: </strong>
-                                        <a href="https://www.google.es/maps/place/@oEvento.UbicacionNombre" target="_blank" class="link-primary text-truncate" style="margin-left:1%">@oEvento.UbicacionNombre</a>
-                                        <strong style="margin-left:2%">Entradas: </strong>
-                                        <label class="form-label" style="margin-left:1%">@oEvento.PlazasActuales</label>
-                                    </div>
-                                    <div class="col d-flex justify-content-end">
-                                        @if (User.IsInRole("Usuario"))
-                                        {
-                                            <a href="#" class="btn btn-warning m-1 ocioCardButton">Reservar</a>
-                                        }
-                                    </div>
-                                </div>
-                            </div>
-                        }
-                    </div>
-                </div>
-                break;
-            case "Gastronomia":
-                <div class="col-12 mb-2">
-                    <div class="card">
-                        <div class="card-header gastronomiaCardHeader ">
-                            <h5 class="text-center card-title">
-                                @oEvento.Titulo -
-                                @if (oEvento.Precio == 0)
-                                {
-                                    <label class="form-label">Gratis</label>
-                                }
-                                else
-                                {
-                                    <label class="form-label">@oEvento.Precio €</label>
-                                }
-                                (@oEvento.ValorEnPuntos Ptos)
-                            </h5>
-                        </div>
-                        <div class="card-body gastronomiaCardBody ">
-                            <div class="row">
-                                <img src=@oEvento.Imagen
-                                     class="rounded align-self-center" style="width: 155px;height: 155px;">
-
-                                <div class="col">
-                                    <p class="card-text"> @oEvento.Descripcion</p>
-                                </div>
-                                <div class="col-lg-1 col-md-1 col align-self-end">
-                                    <div class="d-flex justify-content-end">
-                                        <strong class="form-label" style="white-space:nowrap">Fecha de inicio: </strong>
-                                        <label class="form-label" style="margin-left:1%">@oEvento.FechaInicio.ToShortDateString()</label>
-                                    </div>
-                                    <div class="d-flex justify-content-end">
-                                        <strong class="form-label" style="white-space:nowrap">Fecha de finalizaci&oacute;n: </strong>
-                                        <label class="form-label" style="margin-left:1%">@oEvento.FechaFin.ToShortDateString()</label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        @if (User.IsInRole("Empresa") || User.IsInRole("Usuario"))
-                        {
-                            <div class="card-footer gastronomiaCardFooter ">
-                                <div class="row">
-                                    <div class="col d-flex align-self-center">
-                                        <strong>Categoria: </strong>
-                                        <label class="form-label text-truncate" style="margin-left:1%">@oEvento.CategoriaNombre</label>
-                                        <strong style="margin-left:2%">Direcci&oacute;n: </strong>
-                                        <a href="https://www.google.es/maps/place/@oEvento.UbicacionNombre" target="_blank" class="link-primary text-truncate" style="margin-left:1%">@oEvento.UbicacionNombre</a>
-                                        <strong style="margin-left:2%">Entradas: </strong>
-                                        <label class="form-label" style="margin-left:1%">@oEvento.PlazasActuales</label>
-                                    </div>
-                                    <div class="col d-flex justify-content-end">
-                                        @if (User.IsInRole("Usuario"))
-                                        {
-                                            <a href="#" class="btn btn-warning m-1 gastronomiaCardButton">Reservar</a>
-                                        }
-                                    </div>
-                                </div>
-                            </div>
-                        }
-                    </div>
-                </div>
-                break;
-            case "Deportes":
-                <div class="col-12 mb-2">
-                    <div class="card">
-                        <div class="card-header DeportesCardHeader ">
-                            <h5 class="text-center card-title">
-                                @oEvento.Titulo -
-                                @if (oEvento.Precio == 0)
-                                {
-                                    <label class="form-label">Gratis</label>
-                                }
-                                else
-                                {
-                                    <label class="form-label">@oEvento.Precio €</label>
-                                }
-                                (@oEvento.ValorEnPuntos Ptos)
-                            </h5>
-                        </div>
-                        <div class="card-body DeportesCardBody ">
-                            <div class="row">
-                                <img src=@oEvento.Imagen
-                                     class="rounded align-self-center" style="width: 155px;height: 155px;">
-
-                                <div class="col">
-                                    <p class="card-text"> @oEvento.Descripcion</p>
-                                </div>
-                                <div class="col-lg-1 col-md-1 col align-self-end">
-                                    <div class="d-flex justify-content-end">
-                                        <strong class="form-label" style="white-space:nowrap">Fecha de inicio: </strong>
-                                        <label class="form-label" style="margin-left:1%">@oEvento.FechaInicio.ToShortDateString()</label>
-                                    </div>
-                                    <div class="d-flex justify-content-end">
-                                        <strong class="form-label" style="white-space:nowrap">Fecha de finalizaci&oacute;n: </strong>
-                                        <label class="form-label" style="margin-left:1%">@oEvento.FechaFin.ToShortDateString()</label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        @if (User.IsInRole("Empresa") || User.IsInRole("Usuario"))
-                        {
-                            <div class="card-footer DeportesCardFooter ">
-                                <div class="row">
-                                    <div class="col d-flex align-self-center">
-                                        <strong>Categoria: </strong>
-                                        <label class="form-label text-truncate" style="margin-left:1%">@oEvento.CategoriaNombre</label>
-                                        <strong style="margin-left:2%">Direcci&oacute;n: </strong>
-                                        <a href="https://www.google.es/maps/place/@oEvento.UbicacionNombre" target="_blank" class="link-primary text-truncate" style="margin-left:1%">@oEvento.UbicacionNombre</a>
-                                        <strong style="margin-left:2%">Entradas: </strong>
-                                        <label class="form-label" style="margin-left:1%">@oEvento.PlazasActuales</label>
-                                    </div>
-                                    <div class="col d-flex justify-content-end">                                      
-                                        @if (User.IsInRole("Usuario"))
-                                        {
-                                            <a href="#" class="btn btn-warning m-1 DeportesCardButton">Reservar</a>
-                                        }
-                                    </div>
-                                </div>
-                            </div>
-                        }
-                    </div>
-                </div>
-                break;
-            case "Al aire libre":
-                <div class="col-12 mb-2">
-                    <div class="card">
-                        <div class="card-header aireLibreCardHeader ">
-                            <h5 class="text-center card-title">
-                                @oEvento.Titulo -
-                                @if (oEvento.Precio == 0)
-                                {
-                                    <label class="form-label">Gratis</label>
-                                }
-                                else
-                                {
-                                    <label class="form-label">@oEvento.Precio €</label>
-                                }
-                                (@oEvento.ValorEnPuntos Ptos)
-                            </h5>
-                        </div>
-                        <div class="card-body aireLibreCardBody ">
-                            <div class="row">
-                                <img src=@oEvento.Imagen
-                                     class="rounded align-self-center" style="width: 155px;height: 155px;">
-
-                                <div class="col">
-                                    <p class="card-text"> @oEvento.Descripcion</p>
-                                </div>
-                                <div class="col-lg-1 col-md-1 col align-self-end">
-                                    <div class="d-flex justify-content-end">
-                                        <strong class="form-label" style="white-space:nowrap">Fecha de inicio: </strong>
-                                        <label class="form-label" style="margin-left:1%">@oEvento.FechaInicio.ToShortDateString()</label>
-                                    </div>
-                                    <div class="d-flex justify-content-end">
-                                        <strong class="form-label" style="white-space:nowrap">Fecha de finalizaci&oacute;n: </strong>
-                                        <label class="form-label" style="margin-left:1%">@oEvento.FechaFin.ToShortDateString()</label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        @if (User.IsInRole("Empresa") || User.IsInRole("Usuario"))
-                        {
-                            <div class="card-footer aireLibreCardFooter ">
-                                <div class="row">
-                                    <div class="col d-flex align-self-center">
-                                        <strong>Categoria: </strong>
-                                        <label class="form-label text-truncate" style="margin-left:1%">@oEvento.CategoriaNombre</label>
-                                        <strong style="margin-left:2%">Direcci&oacute;n: </strong>
-                                        <a href="https://www.google.es/maps/place/@oEvento.UbicacionNombre" target="_blank" class="link-primary text-truncate" style="margin-left:1%">@oEvento.UbicacionNombre</a>
-                                        <strong style="margin-left:2%">Entradas: </strong>
-                                        <label class="form-label" style="margin-left:1%">@oEvento.PlazasActuales</label>
-                                    </div>
-                                    <div class="col d-flex justify-content-end">                                        
-                                        @if (User.IsInRole("Usuario"))
-                                        {
-                                            <a href="#" class="btn btn-warning m-1 aireLibreCardButton">Reservar</a>
-                                        }
-                                    </div>
-                                </div>
-                            </div>
-                        }
-                    </div>
-                </div>
-                break;
-            case "Arte y Cultura":
-                <div class="col-12 mb-2">
-                    <div class="card">
-                        <div class="card-header arteCulturaCardHeader ">
-                            <h5 class="text-center card-title">
-                                @oEvento.Titulo -
-                                @if (oEvento.Precio == 0)
-                                {
-                                    <label class="form-label">Gratis</label>
-                                }
-                                else
-                                {
-                                    <label class="form-label">@oEvento.Precio €</label>
-                                }
-                                (@oEvento.ValorEnPuntos Ptos)
-                            </h5>
-                        </div>
-                        <div class="card-body arteCulturaCardBody ">
-                            <div class="row">
-                                <img src=@oEvento.Imagen
-                                     class="rounded align-self-center" style="width: 155px;height: 155px;">
-
-                                <div class="col">
-                                    <p class="card-text"> @oEvento.Descripcion</p>
-                                </div>
-                                <div class="col-lg-1 col-md-1 col align-self-end">
-                                    <div class="d-flex justify-content-end">
-                                        <strong class="form-label" style="white-space:nowrap">Fecha de inicio: </strong>
-                                        <label class="form-label" style="margin-left:1%">@oEvento.FechaInicio.ToShortDateString()</label>
-                                    </div>
-                                    <div class="d-flex justify-content-end">
-                                        <strong class="form-label" style="white-space:nowrap">Fecha de finalizaci&oacute;n: </strong>
-                                        <label class="form-label" style="margin-left:1%">@oEvento.FechaFin.ToShortDateString()</label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        @if (User.IsInRole("Empresa") || User.IsInRole("Usuario"))
-                        {
-                            <div class="card-footer arteCulturaCardFooter ">
-                                <div class="row">
-                                    <div class="col d-flex align-self-center">
-                                        <strong>Categoria: </strong>
-                                        <label class="form-label text-truncate" style="margin-left:1%">@oEvento.CategoriaNombre</label>
-                                        <strong style="margin-left:2%">Direcci&oacute;n: </strong>
-                                        <a href="https://www.google.es/maps/place/@oEvento.UbicacionNombre" target="_blank" class="link-primary text-truncate" style="margin-left:1%">@oEvento.UbicacionNombre</a>
-                                        <strong style="margin-left:2%">Entradas: </strong>
-                                        <label class="form-label" style="margin-left:1%">@oEvento.PlazasActuales</label>
-                                    </div>
-                                    <div class="col d-flex justify-content-end">                                        
-                                        @if (User.IsInRole("Usuario"))
-                                        {
-                                            <a href="#" class="btn btn-warning m-1 arteCulturaCardButton">Reservar</a>
-                                        }
-                                    </div>
-                                </div>
-                            </div>
-                        }
-                    </div>
-                </div>
-                break;
-            case "Tecnologia y Ciencia":
-                <div class="col-12 mb-2">
-                    <div class="card">
-                        <div class="card-header tecnologiaCienciaCardHeader ">
-                            <h5 class="text-center card-title">
-                                @oEvento.Titulo -
-                                @if (oEvento.Precio == 0)
-                                {
-                                    <label class="form-label">Gratis</label>
-                                }
-                                else
-                                {
-                                    <label class="form-label">@oEvento.Precio €</label>
-                                }
-                                (@oEvento.ValorEnPuntos Ptos)
-                            </h5>
-                        </div>
-                        <div class="card-body tecnologiaCienciaCardBody " >
-                            <div class="row">
-                                <img src=@oEvento.Imagen
-                                     class="rounded align-self-center" style="width: 155px;height: 155px;">
-
-                                <div class="col">
-                                    <p class="card-text"> @oEvento.Descripcion</p>
-                                </div>
-                                <div class="col-lg-1 col-md-1 col align-self-end">
-                                    <div class="d-flex justify-content-end">
-                                        <strong class="form-label" style="white-space:nowrap">Fecha de inicio: </strong>
-                                        <label class="form-label" style="margin-left:1%">@oEvento.FechaInicio.ToShortDateString()</label>
-                                    </div>
-                                    <div class="d-flex justify-content-end">
-                                        <strong class="form-label" style="white-space:nowrap">Fecha de finalizaci&oacute;n: </strong>
-                                        <label class="form-label" style="margin-left:1%">@oEvento.FechaFin.ToShortDateString()</label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        @if (User.IsInRole("Empresa") || User.IsInRole("Usuario"))
-                        {
-                            <div class="card-footer tecnologiaCienciaCardFooter ">
-                                <div class="row">
-                                    <div class="col d-flex align-self-center">
-                                        <strong>Categoria: </strong>
-                                        <label class="form-label text-truncate" style="margin-left:1%">@oEvento.CategoriaNombre</label>
-                                        <strong style="margin-left:2%">Direcci&oacute;n: </strong>
-                                        <a href="https://www.google.es/maps/place/@oEvento.UbicacionNombre" target="_blank" class="link-primary text-truncate" style="margin-left:1%">@oEvento.UbicacionNombre</a>
-                                        <strong style="margin-left:2%">Entradas: </strong>
-                                        <label class="form-label" style="margin-left:1%">@oEvento.PlazasActuales</label>
-                                    </div>
-                                    <div class="col d-flex justify-content-end">
-                                        @if (User.IsInRole("Usuario"))
-                                        {
-                                            <a href="#" class="btn btn-warning m-1 tecnologiaCienciaCardButton">Reservar</a>
-                                        }
-                                    </div>
-                                </div>
-                            </div>
-                        }
-                    </div>
-                </div>
-                break;
-        }
+    {      
        
+        string idHeader = "Header" + oEvento.FkIdCategoria.ToString();
+        string idBody = "Body" + oEvento.FkIdCategoria.ToString();
+        string idFooter = "Footer" + oEvento.FkIdCategoria.ToString();
+        string idButton = "Button" + oEvento.FkIdCategoria.ToString();
+        
+        <div class="col-12 mb-2">
+            <div class="card">
+                <div class="card-header  @idHeader">
+                    <h5 class="text-center card-title">
+                        @oEvento.Titulo -
+                        @if (oEvento.Precio == 0)
+                        {
+                            <label class="form-label">Gratis</label>
+                        }
+                        else
+                        {
+                            <label class="form-label">@oEvento.Precio €</label>
+                        }
+                        (@oEvento.ValorEnPuntos Ptos)
+                    </h5>
+                </div>
+                <div class="card-body @idBody">
+                    <div class="row">
+                        <img src=@oEvento.Imagen
+                             class="rounded align-self-center" style="width: 155px;height: 155px;">
+
+                        <div class="col">
+                            <p class="card-text"> @oEvento.Descripcion</p>
+                        </div>
+                        <div class="col-lg-1 col-md-1 col align-self-end">
+                            <div class="d-flex justify-content-end">
+                                <strong class="form-label" style="white-space:nowrap">Fecha de inicio: </strong>
+                                <label class="form-label" style="margin-left:1%">@oEvento.FechaInicio.ToShortDateString()</label>
+                            </div>
+                            <div class="d-flex justify-content-end">
+                                <strong class="form-label" style="white-space:nowrap">Fecha de finalizaci&oacute;n: </strong>
+                                <label class="form-label" style="margin-left:1%">@oEvento.FechaFin.ToShortDateString()</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @if (User.IsInRole("Empresa") || User.IsInRole("Usuario"))
+                {
+                    <div class="card-footer @idFooter">
+                        <div class="row">
+                            <div class="col d-flex align-self-center">
+                                <strong>Categoria: </strong>
+                                <label class="form-label text-truncate" style="margin-left:1%">@oEvento.CategoriaNombre</label>
+                                <strong style="margin-left:2%">Direcci&oacute;n: </strong>
+                                <a href="https://www.google.es/maps/place/@oEvento.UbicacionNombre" target="_blank" class="link-primary text-truncate" style="margin-left:1%">@oEvento.UbicacionNombre</a>
+                                <strong style="margin-left:2%">Entradas: </strong>
+                                <label class="form-label" style="margin-left:1%">@oEvento.PlazasActuales</label>
+                            </div>
+                            <div class="col d-flex justify-content-end">
+                                @if (User.IsInRole("Usuario"))
+                                {
+                                    <a href="#" class="btn btn-warning m-1 idButton">Reservar</a>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>      
     }
 </div>
