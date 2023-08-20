@@ -153,8 +153,25 @@
         font-size: 25px;
         font-family: sans-serif;
         text-shadow: 1px 0 0 #000, -1px 0 0 #000, 0 1px 0 #000, 0 -1px 0 #000, 0.5px 0.5px #000, -0.5px -0.5px 0 #000, 0.5px -0.5px 0 #000, -0.5px 0.5px 0 #000;
+    }    
+
+    #style-2::-webkit-scrollbar-track {
+        -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+        border-radius: 10px;
+        background-color: #F5F5F5;
     }
 
+    #style-2::-webkit-scrollbar {
+        width: 12px;
+        background-color: #F5F5F5;
+    }
+
+    #style-2::-webkit-scrollbar-thumb {
+        border-radius: 10px;
+        -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+        background: linear-gradient(-40deg,#ffc800cf, #ff4600);
+    }
+    
 </style>
 
 <h1 class="display-4">Mis eventos</h1>
@@ -174,67 +191,68 @@
     </div>
 
 </div>
-<div class="row">
-    @foreach (Evento oEvento in @Model)
-    {
 
-        string idHeader = "Header" + oEvento.FkIdCategoria.ToString();
-        string idBody = "Body" + oEvento.FkIdCategoria.ToString();
-        string idFooter = "Footer" + oEvento.FkIdCategoria.ToString();
-        string idButton = "Button" + oEvento.FkIdCategoria.ToString();
+<div class="overflow-auto " id="style-2" style="height: 70vh;">
+@foreach (Evento oEvento in @Model)
+{
 
-        <div class="col-12 mb-2">
-            <div class="card">
-                <div class="card-header  @idHeader">
-                    <h5 class="text-center card-title">
-                        @oEvento.Titulo -
-                        @if (oEvento.Precio == 0)
-                        {
-                            <label class="form-label">Gratis</label>
-                        }
-                        else
-                        {
-                            <label class="form-label">@oEvento.Precio €</label>
-                        }
-                        (@oEvento.ValorEnPuntos Ptos)
-                    </h5>
-                </div>
-                <div class="card-body @idBody">
-                    <div class="row">
-                        <img src=@oEvento.Imagen
-                             class="rounded align-self-center" style="width: 155px;height: 155px;">
+    string idHeader = "Header" + oEvento.FkIdCategoria.ToString();
+    string idBody = "Body" + oEvento.FkIdCategoria.ToString();
+    string idFooter = "Footer" + oEvento.FkIdCategoria.ToString();
+    string idButton = "Button" + oEvento.FkIdCategoria.ToString();
 
-                        <div class="col">
-                            <p class="card-text"> @oEvento.Descripcion</p>
-                        </div>
-                        <div class="col-lg-1 col-md-1 col align-self-end">
-                            <div class="d-flex justify-content-end">
-                                <strong class="form-label" style="white-space:nowrap">Fecha de inicio: </strong>
-                                <label class="form-label" style="margin-left:1%">@oEvento.FechaInicio.ToShortDateString()</label>
-                            </div>
-                            <div class="d-flex justify-content-end">
-                                <strong class="form-label" style="white-space:nowrap">Fecha de finalizaci&oacute;n: </strong>
-                                <label class="form-label" style="margin-left:1%">@oEvento.FechaFin.ToShortDateString()</label>
-                            </div>
-                        </div>
+    <div class="col-12 mb-2">
+        <div class="card">
+            <div class="card-header  @idHeader">
+                <h5 class="text-center card-title">
+                    @oEvento.Titulo -
+                    @if (oEvento.Precio == 0)
+                    {
+                        <label class="form-label">Gratis</label>
+                    }
+                    else
+                    {
+                        <label class="form-label">@oEvento.Precio €</label>
+                    }
+                    (@oEvento.ValorEnPuntos Ptos)
+                </h5>
+            </div>
+            <div class="card-body @idBody">
+                <div class="row">
+                    <img src=@oEvento.Imagen
+                            class="rounded align-self-center" style="width: 155px;height: 155px;">
+
+                    <div class="col">
+                        <p class="card-text"> @oEvento.Descripcion</p>
                     </div>
-                </div>
-                <div class="card-footer @idFooter">
-                    <div class="row">
-                        <div class="col d-flex align-self-center">
-                            <strong>Categoria: </strong>
-                            <label class="form-label text-truncate" style="margin-left:1%">@oEvento.CategoriaNombre</label>
-                            <strong style="margin-left:2%">Direcci&oacute;n: </strong>
-                            <a href="https://www.google.es/maps/place/@oEvento.UbicacionNombre" target="_blank" class="link-primary text-truncate" style="margin-left:1%">@oEvento.UbicacionNombre</a>
-                            <strong style="margin-left:2%">Entradas: </strong>
-                            <label class="form-label" style="margin-left:1%">@oEvento.PlazasMaximas</label>
+                    <div class="col-lg-1 col-md-1 col align-self-end">
+                        <div class="d-flex justify-content-end">
+                            <strong class="form-label" style="white-space:nowrap">Fecha de inicio: </strong>
+                            <label class="form-label" style="margin-left:1%">@oEvento.FechaInicio.ToShortDateString()</label>
                         </div>
-                        <div class="col d-flex justify-content-end">
-                            <a @*href="anularreserva?idEvento=@oEvento.IdEvento"*@ class="btn m-1 @idButton">Modificar</a>
+                        <div class="d-flex justify-content-end">
+                            <strong class="form-label" style="white-space:nowrap">Fecha de finalizaci&oacute;n: </strong>
+                            <label class="form-label" style="margin-left:1%">@oEvento.FechaFin.ToShortDateString()</label>
                         </div>
                     </div>
                 </div>
             </div>
+            <div class="card-footer @idFooter">
+                <div class="row">
+                    <div class="col d-flex align-self-center">
+                        <strong>Categoria: </strong>
+                        <label class="form-label text-truncate" style="margin-left:1%">@oEvento.CategoriaNombre</label>
+                        <strong style="margin-left:2%">Direcci&oacute;n: </strong>
+                        <a href="https://www.google.es/maps/place/@oEvento.UbicacionNombre" target="_blank" class="link-primary text-truncate" style="margin-left:1%">@oEvento.UbicacionNombre</a>
+                        <strong style="margin-left:2%">Entradas: </strong>
+                        <label class="form-label" style="margin-left:1%">@oEvento.PlazasMaximas</label>
+                    </div>
+                    <div class="col d-flex justify-content-end">
+                        <a @*href="anularreserva?idEvento=@oEvento.IdEvento"*@ class="btn m-1 @idButton">Modificar</a>
+                    </div>
+                </div>
+            </div>
         </div>
-    }
+    </div>
+}
 </div>

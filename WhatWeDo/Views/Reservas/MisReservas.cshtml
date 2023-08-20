@@ -155,6 +155,23 @@
         text-shadow: 1px 0 0 #000, -1px 0 0 #000, 0 1px 0 #000, 0 -1px 0 #000, 0.5px 0.5px #000, -0.5px -0.5px 0 #000, 0.5px -0.5px 0 #000, -0.5px 0.5px 0 #000;
     }
 
+    #style-2::-webkit-scrollbar-track {
+        -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+        border-radius: 10px;
+        background-color: #F5F5F5;
+    }
+
+    #style-2::-webkit-scrollbar {
+        width: 12px;
+        background-color: #F5F5F5;
+    }
+
+    #style-2::-webkit-scrollbar-thumb {
+        border-radius: 10px;
+        -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+        background: linear-gradient(-40deg,#ffc800cf, #ff4600);
+    }
+
 </style>
 
 <h1 class="display-4">Mis reservas</h1>
@@ -174,7 +191,7 @@
     </div>
 
 </div>
-<div class="row">
+<div class="overflow-auto" id="style-2" style="height: 70vh;">
     @foreach (Evento oEvento in @Model)
     {
 
