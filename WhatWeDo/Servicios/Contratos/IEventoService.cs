@@ -6,6 +6,8 @@ namespace WhatWeDo.Servicios.Contratos
     {
         Task<List<Evento>> GetEventos();
 
+        Task<List<Evento>> GetEventosPorCategoria(int nCategoria);
+
         Task InsertEvento(Evento oEvento);
 
         Task UpdateEvento(Evento oEvento);
