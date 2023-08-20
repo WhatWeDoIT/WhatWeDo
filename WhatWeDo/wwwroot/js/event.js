@@ -200,3 +200,24 @@ function MostrarDireccion() {
     }
 
 }
+
+//Preview imagen
+const defaultFile ='https://wpdirecto.com/wp-content/uploads/2017/08/alt-de-una-imagen.png'
+const file = document.getElementById('subirImg');
+const imagen = document.getElementById('img');
+
+file.addEventListener('change', e => {
+    if (e.target.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            imagen.src = e.target.result;
+        }
+        reader.readAsDataURL(e.target.files[0])
+        
+    } else
+    {
+        imagen.src = defaultFile;
+    }
+
+    console.log();
+});

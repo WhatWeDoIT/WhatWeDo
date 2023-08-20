@@ -1,0 +1,246 @@
+﻿@model List<Evento>
+@{
+    ViewData["Title"] = "Eventos";
+}
+<style>
+    /*ocio*/
+    .ocioButton {
+        background: #acd8f3;
+        color: white;
+        border-color: #acd8f3;
+    }
+
+    .Header1 {
+        background: linear-gradient(1deg, #acd8f3, #5586df24);
+    }
+
+    .Body1 {
+        background: linear-gradient(45deg, transparent, #acd8f3);
+    }
+
+    .Footer1 {
+        background: linear-gradient(1deg, #acd8f3, #5586df24);
+    }
+
+    .Button1 {
+        background: linear-gradient(1deg, #acd8f3, #5586df24);
+        border-color: #3f3c3c45 !important;
+    }
+
+    /*Gastronomia */
+    .gastronomiaButton {
+        background: #FFB3BA;
+        color: white;
+        border-color: #FFB3BA;
+    }
+
+    .Header2 {
+        background: linear-gradient(1deg, #FFB3BA, #5586df24);
+    }
+
+    .Body2 {
+        background: linear-gradient(45deg, transparent, #FFB3BA);
+    }
+
+    .Footer2 {
+        background: linear-gradient(1deg, #FFB3BA, #5586df24);
+    }
+
+    .Button2 {
+        background: linear-gradient(1deg, #FFB3BA, #5586df24);
+        border-color: #3f3c3c45 !important;
+    }
+
+    /*Deportes*/
+    .DeportesButton {
+        background: #FFE5B4;
+        color: white;
+        border-color: #FFE5B4;
+    }
+
+    .Header3 {
+        background: linear-gradient(1deg, #FFE5B4, #5586df24);
+    }
+
+    .Body3 {
+        background: linear-gradient(45deg, transparent, #FFE5B4);
+    }
+
+    .Footer3 {
+        background: linear-gradient(1deg, #FFE5B4, #5586df24);
+    }
+
+    .Button3 {
+        background: linear-gradient(1deg, #FFE5B4, #5586df24);
+        border-color: #3f3c3c45 !important;
+    }
+
+    /* Aire libre */
+    .aireLibreButton {
+        background: #85c19a;
+        color: white;
+        border-color: #85c19a;
+    }
+
+    .Header4 {
+        background: linear-gradient(1deg, #85c19a, #5586df24);
+    }
+
+    .Body4 {
+        background: linear-gradient(45deg, transparent, #85c19a);
+    }
+
+    .Footer4 {
+        background: linear-gradient(1deg, #85c19a, #5586df24);
+    }
+
+    .Button4 {
+        background: linear-gradient(1deg, #85c19a, #5586df24);
+        border-color: #3f3c3c45 !important;
+    }
+
+
+    /*Arte y Cultura*/
+    .arteCulturaButton {
+        background: #CBB4D5;
+        color: white;
+        border-color: #CBB4D5;
+    }
+
+    .Header5 {
+        background: linear-gradient(1deg, #c2a5cf, #5586df24);
+    }
+
+    .Body5 {
+        background: linear-gradient(45deg, transparent, #CBB4D5);
+    }
+
+    .Footer5 {
+        background: linear-gradient(1deg, #c2a5cf, #5586df24);
+    }
+
+    .Button5 {
+        background: linear-gradient(1deg, #c2a5cf, #5586df24);
+        border-color: #3f3c3c45 !important;
+    }
+
+    /*Tecnologia y ciencia */
+    .tecnologiaCienciaButton {
+        background: #f1a875;
+        color: white;
+        border-color: #f1a875;
+    }
+
+    .Header6 {
+        background: linear-gradient(1deg, #f1a875, #5586df24);
+    }
+
+    .Body6 {
+        background: linear-gradient(45deg, transparent, #f1a875);
+    }
+
+    .Footer6 {
+        background: linear-gradient(1deg, #f1a875, #5586df24);
+    }
+
+    .Button6 {
+        background: linear-gradient(1deg, #f1a875, #5586df24);
+        border-color: #3f3c3c45 !important;
+    }
+
+    .buttonCaption {
+        color: white;
+        font-size: 25px;
+        font-family: sans-serif;
+        text-shadow: 1px 0 0 #000, -1px 0 0 #000, 0 1px 0 #000, 0 -1px 0 #000, 0.5px 0.5px #000, -0.5px -0.5px 0 #000, 0.5px -0.5px 0 #000, -0.5px 0.5px 0 #000;
+    }
+
+</style>
+
+<h1 class="display-4">Eventos</h1>
+
+<div class="row">
+    <div class="col">
+        <hr Categorias />
+        <div class="col d-flex justify-content-center">
+            <a href="eventosporcategoria?categoria=1" class="btn m-1 text-truncate ocioButton buttonCaption">Ocio</a>
+            <a href="eventosporcategoria?categoria=2" class="btn m-1 text-truncate gastronomiaButton buttonCaption">Gastronomía</a>
+            <a href="eventosporcategoria?categoria=4" class="btn m-1 text-truncate aireLibreButton buttonCaption">Al aire libre</a>
+            <a href="eventosporcategoria?categoria=5" class="btn m-1 text-truncate arteCulturaButton buttonCaption">Arte y Cultura</a>
+            <a href="eventosporcategoria?categoria=6" class="btn m-1 text-truncate tecnologiaCienciaButton buttonCaption">Tecnología y Ciencia</a>
+            <a href="eventosporcategoria?categoria=3" class="btn m-1 text-truncate DeportesButton buttonCaption">Deportes</a>
+        </div>
+        <hr />
+    </div>
+
+</div>
+<div class="row">
+    @foreach (Evento oEvento in @Model)
+    {
+
+        string idHeader = "Header" + oEvento.FkIdCategoria.ToString();
+        string idBody = "Body" + oEvento.FkIdCategoria.ToString();
+        string idFooter = "Footer" + oEvento.FkIdCategoria.ToString();
+        string idButton = "Button" + oEvento.FkIdCategoria.ToString();
+
+        <div class="col-12 mb-2">
+            <div class="card">
+                <div class="card-header  @idHeader">
+                    <h5 class="text-center card-title">
+                        @oEvento.Titulo -
+                        @if (oEvento.Precio == 0)
+                        {
+                            <label class="form-label">Gratis</label>
+                        }
+                        else
+                        {
+                            <label class="form-label">@oEvento.Precio €</label>
+                        }
+                        (@oEvento.ValorEnPuntos Ptos)
+                    </h5>
+                </div>
+                <div class="card-body @idBody">
+                    <div class="row">
+                        <img src=@oEvento.Imagen
+                             class="rounded align-self-center" style="width: 155px;height: 155px;">
+
+                        <div class="col">
+                            <p class="card-text"> @oEvento.Descripcion</p>
+                        </div>
+                        <div class="col-lg-1 col-md-1 col align-self-end">
+                            <div class="d-flex justify-content-end">
+                                <strong class="form-label" style="white-space:nowrap">Fecha de inicio: </strong>
+                                <label class="form-label" style="margin-left:1%">@oEvento.FechaInicio.ToShortDateString()</label>
+                            </div>
+                            <div class="d-flex justify-content-end">
+                                <strong class="form-label" style="white-space:nowrap">Fecha de finalizaci&oacute;n: </strong>
+                                <label class="form-label" style="margin-left:1%">@oEvento.FechaFin.ToShortDateString()</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @if (User.IsInRole("Empresa") || User.IsInRole("Usuario"))
+                {
+                    <div class="card-footer @idFooter">
+                        <div class="row">
+                            <div class="col d-flex align-self-center">
+                                <strong>Categoria: </strong>
+                                <label class="form-label text-truncate" style="margin-left:1%">@oEvento.CategoriaNombre</label>
+                                <strong style="margin-left:2%">Direcci&oacute;n: </strong>
+                                <a href="https://www.google.es/maps/place/@oEvento.UbicacionNombre" target="_blank" class="link-primary text-truncate" style="margin-left:1%">@oEvento.UbicacionNombre</a>
+                                <strong style="margin-left:2%">Entradas: </strong>
+                                <label class="form-label" style="margin-left:1%">@oEvento.PlazasActuales</label>
+                            </div>
+                            <div class="col d-flex justify-content-end">
+                                @if (User.IsInRole("Usuario"))
+                                {
+                                    <a href="#" class="btn m-1 @idButton">Reservar</a>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+</div>

@@ -33,6 +33,39 @@ namespace WhatWeDo.Servicios.Implementacion
                 throw new Exception(ex.Message);
             }
         }
+        public async Task<List<Descuento>> GetDescuentos()
+        {
+            List<Descuento> lstDescuento = new List<Descuento>();
+            try
+            {
+                using (SqlConnection conexion = new SqlConnection(_conexion.CadenaBBDD))
+                {
+                    SqlCommand cmd = new SqlCommand("sp_GetDescuentos", conexion);
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    conexion.Open();
+                    using (SqlDataReader dr = await cmd.ExecuteReaderAsync())
+                    {
+                        while (await dr.ReadAsync())
+                        {
+                            Descuento oDescuento = new Descuento();
+                            oDescuento.IdDescuento = Convert.ToInt32(dr["IdDescuento"]);
+                            oDescuento.Valor = Convert.ToInt32(dr["Valor"]);
+                            oDescuento.MostrarValor = dr["Valor"].ToString() + " %";
+                            lstDescuento.Add(oDescuento);
+                        }
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+
+            }
+            return lstDescuento;
+        }
+
 
         public async Task<Descuento> GetDescuento(Descuento oDescuento)
         {
@@ -90,7 +123,7 @@ namespace WhatWeDo.Servicios.Implementacion
             {
                 using (SqlConnection conexion = new SqlConnection(_conexion.CadenaBBDD))
                 {
-                    SqlCommand cmd = new SqlCommand("sp_UpdateCategoria", conexion);
+                    SqlCommand cmd = new SqlCommand("sp_UpdateDescuento", conexion);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.Add(new SqlParameter("@IdDescuento", oDescuento.IdDescuento));
                     cmd.Parameters.Add(new SqlParameter("@Valor", oDescuento.Valor));

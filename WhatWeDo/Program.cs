@@ -22,6 +22,9 @@ builder.Services.Configure<ConfiguracionConexion>(builder.Configuration.GetSecti
 builder.Services.AddScoped<IUsuarioService, UsuarioService>();
 builder.Services.AddScoped<IEmpresaService, EmpresaService>();
 builder.Services.AddScoped<IEventoService, EventoService>();
+builder.Services.AddScoped<IUbicacionService, UbicacionService>();
+builder.Services.AddScoped<ICategoriaService, CategoriaService>();
+builder.Services.AddScoped<IDescuentoService, DescuentoService>();
 
 var app = builder.Build();
 
