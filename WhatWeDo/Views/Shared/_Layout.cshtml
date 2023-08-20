@@ -34,13 +34,19 @@
                                     <li class="nav-item d-flex align-self-center d-none d-sm-block">
                                         <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Eventos">WhatWeDo</a>
                                     </li>
+                                    @if (User.IsInRole("Usuario"))
+                                    {
+                                        <li class="nav-item">
+                                            <a class="nav-link text-light" asp-controller="Reservas" asp-action="MisReservas">Mis reservas</a>
+                                        </li>
+                                    }
                                     @if (User.IsInRole("Empresa"))
                                     {
                                         <li class="nav-item">
-                                            <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="MisEventos">Mis eventos</a>
+                                            <a class="nav-link text-light" asp-controller="EventosEmpresa" asp-action="MisEventosEmpresa">Mis eventos</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="CrearEvento">Crear evento</a>
+                                            <a class="nav-link text-light" asp-area="" asp-controller="EventosEmpresa" asp-action="CrearEvento">Crear evento</a>
                                         </li>
                                     }                                    
                                 </ul>
