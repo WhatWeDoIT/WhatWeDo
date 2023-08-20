@@ -31,6 +31,12 @@ namespace WhatWeDo.Controllers
             return View();
         }
 
+        public IActionResult Preferences()
+        {
+            // Supongamos que tienes una lista de categorías de eventos
+            //List<CategoriaEvento> categorias = ObtenerCategoriasDesdeLaBaseDeDatos(); //TODO
+            return View();
+        }
         public async Task<IActionResult> IniciarSesion(Usuario usuario)
         {
             Usuario oUsuario = new Usuario();

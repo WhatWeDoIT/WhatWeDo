@@ -34,5 +34,20 @@ namespace WhatWeDo.Models
 
         public int ValorEnPuntos { get; set; }
 
+        //Cargar combo Direcciones
+        public List<Ubicacion> lstUbicaciones { get; set; }
+
+        //Cargar combo Categorias
+        public List<Categoria> lstCategorias { get; set; }
+
+        //Cargar combo Descuentos
+        public List<Descuento> lstDescuento { get; set; }
+        
+        //Cargar categoria en targeta
+        public string CategoriaNombre { get; set; }
+
+        //Cargar ubicacion en targeta
+
+        public string UbicacionNombre { get; set; }
     }
 }
