@@ -64,6 +64,42 @@ namespace WhatWeDo.Servicios.Implementacion
             return oUbicacion;
         }
 
+        public async Task<List<Ubicacion>> GetUbicacionPorEmpresa(string sMail)
+        {
+            List<Ubicacion> lstUbicacion = new List<Ubicacion>();
+
+            try
+            {
+                using (SqlConnection conexion = new SqlConnection(_conexion.CadenaBBDD))
+                {
+                    SqlCommand cmd = new SqlCommand("sp_GetUbicacionPorEmpresa", conexion);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add(new SqlParameter("@Mail", sMail));
+
+                    conexion.Open();
+                    using (SqlDataReader dr = await cmd.ExecuteReaderAsync())
+                    {
+                        while (await dr.ReadAsync())
+                        {
+                            Ubicacion oUbicacion = new Ubicacion();
+                            oUbicacion.IdUbicacion = Convert.ToInt32(dr["IdUbicacion"]);
+                            oUbicacion.Direccion = dr["Direccion"].ToString();
+                            oUbicacion.FkIdEmpresa = Convert.ToInt32(dr["FkIdEmpresa"]);
+
+                            lstUbicacion.Add(oUbicacion);
+                        }
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+
+            }
+            return lstUbicacion;
+        }
+
         public async Task InsertUbicacion(Ubicacion oUbicacion)
         {
             try

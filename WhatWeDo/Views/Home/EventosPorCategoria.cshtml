@@ -4,7 +4,7 @@
 }
 <style>
     /*ocio*/
-    .ocioButton{
+    .ocioButton {
         background: #acd8f3;
         color: white;
         border-color: #acd8f3;
@@ -31,7 +31,7 @@
     .gastronomiaButton {
         background: #FFB3BA;
         color: white;
-        border-color: #FFB3BA;        
+        border-color: #FFB3BA;
     }
 
     .Header2 {
@@ -146,7 +146,7 @@
     .Button6 {
         background: linear-gradient(1deg, #f1a875, #5586df24);
         border-color: #3f3c3c45 !important;
-    }   
+    }
 
     .buttonCaption {
         color: white;
@@ -160,29 +160,29 @@
 <h1 class="display-4">Eventos</h1>
 
 <div class="row">
-    <div class="col">        
-        <hr Categorias/>
-        <div class ="col d-flex justify-content-center">
-            <a href="home/eventosporcategoria?categoria=1" class="btn m-1 text-truncate ocioButton buttonCaption">Ocio</a>
-            <a href="home/eventosporcategoria?categoria=2" class="btn m-1 text-truncate gastronomiaButton buttonCaption">Gastronomía</a>
-            <a href="home/eventosporcategoria?categoria=4" class="btn m-1 text-truncate aireLibreButton buttonCaption">Al aire libre</a>
-            <a href="home/eventosporcategoria?categoria=5" class="btn m-1 text-truncate arteCulturaButton buttonCaption">Arte y Cultura</a>
-            <a href="home/eventosporcategoria?categoria=6" class="btn m-1 text-truncate tecnologiaCienciaButton buttonCaption">Tecnología y Ciencia</a>
-            <a href="home/eventosporcategoria?categoria=3" class="btn m-1 text-truncate DeportesButton buttonCaption">Deportes</a>
+    <div class="col">
+        <hr Categorias />
+        <div class="col d-flex justify-content-center">
+            <a href="eventosporcategoria?categoria=1" class="btn m-1 text-truncate ocioButton buttonCaption">Ocio</a>
+            <a href="eventosporcategoria?categoria=2" class="btn m-1 text-truncate gastronomiaButton buttonCaption">Gastronomía</a>
+            <a href="eventosporcategoria?categoria=4" class="btn m-1 text-truncate aireLibreButton buttonCaption">Al aire libre</a>
+            <a href="eventosporcategoria?categoria=5" class="btn m-1 text-truncate arteCulturaButton buttonCaption">Arte y Cultura</a>
+            <a href="eventosporcategoria?categoria=6" class="btn m-1 text-truncate tecnologiaCienciaButton buttonCaption">Tecnología y Ciencia</a>
+            <a href="eventosporcategoria?categoria=3" class="btn m-1 text-truncate DeportesButton buttonCaption">Deportes</a>
         </div>
         <hr />
     </div>
-    
+
 </div>
 <div class="row">
     @foreach (Evento oEvento in @Model)
-    {      
-       
+    {
+
         string idHeader = "Header" + oEvento.FkIdCategoria.ToString();
         string idBody = "Body" + oEvento.FkIdCategoria.ToString();
         string idFooter = "Footer" + oEvento.FkIdCategoria.ToString();
         string idButton = "Button" + oEvento.FkIdCategoria.ToString();
-        
+
         <div class="col-12 mb-2">
             <div class="card">
                 <div class="card-header  @idHeader">
@@ -241,6 +241,6 @@
                     </div>
                 }
             </div>
-        </div>      
+        </div>
     }
 </div>
