@@ -34,6 +34,9 @@ namespace WhatWeDo.Models
 
         public int ValorEnPuntos { get; set; }
 
+        //para saber si el usuario lo ha reservado
+        public bool Reservado { get; set; } 
+
         //Cargar combo Direcciones
         public List<Ubicacion> lstUbicaciones { get; set; }
 
@@ -47,7 +50,6 @@ namespace WhatWeDo.Models
         public string CategoriaNombre { get; set; }
 
         //Cargar ubicacion en targeta
-
         public string UbicacionNombre { get; set; }
     }
 }

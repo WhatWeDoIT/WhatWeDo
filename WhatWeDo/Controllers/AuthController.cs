@@ -47,6 +47,7 @@ namespace WhatWeDo.Controllers
                 {
                     oUsuario = await _ServicioUsuario.LoginUsuario(usuario.Mail, Utilidades.EncriptarPassword(usuario.Pass));
                     usuario.Nombre = oUsuario.Nombre;
+                    usuario.IdUsuario = oUsuario.IdUsuario;
                 }
 
                 if (oUsuario.IdUsuario == 0)
@@ -65,6 +66,7 @@ namespace WhatWeDo.Controllers
                 {
                     oEmpresa = await _ServicioEmpresa.LoginEmpresa(oEmpresa.Mail, Utilidades.EncriptarPassword(oEmpresa.Pass));
                     usuario.Nombre = oEmpresa.Nombre;
+                    usuario.IdUsuario = oEmpresa.IdEmpresa;
                 }
 
                 if (oEmpresa.IdEmpresa == 0)
@@ -79,7 +81,8 @@ namespace WhatWeDo.Controllers
             {
                 new Claim(ClaimTypes.Name, usuario.Nombre),
                 new Claim(ClaimTypes.Email, usuario.Mail),
-                new Claim(ClaimTypes.Role, rol)
+                new Claim(ClaimTypes.Role, rol),
+                new Claim(ClaimTypes.NameIdentifier, usuario.IdUsuario.ToString())
             };
 
             ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);

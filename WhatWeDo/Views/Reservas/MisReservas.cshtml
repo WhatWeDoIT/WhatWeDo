@@ -1,6 +1,6 @@
 ﻿@model List<Evento>
 @{
-    ViewData["Title"] = "Eventos";
+    ViewData["Title"] = "Mis Reservas";
 }
 <style>
     /*ocio*/
@@ -157,7 +157,7 @@
 
 </style>
 
-<h1 class="display-4">Eventos</h1>
+<h1 class="display-4">Mis reservas</h1>
 
 <div class="row">
     <div class="col">
@@ -219,27 +219,21 @@
                         </div>
                     </div>
                 </div>
-                @if (User.IsInRole("Empresa") || User.IsInRole("Usuario"))
-                {
-                    <div class="card-footer @idFooter">
-                        <div class="row">
-                            <div class="col d-flex align-self-center">
-                                <strong>Categoria: </strong>
-                                <label class="form-label text-truncate" style="margin-left:1%">@oEvento.CategoriaNombre</label>
-                                <strong style="margin-left:2%">Direcci&oacute;n: </strong>
-                                <a href="https://www.google.es/maps/place/@oEvento.UbicacionNombre" target="_blank" class="link-primary text-truncate" style="margin-left:1%">@oEvento.UbicacionNombre</a>
-                                <strong style="margin-left:2%">Entradas: </strong>
-                                <label class="form-label" style="margin-left:1%">@oEvento.PlazasActuales</label>
-                            </div>
-                            <div class="col d-flex justify-content-end">
-                                @if (User.IsInRole("Usuario"))
-                                {
-                                    <a href="#" class="btn m-1 @idButton">Reservar</a>
-                                }
-                            </div>
+                <div class="card-footer @idFooter">
+                    <div class="row">
+                        <div class="col d-flex align-self-center">
+                            <strong>Categoria: </strong>
+                            <label class="form-label text-truncate" style="margin-left:1%">@oEvento.CategoriaNombre</label>
+                            <strong style="margin-left:2%">Direcci&oacute;n: </strong>
+                            <a href="https://www.google.es/maps/place/@oEvento.UbicacionNombre" target="_blank" class="link-primary text-truncate" style="margin-left:1%">@oEvento.UbicacionNombre</a>
+                            <strong style="margin-left:2%">Entradas: </strong>
+                            <label class="form-label" style="margin-left:1%">@oEvento.PlazasMaximas</label>
+                        </div>
+                        <div class="col d-flex justify-content-end">
+                            <a href="anularreserva?idEvento=@oEvento.IdEvento" class="btn m-1 @idButton">Anular Reserva</a>
                         </div>
                     </div>
-                }
+                </div>
             </div>
         </div>
     }
