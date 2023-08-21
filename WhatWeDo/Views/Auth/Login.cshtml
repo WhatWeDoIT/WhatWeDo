@@ -4,7 +4,7 @@
     ViewData["Title"] = "Login";
 }
 <style>
-    /*Estilos del checkbox empresa*/
+    /*Estilos del checkbox es empresa*/
 
     .checkbox-wrapper-35 .switch {
       display: none;
@@ -144,53 +144,93 @@
         background-color: orange;
     }
 
-        .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-        }
+    .btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
 
-        .btn:active {
-            transform: translateY(-1px);
-            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-        }
+    .btn:active {
+        transform: translateY(-1px);
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    }
 
-        .btn::after {
-            content: "";
-            display: inline-block;
-            height: 100%;
-            width: 100%;
-            border-radius: 5px;
-            position: absolute;
-            top: 0;
-            left: 0;
-            z-index: -1;
-            transition: all .4s;
-        }
+    .btn::after {
+        content: "";
+        display: inline-block;
+        height: 100%;
+        width: 100%;
+        border-radius: 5px;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: -1;
+        transition: all .4s;
+    }
 
-        .btn::after {
-            background-color: orange;
-        }
+    .btn::after {
+        background-color: orange;
+    }
 
-        .btn:hover::after {
-            transform: scaleX(1.4) scaleY(1.6);
-            opacity: 0;
-        }
+    .btn:hover::after {
+        transform: scaleX(1.4) scaleY(1.6);
+        opacity: 0;
+    }
+
+    .form-floating label {
+        color: white;
+    }
+
+    .form-control {
+        background-color: transparent !important;
+        border: none;
+        border-bottom: 2px solid white;
+        transition: border-color 0.3s ease; /* Agrega una transición suave para el cambio de color del borde */
+        border-radius:0px;
+    }
+
+    /* Asegura que el texto en el campo de correo electrónico se muestre en blanco */
+    .form-control:-internal-autofill-selected::first-line {
+        color: white !important;
+    }
+
+    /* Estilo para el texto del campo autocompletado */
+    .form-control:-webkit-autofill::first-line {
+        color: white !important;
+    }
+
+    /* Anula los estilos del autocompletado del navegador */
+    .form-control:-webkit-autofill,
+    .form-control:-webkit-autofill:focus,
+    .form-control:-webkit-autofill:hover,
+    .form-control:-webkit-autofill:active {
+        -webkit-box-shadow: 0 0 0px 1000px transparent inset !important;
+        transition: background-color 5000s ease-in-out 0s;
+        color: white !important; /* Asegura que el color del texto sea blanco */
+    }
+
+    /* Anula los estilos de Bootstrap para el input en el estado de foco */
+    .form-floating .form-control:focus {
+        outline: none !important;
+        border-color: orange !important; /* Anula el color del borde de Bootstrap en foco */
+        box-shadow: none !important; /* Anula la sombra en foco de Bootstrap */
+        color:white !important;
+    }
 </style>
 <div class="row justify-content-center">
     <div class="col-10">
         <section>
             <form asp-controller="Auth" asp-action="IniciarSesion" id="account" method="post">
-                <h2>¡Bienvenido!</h2>
+                <h2 class="text-white">¡Bienvenido!</h2>
                 <hr />
                 <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
                 <div class="form-floating mb-3">
-                    <input asp-for="Mail" class="form-control" autocomplete="username" aria-required="true" placeholder="nombre@ejemplo.com" />
+                    <input asp-for="Mail" class="form-control" style="color:white !important" autocomplete="username" aria-required="true" placeholder="nombre@ejemplo.com" />
                     <label class="form-label">Email</label>
                     <span class="text-danger"></span>
                     <span asp-validation-for="Mail" class="text-danger"></span>
                 </div>
                 <div class="form-floating mb-3">
-                    <input asp-for="Pass" type="password" class="form-control" autocomplete="contraseña-actual" aria-required="true" placeholder="Contraseña" />
+                    <input asp-for="Pass" type="password" style="color:white !important" class="form-control" autocomplete="contraseña-actual" aria-required="true" placeholder="Contraseña" />
                     <label class="form-label">Contraseña</label>
                     <span  class="text-danger"></span>
                     <span asp-validation-for="Pass" class="text-danger"></span>
@@ -199,10 +239,10 @@
                     <div class="checkbox-wrapper-35">
                         <input asp-for="EsEmpresa" name="EsEmpresa" id="switch" type="checkbox" class="switch">
                         <label for="switch">
-                            <span class="switch-x-text">Conectarse como</span>
+                            <span class="switch-x-text text-white">Conectarse como</span>
                             <span class="switch-x-toggletext">
-                                <span class="switch-x-unchecked"><span class="switch-x-hiddenlabel">Unchecked: </span>Usuario</span>
-                                <span class="switch-x-checked"><span class="switch-x-hiddenlabel">Checked: </span>Empresa</span>
+                                <span class="switch-x-unchecked" style="color:orange"><span class="switch-x-hiddenlabel">Unchecked: </span>Usuario</span>
+                                <span class="switch-x-checked" style="color:orangered";><span class="switch-x-hiddenlabel">Checked: </span>Empresa</span>
                             </span>
                         </label>
                     </div>
@@ -228,6 +268,7 @@
         </section>
     </div>
 </div>
+
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 
 <script type="text/javascript">
