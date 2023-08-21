@@ -13,14 +13,14 @@
         right: 20px; /* Ajusta el valor para controlar la posición horizontal */
     }
 
-    .icon-container i {
-        position: absolute;
-        top: 0;
-        left: 0;
-        transform: translate(-50%, -50%);
-        display: none;
-    }
-         
+        .icon-container i {
+            position: absolute;
+            top: 0;
+            left: 0;
+            transform: translate(-50%, -50%);
+            display: none;
+        }
+
     /*Estilos para el boton*/
     .btn {
         position: relative;
@@ -38,40 +38,40 @@
         background-color: orange;
     }
 
-    .btn:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-    }
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
 
-    .btn:active {
-        transform: translateY(-1px);
-        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-    }
+        .btn:active {
+            transform: translateY(-1px);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        }
 
-    .btn::after {
-        content: "";
-        display: inline-block;
-        height: 100%;
-        width: 100%;
-        border-radius: 5px;
-        position: absolute;
-        top: 0;
-        left: 0;
-        z-index: -1;
-        transition: all .4s;
-    }
+        .btn::after {
+            content: "";
+            display: inline-block;
+            height: 100%;
+            width: 100%;
+            border-radius: 5px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            transition: all .4s;
+        }
 
-    .btn::after {
-        background-color: orange;
-    }
+        .btn::after {
+            background-color: orange;
+        }
 
-    .btn:hover::after {
-        transform: scaleX(1.4) scaleY(1.6);
-        opacity: 0;
-    }
+        .btn:hover::after {
+            transform: scaleX(1.4) scaleY(1.6);
+            opacity: 0;
+        }
 </style>
 
-<form asp-controller="Home" asp-action="InsertEvento" id="crearEventoForm" method="post" enctype="multipart/form-data">
+<form asp-controller="EventosEmpresa" asp-action="InsertEvento" id="crearEventoForm" method="post" enctype="multipart/form-data">
     <div>
         <h2>Crear evento</h2>
         <hr />
@@ -96,9 +96,9 @@
         <div class="col-6 mb-2">
             <div class="form-floating mb-3">
                 @Html.DropDownList("direccion", null, "Seleccionar...", new{@class="form-select"} )
-                <label>Direccion</label>               
+                <label>Direccion</label>
             </div>
-        </div>        
+        </div>
     </div>
 
     <div class="row">
@@ -112,7 +112,7 @@
                     <i id="exclamationDescripcion" class="fas fa-exclamation-circle" style="color: red;" data-toggle="tooltip" data-placement="top" title="La descripción debe tener entre 40 y 255 caracteres"></i>
                 </div>
             </div>
-        </div>       
+        </div>
     </div>
 
     <div class="row">
@@ -140,7 +140,7 @@
                         </div>
                     </div>
                 </div>
-            </div>            
+            </div>
             <div class="row">
                 <div class="col mb-2">
                     <div class="form-floating mb-3 position-relative">
@@ -168,9 +168,9 @@
         </div>
         <div class="col d-flex justify-content-end">
             <img id="img" src="https://wpdirecto.com/wp-content/uploads/2017/08/alt-de-una-imagen.png" style="height: 200px; width: 200px;"
-                 class="rounded float-right" alt="...">            
-        </div>       
-    </div>    
+                 class="rounded float-right" alt="...">
+        </div>
+    </div>
     <div class="col" style="margin-top:3%">
         <input id="subirImg" type="file" class="form-control" name="Imagen" />
     </div>
@@ -182,7 +182,7 @@
                     <label>Descuento</label>
                 </div>
             </div>
-        </div>       
+        </div>
         <div class="col-6 mb-2">
             <div class="form-floating mb-3">
                 @Html.DropDownList("categoria", null, "Seleccionar...", new{@class="form-select"} )
@@ -190,7 +190,7 @@
             </div>
         </div>
     </div>
-    <div class="row" >
+    <div class="row">
         <div class="input-group">
             <div class="col-lg-2 col d-flex justify-content-start">
                 <button id="insertEventoSubmit" type="submit" class="btn btn-sm btn-warning">Aceptar</button>
@@ -198,8 +198,8 @@
             <div class="col-lg-2 col d-flex justify-content-end ">
                 <a class="btn btn-sm btn-warning" asp-controller="User" asp-action="Cancelar">Cancelar</a>
             </div>
-        </div>     
-        
+        </div>
+
         @if (ViewBag.Alert != null)
         {
             <div class="alert alert-dismissable alert-danger" style="margin-top:10px">
@@ -211,12 +211,11 @@
                 </div>
             </div>
         }
-     </div>
-    
-</form>
+    </div>
 
-@*Scritps para validar los datos introducidos por la empresa*@
-@*TODO*@
+</form>
 
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/js/event.js"></script>
+
+

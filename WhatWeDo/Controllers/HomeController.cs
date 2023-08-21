@@ -3,79 +3,62 @@ using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using System.Security.Claims;
 using WhatWeDo.Models;
+using WhatWeDo.Servicios.Contratos;
 
 namespace WhatWeDo.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Eventos ()
+
+        private readonly IEventoService _ServicioEvento;
+        
+        static List<Evento> lstEventosCategorizados = new List<Evento>();
+        static bool bBuscarPorCategoria = false;     
+
+        public HomeController(IEventoService servicioEvento)
         {
-            Evento oEvento = new Evento()
+            _ServicioEvento = servicioEvento;          
+        }
+
+        public IActionResult Inicio()
+        {
+            return RedirectToAction("Eventos", "Home");
+        }
+
+        public async Task <IActionResult> Eventos()
+        {
+            List<Evento> lstEventos = new List<Evento>();          
+            
+            //Para redirigir a los eventos por categoria
+            if (bBuscarPorCategoria)
             {
-                Imagen = "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Burger_King_2020.svg/150px-Burger_King_2020.svg.png"
-
-               ,
-                Titulo = "Burger King: Comer en compañia"
-
-               ,
-                Descripcion = "No sabes que hacer para comer, ven con tu familia o amigos! \n " +
-                             "Obtén un descuento del 20% en el total de la cuenta por venir acompañado de 5 personas"
-            };
-
-            Evento oEvento2 = new Evento()
+                lstEventos = lstEventosCategorizados;
+                bBuscarPorCategoria = false;
+            }              
+            else
             {
-                Imagen = "https://rubricadigital.es/wp-content/uploads/2022/01/logo-Ibai.jpg"
-
-               ,
-                Titulo = "Telepizza: Comer en compañia"
-
-               ,
-                Descripcion = "No sabes que hacer para comer, ven con tu familia o amigos! \n " +
-                             "Obten un descuento del 20% en el total de la cuenta por venir acompañado de 5 personas"
-            };
-
-            Evento oEvento3 = new Evento()
-            {
-                Imagen = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRHQtU7j0ZHLqIisJkYEuLrwExbT1bMOw9XO5KwGW8N39JXqc7uh0lntOzs3l9qIHYnPQ0&usqp=CAU"
-
-               ,
-                Titulo = "McDonals: Comer en compañia"
-
-               ,
-                Descripcion = "No sabes que hacer para comer, ven con tu familia o amigos! \n " +
-                             "Obten un descuento del 20% en el total de la cuenta por venir acompañado de 5 personas"
-            };
-
-            List<Evento> lstEventos = new List<Evento>
-            {
-                oEvento,
-                oEvento2,
-                oEvento3
-            };
+                lstEventos = await _ServicioEvento.GetEventos(Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier)));
+            }           
 
             return View(lstEventos);
         }
 
-        [Authorize(Roles = "Empresa")]
-        public IActionResult MisEventos()
+        public async Task<IActionResult> EventosPorCategoria(int categoria)
         {
-            Usuario usuario = new Usuario();
-            usuario.Nombre = User.FindFirstValue(ClaimTypes.Name);
-            usuario.Mail = User.FindFirstValue(ClaimTypes.Email);
-            return View(usuario);
-        }
+            bBuscarPorCategoria = true;
+            lstEventosCategorizados = await _ServicioEvento.GetEventosPorCategoria(categoria);
 
-        [Authorize(Roles = "Empresa")]
-        public IActionResult CrearEvento()
-        {
-            return View();
-        }
+            return RedirectToAction("Eventos", "Home");
+        }       
         
-        [Authorize(Roles = "Empresa")]
-        public IActionResult InsertEvento()
+        [Authorize(Roles = "Usuario")]
+        public async Task<IActionResult> ReservarEvento(int idEvento)
         {
-            return View();
+            await _ServicioEvento.ReservarEvento(idEvento, Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier)));
+
+            return RedirectToAction("MisReservas", "Reservas");
         }
+      
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

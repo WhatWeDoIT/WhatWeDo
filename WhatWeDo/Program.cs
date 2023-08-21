@@ -21,6 +21,10 @@ builder.Services.Configure<ConfiguracionConexion>(builder.Configuration.GetSecti
 //Agregamos servicios por tabla
 builder.Services.AddScoped<IUsuarioService, UsuarioService>();
 builder.Services.AddScoped<IEmpresaService, EmpresaService>();
+builder.Services.AddScoped<IEventoService, EventoService>();
+builder.Services.AddScoped<IUbicacionService, UbicacionService>();
+builder.Services.AddScoped<ICategoriaService, CategoriaService>();
+builder.Services.AddScoped<IDescuentoService, DescuentoService>();
 
 var app = builder.Build();
 
@@ -43,6 +47,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Eventos}");
+    pattern: "{controller=Home}/{action=Inicio}");
 
 app.Run();

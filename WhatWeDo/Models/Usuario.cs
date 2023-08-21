@@ -11,6 +11,6 @@
 
         public string ConfirmPass { get; set; } //para validar la contraseña
         public bool EsEmpresa { get; set; } //para asignar rol en el login y registro
-        public List<String> Categorias { get; set; } //para almacenar las categorias preferidas del usuario
+        public List<string> Categorias { get; set; } //para almacenar las categorias preferidas del usuario       
     }
 }
