@@ -180,25 +180,25 @@
     }
 
     .form-floating label {
-        color: white;
+        color: black;
     }
 
     .form-control {
         background-color: transparent !important;
         border: none;
-        border-bottom: 2px solid white;
+        border-bottom: 2px solid ;
         transition: border-color 0.3s ease; /* Agrega una transición suave para el cambio de color del borde */
         border-radius:0px;
     }
 
     /* Asegura que el texto en el campo de correo electrónico se muestre en blanco */
     .form-control:-internal-autofill-selected::first-line {
-        color: white !important;
+        color: black !important;
     }
 
     /* Estilo para el texto del campo autocompletado */
     .form-control:-webkit-autofill::first-line {
-        color: white !important;
+        color: black !important;
     }
 
     /* Anula los estilos del autocompletado del navegador */
@@ -208,7 +208,7 @@
     .form-control:-webkit-autofill:active {
         -webkit-box-shadow: 0 0 0px 1000px transparent inset !important;
         transition: background-color 5000s ease-in-out 0s;
-        color: white !important; /* Asegura que el color del texto sea blanco */
+        color: black !important; /* Asegura que el color del texto sea blanco */
     }
 
     /* Anula los estilos de Bootstrap para el input en el estado de foco */
@@ -216,7 +216,15 @@
         outline: none !important;
         border-color: #ff8125 !important; /* Anula el color del borde de Bootstrap en foco */
         box-shadow: none !important; /* Anula la sombra en foco de Bootstrap */
-        color:white !important;
+        color:black !important;
+    }
+
+    /* Anula los estilos de Bootstrap para el input en el estado de foco */
+    .form-floating .form-control:focus .empresa {
+        outline: none !important;
+            border-color: #ff2a5c !important; /* Anula el color del borde de Bootstrap en foco */
+        box-shadow: none !important; /* Anula la sombra en foco de Bootstrap */
+        color: black !important;
     }
 
     /*iconos de los campos*/
@@ -238,11 +246,11 @@
     <div class="col-10">
         <section>
             <form asp-controller="Auth" asp-action="IniciarSesion" id="account" method="post">
-                <h2 class="text-white">¡Bienvenido!</h2>
+                <h2 class="text-black">¡Bienvenido!</h2>
                 <hr />
                 <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
                 <div class="form-floating mb-3 position-relative">
-                    <input asp-for="Mail" class="form-control" style="color:white !important" autocomplete="username" aria-required="true" placeholder="nombre@ejemplo.com" />
+                    <input asp-for="Mail" class="form-control" style="color:black !important;border-color: #c9c4c4;" autocomplete="username" aria-required="true" placeholder="nombre@ejemplo.com" />
                     <label class="form-label">Email</label>
                     <span class="text-danger"></span>
                     <span asp-validation-for="Mail" class="text-danger"></span>
@@ -251,7 +259,7 @@
                     </div>
                 </div>
                 <div class="form-floating mb-3">
-                    <input asp-for="Pass" type="password" style="color:white !important" class="form-control" autocomplete="contraseña-actual" aria-required="true" placeholder="Contraseña" />
+                    <input asp-for="Pass" type="password" style="color:black !important;border-color: #c9c4c4;" class="form-control" autocomplete="contraseña-actual" aria-required="true" placeholder="Contraseña" />
                     <label class="form-label">Contraseña</label>
                     <span  class="text-danger"></span>
                     <span asp-validation-for="Pass" class="text-danger"></span>
@@ -263,7 +271,7 @@
                     <div class="checkbox-wrapper-35">
                         <input asp-for="EsEmpresa" name="EsEmpresa" id="switch" type="checkbox" class="switch">
                         <label for="switch">
-                            <span class="switch-x-text text-white">Conectarse como</span>
+                            <span class="switch-x-text text-black">Conectarse como</span>
                             <span class="switch-x-toggletext">
                                 <span class="switch-x-unchecked" style="color:#ff8125"><span class="switch-x-hiddenlabel">Unchecked: </span>Usuario</span>
                                 <span class="switch-x-checked" style="color:#ff2a5c"><span class="switch-x-hiddenlabel">Checked: </span>Empresa</span>
@@ -304,6 +312,7 @@
                 $("#iconEmail, #passIcon").css("color", "#ff2a5c");
             } else {
                 $("#iconEmail, #passIcon").css("color", "#ff8125");
+                
             }
         });
     });
