@@ -3,6 +3,9 @@
     Layout = "/Views/Auth/_AuthLayout.cshtml";
     ViewData["Title"] = "Login";
 }
+
+<!-- Iconos de 'Font Awesome' -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 <style>
     /*Estilos del checkbox es empresa*/
 
@@ -39,7 +42,7 @@
     }
 
     .checkbox-wrapper-35 .switch + label::before {
-      background-color: orange;
+      background-color: #ff8125;
       border-radius: 500px;
       height: 15px;
       margin-right: 8px;
@@ -107,7 +110,7 @@
     }
 
     .checkbox-wrapper-35 .switch:checked + label::before {
-      background-color: orangered;
+       background-color: #ff2a5c;
     }
 
     .checkbox-wrapper-35 .switch:checked + label::after {
@@ -211,9 +214,24 @@
     /* Anula los estilos de Bootstrap para el input en el estado de foco */
     .form-floating .form-control:focus {
         outline: none !important;
-        border-color: orange !important; /* Anula el color del borde de Bootstrap en foco */
+        border-color: #ff8125 !important; /* Anula el color del borde de Bootstrap en foco */
         box-shadow: none !important; /* Anula la sombra en foco de Bootstrap */
         color:white !important;
+    }
+
+    /*iconos de los campos*/
+    .icon-container {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        right: 20px; /* Ajusta el valor para controlar la posición horizontal */
+    }
+
+    .icon-container i {
+        position: absolute;
+        top: 0;
+        left: 0;
+        transform: translate(-50%, -50%);
     }
 </style>
 <div class="row justify-content-center">
@@ -223,17 +241,23 @@
                 <h2 class="text-white">¡Bienvenido!</h2>
                 <hr />
                 <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
-                <div class="form-floating mb-3">
+                <div class="form-floating mb-3 position-relative">
                     <input asp-for="Mail" class="form-control" style="color:white !important" autocomplete="username" aria-required="true" placeholder="nombre@ejemplo.com" />
                     <label class="form-label">Email</label>
                     <span class="text-danger"></span>
                     <span asp-validation-for="Mail" class="text-danger"></span>
+                    <div class="icon-container">
+                        <i id="iconEmail" class="fa-solid fa-envelope" style="color: #ff8125;" data-toggle="tooltip" data-placement="top" title="Email"></i>
+                    </div>
                 </div>
                 <div class="form-floating mb-3">
                     <input asp-for="Pass" type="password" style="color:white !important" class="form-control" autocomplete="contraseña-actual" aria-required="true" placeholder="Contraseña" />
                     <label class="form-label">Contraseña</label>
                     <span  class="text-danger"></span>
                     <span asp-validation-for="Pass" class="text-danger"></span>
+                    <div class="icon-container">
+                        <i id="passIcon" class="fa-solid fa-lock" style="color: #ff8125;" data-toggle="tooltip" data-placement="top" title="Contraseña"></i>
+                    </div>
                 </div>      
                 <div class="col-6 align-self-center mb-4 mt-4 me-0">
                     <div class="checkbox-wrapper-35">
@@ -241,8 +265,8 @@
                         <label for="switch">
                             <span class="switch-x-text text-white">Conectarse como</span>
                             <span class="switch-x-toggletext">
-                                <span class="switch-x-unchecked" style="color:orange"><span class="switch-x-hiddenlabel">Unchecked: </span>Usuario</span>
-                                <span class="switch-x-checked" style="color:orangered";><span class="switch-x-hiddenlabel">Checked: </span>Empresa</span>
+                                <span class="switch-x-unchecked" style="color:#ff8125"><span class="switch-x-hiddenlabel">Unchecked: </span>Usuario</span>
+                                <span class="switch-x-checked" style="color:#ff2a5c"><span class="switch-x-hiddenlabel">Checked: </span>Empresa</span>
                             </span>
                         </label>
                     </div>
@@ -270,6 +294,20 @@
 </div>
 
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {//Cambia el color de los iconos del login dependiendo del estado del Checkbox.
+        $("#switch").on("change", function () {
+            var isChecked = $(this).prop("checked");
+
+            if (isChecked) {
+                $("#iconEmail, #passIcon").css("color", "#ff2a5c");
+            } else {
+                $("#iconEmail, #passIcon").css("color", "#ff8125");
+            }
+        });
+    });
+</script>
 
 <script type="text/javascript">
     $("#linkLogIn").addClass("active");

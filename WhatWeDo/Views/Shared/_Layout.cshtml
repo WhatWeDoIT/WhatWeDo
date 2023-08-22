@@ -9,14 +9,16 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/WhatWeDo.styles.css" asp-append-version="true" />
+    <!-- Iconos de 'Font Awesome' -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 </head>
-<body style="margin-bottom: 0px">
+<body style="margin-bottom: 0px;">
     <div class="container-fluid">
         <div class="row">           
             @*nav bar*@
             <div class="col" style="padding: 0;">
                 <header>
-                    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar navbar-dark bg-dark border-bottom box-shadow mb-3" style="background:linear-gradient(-40deg, #ff4600, #ffc800cf);">
+                    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar navbar-dark bg-dark border-bottom box-shadow mb-3" style="background:linear-gradient(-40deg, #001122, #001122);">
                         <div class="container-fluid" style="padding: 0px;">     
                             <div class="input-group navbar-toggler" style="border: none;">
                                 <div class="d-flex align-self-center">
@@ -50,12 +52,28 @@
                                         </li>
                                     }                                    
                                 </ul>
-                               
+
+                                
+
                                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">                                    
                                     <div class="navbar-nav flex-grow-1 justify-content-end" style="margin-right: 10%;margin-left: 10%;">
+                                        @if (!User.IsInRole("Empresa"))
+                                        {
+                                            <div class="d-sm-inline-flex justify-content-end me-5">
+                                                <label style="color:white; font-weight:bold;" title="Puntos"><i class="fa-solid fa-coins" style="color:#ff2a5c"></i> 999.999</label>
+                                            </div>
+                                        }
                                         <div class="dropdown">
                                             <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-                                                <img src="https://cdn-icons-png.flaticon.com/512/17/17004.png" alt="" width="32" height="32" class="rounded-circle me-2 d-none d-sm-block">
+                                                @*<img src="https://cdn-icons-png.flaticon.com/512/17/17004.png" alt="" width="32" height="32" class="rounded-circle me-2 d-none d-sm-block">*@
+                                                @if(!User.IsInRole("Empresa")){
+                                                    <i class="fa-solid fa-user rounded-circle me-2 d-none d-sm-block" style="color: #ff8125;" width="32" height="32"></i>
+                                                }
+                                                else
+                                                {
+                                                    <i class="fa-solid fa-user-tie rounded-circle me-2 d-none d-sm-block" style="color: #ff2a5c;" width="32" height="32"></i>
+                                                }
+
                                                 <strong>Mi cuenta</strong>
                                             </a>
                                             <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1" style="">
@@ -70,18 +88,18 @@
                                                     @if (User.IsInRole("Empresa"))
                                                     {
                                                         <li>
-                                                           <a class="dropdown-item" asp-controller="User" asp-action="MisDatosEmpresa">Mis datos</a>
+                                                            <a class="dropdown-item" asp-controller="User" asp-action="MisDatosEmpresa"><i class="fa-solid fa-user-pen" style="color:#ff2a5c"></i> Mis datos</a>
                                                         </li>
                                                     }
                                                     else
                                                     {
-                                                        <li>                                                           
-                                                            <a class="dropdown-item" asp-controller="User" asp-action="MisDatosUsuario">Mis datos</a>                                                           
+                                                        <li>
+                                                            <a class="dropdown-item" asp-controller="User" asp-action="MisDatosUsuario"><i class="fa-solid fa-user-pen" style="color:#ff8125"></i> Mis datos</a>
                                                         </li>
                                                     }
                                                     <li><hr class="dropdown-divider"></li>
-                                                    <li>  
-                                                        <a class="dropdown-item" asp-controller="Auth" asp-action="CerrarSesion">Cerrar sesión</a>                                                        
+                                                    <li>
+                                                        <a class="dropdown-item" asp-controller="Auth" asp-action="CerrarSesion"><i class="fa-solid fa-right-from-bracket text-danger"></i> Cerrar sesión</a>
                                                     </li>
                                                 }                                                
                                             </ul>

@@ -37,7 +37,7 @@ $(document).ready(function () {
     tituloInput.trigger("input");
 });
 
-//Script para verificar la dirección introducido por el usaurio
+//Script para verificar la dirección introducido por el Usuario
 $(document).ready(function () {
     var checkIconDireccion = $("#checkDireccion");
     var exclamationIconDireccion = $("#exclamationDireccion");
@@ -74,7 +74,7 @@ $(document).ready(function () {
 });
 
 
-//Script para verificar el email introducido por el usaurio
+//Script para verificar el email introducido por el Usuario
 $(document).ready(function () {//Se ejecuta una vez ya se haya cargado la pagina 
     var checkIconEmail = $("#checkEmail");
     var exclamationIconEmail = $("#exclamationEmail");
@@ -112,7 +112,7 @@ $(document).ready(function () {//Se ejecuta una vez ya se haya cargado la pagina
 });
 
 
-//Script para verificar la contraseña introducida por el usaurio
+//Script para verificar la contraseña introducida por el Usuario
 $(document).ready(function () {
     var checkIconPass = $("#checkPass");
     var exclamationIconPass = $("#exclamationPass");
@@ -152,7 +152,7 @@ $(document).ready(function () {
     passInput.trigger("input");
 });
 
-//Script para verificar la confirmación de contraseña introducida por el usaurio
+//Script para verificar la confirmación de contraseña introducida por el Usuario
 $(document).ready(function () {
     var checkIconConfirmPass = $("#checkConfirmPass");
     var exclamationIconConfirmPass = $("#exclamationConfirmPass");
