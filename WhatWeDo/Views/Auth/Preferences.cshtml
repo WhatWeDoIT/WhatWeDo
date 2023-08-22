@@ -16,7 +16,7 @@
     }
 
     .selected {
-        background-image: linear-gradient(orange, #343a40);
+        background-image: linear-gradient(orange, #001122);
         border:none;
     }
 
@@ -25,7 +25,7 @@
         position: absolute;
         top: 0;
         left: 0;
-        background-color: #343a40;
+        background-color: #001122;
         opacity: 0;
         transition: opacity 2s ease; 
     }
@@ -99,7 +99,7 @@
         stroke-dashoffset: 42;
         transition: all 0.2s linear;
         transition-delay: 0.15s;
-        }
+    }
 
     
     /*Estilos para el boton*/
@@ -160,7 +160,7 @@
     }
 
     .arrow-hover a:hover {
-        color: orange;
+        color: #ff2a5c;
         transform: translateX(5px);
     }
 
@@ -173,7 +173,7 @@
     }
 </style>
 
-<form class="preferences-form p-3">
+<form class="preferences-form p-3" asp-controller="Auth" asp-action="GetPreferences" id="preferences" method="post">
 
     <div class="container px-5">
         <div class="row mb-5 d-block">
@@ -302,13 +302,13 @@
         </div>
         <div class="row mt-5 d-block">
             <div class="col-mb-12 mb-2 arrow-hover d-flex justify-content-end">
-                <a class="lead" href="#" style="text-decoration: none; cursor: pointer; ">
+                <a class="lead" href="@Url.Action("Eventos","Home")" style="text-decoration: none; cursor: pointer; ">
                     Omitir este paso por ahora y recordar mas tarde
                     <span class="arrow-icon"><i class="fas fa-arrow-right ml-2"></i></span>
                 </a>
             </div>
             <div class="col-mb-12 arrow-hover d-flex justify-content-center">
-                <button class="btn" id="btnGuardarPreferencias">Guardar Preferencias</button>
+                <button class="btn" type="submit" id="btnGuardarPreferencias">Guardar Preferencias</button>
             </div>
         </div>
     </div>

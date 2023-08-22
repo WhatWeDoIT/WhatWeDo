@@ -56,7 +56,7 @@
     }
 
     .checkbox-wrapper-35 .switch + label::before {
-      background-color: orange;
+      background-color: #ff8125;
       border-radius: 500px;
       height: 15px;
       margin-right: 8px;
@@ -124,7 +124,7 @@
     }
 
     .checkbox-wrapper-35 .switch:checked + label::before {
-      background-color: orangered;
+            background-color: #ff2a5c;
     }
 
     .checkbox-wrapper-35 .switch:checked + label::after {
@@ -192,14 +192,59 @@
      transform: scaleX(1.4) scaleY(1.6);
      opacity: 0;
     }
+
+    .form-floating label{
+        color: black;
+    }
+
+    .form-control {
+        background-color: transparent !important;
+        border: none;
+        border-color: #c9c4c4 !important;
+        border-bottom: 2px solid ;
+        transition: border-color 0.3s ease; /* Agrega una transición suave para el cambio de color del borde */
+        border-radius: 0px;
+    }
+
+    .form-control::placeholder {
+        /*color: white !important;*/
+    }
+
+    /* Asegura que el texto en el campo de correo electrónico se muestre en blanco */
+    .form-control:-internal-autofill-selected::first-line {
+        color: black !important;
+    }
+
+    /* Estilo para el texto del campo autocompletado */
+    .form-control:-webkit-autofill::first-line {
+        color: black !important;
+    }
+
+    /* Anula los estilos del autocompletado del navegador */
+    .form-control:-webkit-autofill,
+    .form-control:-webkit-autofill:focus,
+    .form-control:-webkit-autofill:hover,
+    .form-control:-webkit-autofill:active {
+        -webkit-box-shadow: 0 0 0px 1000px transparent inset !important;
+        transition: background-color 5000s ease-in-out 0s;
+        color: black !important; /* Asegura que el color del texto sea blanco */
+    }
+
+    /* Anula los estilos de Bootstrap para el input en el estado de foco */
+    .form-floating .form-control:focus {
+        outline: none !important;
+        border-color: orange !important; /* Anula el color del borde de Bootstrap en foco */
+        box-shadow: none !important; /* Anula la sombra en foco de Bootstrap */
+        color: black !important;
+    }
 </style>
 
 <form asp-controller="Auth" asp-action="CrearUsuario" id="registerForm" method="post">
-    <h2>Crear una cuenta nueva.</h2>
+    <h2 class="text-black">Crear una cuenta nueva.</h2>
     <hr />
     <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
     <div class="form-floating mb-3 position-relative">
-        <input id="Nombre" asp-for="Nombre" class="form-control" aria-required="true" placeholder="nombre"/>
+        <input id="Nombre" asp-for="Nombre" style="color:black !important" class="form-control" aria-required="true" placeholder="nombre" />
         <label>Nombre</label>
         <span class="text-danger"></span>
         <div class="icon-container ">
@@ -208,7 +253,7 @@
         </div>
     </div>    
     <div id="divDireccion" class="form-floating mb-3 d-none">
-        <input asp-for="Direccion" class="form-control" aria-required="true" placeholder="direccion" />
+        <input asp-for="Direccion" style="color:black !important" class="form-control" aria-required="true" placeholder="direccion" />
         <label>Direccion</label>
         <span class="text-danger"></span>
         <div class="icon-container">
@@ -217,7 +262,7 @@
         </div>
     </div>
     <div class="form-floating mb-3">
-        <input id="Mail" asp-for="Mail" class="form-control" aria-required="true" placeholder="nombre@ejemplo.com" />
+        <input id="Mail" asp-for="Mail" style="color:black !important" class="form-control" aria-required="true" placeholder="nombre@ejemplo.com" />
         <label>Email</label>
         <span class="text-danger"></span>
         <div class="icon-container">
@@ -226,7 +271,7 @@
         </div>
     </div>
     <div class="form-floating">
-        <input asp-for="Pass" type="password" class="form-control" aria-required="true" placeholder="contraseña" />
+        <input asp-for="Pass" type="password" style="color:black !important" class="form-control" aria-required="true" placeholder="contraseña" />
         <label>Contraseña</label>
         <span class="text-danger"></span>
         <div class="icon-container">
@@ -235,7 +280,7 @@
         </div>
     </div>
     <div class="form-floating mb-3 mt-3">
-        <input id="ConfirmPass" asp-for="ConfirmPass" type="password" class="form-control" aria-required="true" placeholder="contraseña" />
+        <input id="ConfirmPass" asp-for="ConfirmPass" style="color:black !important" type="password" class="form-control" aria-required="true" placeholder="Confirmar Contraseña" />
         <label>Confirmar Contraseña</label>
         <span class="text-danger"></span>
         <div class="icon-container">
@@ -247,15 +292,15 @@
         <div class="checkbox-wrapper-35">
             <input asp-for="EsEmpresa" name="EsEmpresa" id="switch" type="checkbox" class="switch">
             <label for="switch">
-                <span class="switch-x-text">Registrarse como  </span>
+                <span class="switch-x-text text-black">Registrarse como  </span>
                 <span class="switch-x-toggletext">
-                    <span class="switch-x-unchecked"><span class="switch-x-hiddenlabel">Unchecked: </span>Usuario</span>
-                    <span class="switch-x-checked"><span class="switch-x-hiddenlabel">Checked: </span>Empresa</span>
+                    <span class="switch-x-unchecked" style="color:#ff8125"><span class="switch-x-hiddenlabel">Unchecked: </span>Usuario</span>
+                    <span class="switch-x-checked" style="color:#ff2a5c"><span class="switch-x-hiddenlabel">Checked: </span>Empresa</span>
                 </span>
             </label>
         </div>
     </div>
-    <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Registrarse</button>
+    <button id="registerSubmit" type="submit" class="w-100 btn btn-lg">Registrarse</button>
     @if (ViewBag.Alert != null)
     {
         <div class="alert alert-dismissable alert-danger" style="margin-top:10px">

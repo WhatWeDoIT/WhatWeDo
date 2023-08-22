@@ -5,9 +5,9 @@
 <style>
     /*ocio*/
     .ocioButton{
-        background: #acd8f3;
+        background: #22d3ee;
         color: white;
-        border-color: #acd8f3;
+        border-color: #22d3ee;
     }
 
     .Header1 {
@@ -29,9 +29,9 @@
 
     /*Gastronomia */
     .gastronomiaButton {
-        background: #FFB3BA;
+        background: #fb7185;
         color: white;
-        border-color: #FFB3BA;        
+        border-color: #fb7185;
     }
 
     .Header2 {
@@ -53,9 +53,9 @@
 
     /*Deportes*/
     .DeportesButton {
-        background: #FFE5B4;
+        background: #fde047;
         color: white;
-        border-color: #FFE5B4;
+        border-color: #fde047;
     }
 
     .Header3 {
@@ -77,9 +77,9 @@
 
     /* Aire libre */
     .aireLibreButton {
-        background: #85c19a;
+        background: #4ade80;
         color: white;
-        border-color: #85c19a;
+        border-color: #4ade80;
     }
 
     .Header4 {
@@ -102,9 +102,9 @@
 
     /*Arte y Cultura*/
     .arteCulturaButton {
-        background: #CBB4D5;
+        background: #fb923c;
         color: white;
-        border-color: #CBB4D5;
+        border-color: #fb923c;
     }
 
     .Header5 {
@@ -150,9 +150,8 @@
 
     .buttonCaption {
         color: white;
-        font-size: 25px;
+        font-size: 1.25rem;
         font-family: sans-serif;
-        text-shadow: 1px 0 0 #000, -1px 0 0 #000, 0 1px 0 #000, 0 -1px 0 #000, 0.5px 0.5px #000, -0.5px -0.5px 0 #000, 0.5px -0.5px 0 #000, -0.5px 0.5px 0 #000;
     }
 
     #style-2::-webkit-scrollbar-track {
@@ -169,14 +168,44 @@
     #style-2::-webkit-scrollbar-thumb {
         border-radius: 10px;
         -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
-        background: linear-gradient(-40deg,#ffc800cf, #ff4600);
+        background: linear-gradient(-40deg,#001122, #001122);
+    }
+
+    /*Botones de paginación*/
+    .pagination-button {
+        margin-right: 10px; 
+        background-color: #ffa500;
+        border:none;
     }
 </style>
 
-<h1 class="display-4">Eventos</h1>
+<h1 class="display-4 mb-5">Eventos</h1>
 
-<div class="row">
-    <div class="col">        
+<hr class="mb-3"/>
+
+<div class="row p-2 m-1 d-flex justify-content-center" @*style="border-radius:5px; background-color:#001122;"*@>
+    <div class="col-md-auto col-sm-auto">
+        <a href="eventosporcategoria?categoria=1" class="btn m-1 text-truncate ocioButton buttonCaption">Ocio</a>
+    </div>
+    <div class="col-md-auto col-sm-auto">
+        <a href="eventosporcategoria?categoria=2" class="btn m-1 text-truncate gastronomiaButton buttonCaption">Gastronomía</a>
+    </div>
+    <div class="col-md-auto col-sm-auto">
+        <a href="eventosporcategoria?categoria=4" class="btn m-1 text-truncate aireLibreButton buttonCaption">Al aire libre</a>
+    </div>
+    <div class="col-md-auto col-sm-auto">
+        <a href="eventosporcategoria?categoria=5" class="btn m-1 text-truncate arteCulturaButton buttonCaption">Arte y Cultura</a>
+    </div>
+    <div class="col-md-auto col-sm-auto">
+        <a href="eventosporcategoria?categoria=6" class="btn m-1 text-truncate tecnologiaCienciaButton buttonCaption">Tecnología y Ciencia</a>
+    </div>
+    <div class="col-md-auto col-sm-auto">
+        <a href="eventosporcategoria?categoria=3" class="btn m-1 text-truncate DeportesButton buttonCaption">Deportes</a>
+    </div>
+</div>
+<hr />
+
+@*<div class="col">
         <hr Categorias/>
         <div class ="col d-flex justify-content-center">
             <a href="eventosporcategoria?categoria=1" class="btn m-1 text-truncate ocioButton buttonCaption">Ocio</a>
@@ -187,10 +216,9 @@
             <a href="eventosporcategoria?categoria=3" class="btn m-1 text-truncate DeportesButton buttonCaption">Deportes</a>
         </div>
         <hr />
-    </div>
-    
-</div>
-<div class="overflow-auto" id="style-2" style="height: 70vh;">
+    </div>*@
+
+<div class="overflow-visible" id="style-2" style="height: 100%;">
     @foreach (Evento oEvento in @Model)
     {
         if (!oEvento.Reservado)
@@ -200,7 +228,7 @@
             string idFooter = "Footer" + oEvento.FkIdCategoria.ToString();
             string idButton = "Button" + oEvento.FkIdCategoria.ToString();
 
-            <div class="col-12 mb-2">
+            <div class="col-12 mb-4">
                 <div class="card">
                     <div class="card-header  @idHeader">
                         <h5 class="text-center card-title">
@@ -262,3 +290,25 @@
         }        
     }
 </div>
+
+<hr />
+
+<!-- Enlaces de paginación -->
+<div class="d-flex justify-content-center mt-4 mb-3">
+    @if (ViewBag.PaginaActual > 1)
+    {
+        <a href="@Url.Action("Eventos", new { page = ViewBag.PaginaActual - 1 })" class="btn btn-primary pagination-button">Anterior</a>
+    }
+
+    @for (int i = 1; i <= ViewBag.TotalPaginas; i++)
+    {
+        <a href="@Url.Action("Eventos", new { page = i })" class="btn btn-secondary @(ViewBag.PaginaActual == i ? "active" : "") pagination-button">@i</a>
+    }
+
+    @if (ViewBag.PaginaActual < ViewBag.TotalPaginas)
+    {
+        <a href="@Url.Action("Eventos", new { page = ViewBag.PaginaActual + 1 })" class="btn btn-primary pagination-button">Siguiente</a>
+    }
+</div>
+
+
