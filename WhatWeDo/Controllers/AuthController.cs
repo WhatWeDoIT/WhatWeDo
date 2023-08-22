@@ -37,6 +37,12 @@ namespace WhatWeDo.Controllers
             //List<CategoriaEvento> categorias = ObtenerCategoriasDesdeLaBaseDeDatos(); //TODO
             return View();
         }
+
+        public async Task<IActionResult> GetPreferences(Usuario usuario) { 
+            return RedirectToAction("Eventos", "Home");
+        }
+
+
         public async Task<IActionResult> IniciarSesion(Usuario usuario)
         {
             Usuario oUsuario = new Usuario();
@@ -89,7 +95,11 @@ namespace WhatWeDo.Controllers
 
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
 
-            return RedirectToAction("Eventos", "Home");
+            //LLeva al usuario a la vista de seleccion de preferencias en el caso de que no sea una empresa.
+            if(!usuario.EsEmpresa)
+                return RedirectToAction("Preferences", "Auth");
+            else
+                return RedirectToAction("Eventos", "Home");
         }
 
         public async Task<IActionResult> CrearUsuario(Usuario usuario)
