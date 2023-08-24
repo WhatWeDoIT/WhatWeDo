@@ -14,5 +14,7 @@ namespace WhatWeDo.Servicios.Contratos
 
         Task DeleteEmpresa(Empresa oEmpresa);
 
+        Task<Empresa> GetEmpresaPorIdEvento(int IdEvento);
+
     }
 }
