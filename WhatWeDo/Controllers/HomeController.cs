@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System.Diagnostics;
 using System.Security.Claims;
 using WhatWeDo.Models;
@@ -82,9 +83,16 @@ namespace WhatWeDo.Controllers
         [Authorize(Roles = "Usuario")]
         public async Task<IActionResult> ReservarEvento(int idEvento)
         {
-            await _ServicioEvento.ReservarEvento(idEvento, Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier)));
+            //await _ServicioEvento.ReservarEvento(idEvento, Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier)));
+            EventoPago oEventoPago = new EventoPago();
+            Evento oEvento = new Evento();
+            oEvento.IdEvento = idEvento;
+            oEventoPago.Evento = oEvento;
 
-            return RedirectToAction("MisReservas", "Reservas");
+            var miObjeto = oEventoPago;
+            TempData["Objeto"] = JsonConvert.SerializeObject(miObjeto);
+
+            return RedirectToAction("EventoPago", "Pago");
         }
       
 
