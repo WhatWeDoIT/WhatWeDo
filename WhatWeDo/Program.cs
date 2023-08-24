@@ -25,6 +25,7 @@ builder.Services.AddScoped<IEventoService, EventoService>();
 builder.Services.AddScoped<IUbicacionService, UbicacionService>();
 builder.Services.AddScoped<ICategoriaService, CategoriaService>();
 builder.Services.AddScoped<IDescuentoService, DescuentoService>();
+builder.Services.AddScoped<IEventoPagoService, EventoPagoService>();
 
 var app = builder.Build();
 
