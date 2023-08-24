@@ -128,6 +128,15 @@
                             <i id="exclamationFechaInicio" class="fas fa-exclamation-circle" style="color: red;" data-toggle="tooltip" data-placement="top" title="La fecha de inicio no puede ser posterior a la fecha final"></i>
                         </div>
                     </div>
+                    <div class="form-floating mb-3 position-relative">
+                        <input id="HoraInicio" asp-for="HoraIncio" type="time" class="form-control" aria-required="true" placeholder="Fecha inicio" />
+                        <label>Hora inicio</label>
+                        <span class="text-danger"></span>
+                        <div class="icon-container ">
+                            <i id="checkHoraInicio" class="fas fa-check-circle" style="color: green;" data-toggle="tooltip" data-placement="top" title="Fecha válida"></i>
+                            <i id="exclamationHoraInicio" class="fas fa-exclamation-circle" style="color: red;" data-toggle="tooltip" data-placement="top" title="La fecha de inicio no puede ser posterior a la fecha final"></i>
+                        </div>
+                    </div>
                 </div>
                 <div class="col mb-2">
                     <div class="form-floating mb-3">
@@ -137,6 +146,15 @@
                         <div class="icon-container">
                             <i id="checkFechaFin" class="fas fa-check-circle" style="color: green;" data-toggle="tooltip" data-placement="top" title="Fecha válida"></i>
                             <i id="exclamationFechaFin" class="fas fa-exclamation-circle" style="color: red;" data-toggle="tooltip" data-placement="top" title="La fecha de final no puede ser anterior a la fecha inicio"></i>
+                        </div>
+                    </div>
+                    <div class="form-floating mb-3 position-relative">
+                        <input id="HoraFin" asp-for="HoraFin" type="time" class="form-control" aria-required="true" placeholder="Fecha inicio" />
+                        <label>Hora fin</label>
+                        <span class="text-danger"></span>
+                        <div class="icon-container ">
+                            <i id="checkHoraFin" class="fas fa-check-circle" style="color: green;" data-toggle="tooltip" data-placement="top" title="Fecha válida"></i>
+                            <i id="exclamationHoraFin" class="fas fa-exclamation-circle" style="color: red;" data-toggle="tooltip" data-placement="top" title="La fecha de inicio no puede ser posterior a la fecha final"></i>
                         </div>
                     </div>
                 </div>
@@ -167,7 +185,7 @@
             </div>
         </div>
         <div class="col d-flex justify-content-end">
-            <img id="img" src="https://wpdirecto.com/wp-content/uploads/2017/08/alt-de-una-imagen.png" style="height: 200px; width: 200px;"
+            <img id="img" src="https://wpdirecto.com/wp-content/uploads/2017/08/alt-de-una-imagen.png" style="height: 100%; width: 100%;"
                  class="rounded float-right" alt="...">
         </div>
     </div>

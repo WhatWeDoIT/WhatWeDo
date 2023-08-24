@@ -80,6 +80,15 @@ namespace WhatWeDo.Servicios.Implementacion
                                 oUbicacion = await _ServicioUbicacion.GetUbicacion(oUbicacion);
                                 oEvento.UbicacionNombre = oUbicacion.Direccion;
                             }
+                            if (!string.IsNullOrWhiteSpace(dr["HoraInicio"].ToString()))
+                            {
+                                oEvento.HoraIncio = (TimeSpan)dr["HoraInicio"];
+                            }
+
+                            if (!string.IsNullOrWhiteSpace(dr["HoraFin"].ToString()))
+                            {
+                                oEvento.HoraFin = (TimeSpan)dr["HoraFin"];
+                            }
 
                             oEvento.Reservado = await GetReservado(idUsuario, oEvento.IdEvento);
 
@@ -149,7 +158,18 @@ namespace WhatWeDo.Servicios.Implementacion
 
                                 oUbicacion = await _ServicioUbicacion.GetUbicacion(oUbicacion);
                                 oEvento.UbicacionNombre = oUbicacion.Direccion;
-                            }                        }
+                            }
+                            if (!string.IsNullOrWhiteSpace(dr["HoraInicio"].ToString()))
+                            {
+                                oEvento.HoraIncio = (TimeSpan)dr["HoraInicio"];
+                            }
+
+                            if (!string.IsNullOrWhiteSpace(dr["HoraFin"].ToString()))
+                            {
+                                oEvento.HoraFin = (TimeSpan)dr["HoraFin"];
+                            }
+
+                        }
                     }
                 }
 
@@ -217,6 +237,15 @@ namespace WhatWeDo.Servicios.Implementacion
                                 oEvento.UbicacionNombre = oUbicacion.Direccion;
                             }
 
+                            if (!string.IsNullOrWhiteSpace(dr["HoraInicio"].ToString()))
+                            {
+                                oEvento.HoraIncio = (TimeSpan)dr["HoraInicio"];
+                            }
+
+                            if (!string.IsNullOrWhiteSpace(dr["HoraFin"].ToString()))
+                            {
+                                oEvento.HoraFin = (TimeSpan)dr["HoraFin"];
+                            }
 
                             lstEventos.Add(oEvento);
                         }
@@ -285,7 +314,15 @@ namespace WhatWeDo.Servicios.Implementacion
                                 oUbicacion = await _ServicioUbicacion.GetUbicacion(oUbicacion);
                                 oEvento.UbicacionNombre = oUbicacion.Direccion;
                             }
+                            if (!string.IsNullOrWhiteSpace(dr["HoraInicio"].ToString()))
+                            {
+                                oEvento.HoraIncio = (TimeSpan)dr["HoraInicio"];
+                            }
 
+                            if (!string.IsNullOrWhiteSpace(dr["HoraFin"].ToString()))
+                            {
+                                oEvento.HoraFin = (TimeSpan)dr["HoraFin"];
+                            }
 
                             lstEventos.Add(oEvento);
                         }
@@ -354,6 +391,15 @@ namespace WhatWeDo.Servicios.Implementacion
 
                                 oUbicacion = await _ServicioUbicacion.GetUbicacion(oUbicacion);
                                 oEvento.UbicacionNombre = oUbicacion.Direccion;
+                            }
+                            if (!string.IsNullOrWhiteSpace(dr["HoraInicio"].ToString()))
+                            {
+                                oEvento.HoraIncio = (TimeSpan)dr["HoraInicio"];
+                            }
+
+                            if (!string.IsNullOrWhiteSpace(dr["HoraFin"].ToString()))
+                            {
+                                oEvento.HoraFin = (TimeSpan)dr["HoraFin"];
                             }
 
 
@@ -425,6 +471,15 @@ namespace WhatWeDo.Servicios.Implementacion
                                 oEvento.UbicacionNombre = oUbicacion.Direccion;
                             }
 
+                            if (!string.IsNullOrWhiteSpace(dr["HoraInicio"].ToString()))
+                            {
+                                oEvento.HoraIncio = (TimeSpan)dr["HoraInicio"];
+                            }
+
+                            if (!string.IsNullOrWhiteSpace(dr["HoraFin"].ToString()))
+                            {
+                                oEvento.HoraFin = (TimeSpan)dr["HoraFin"];
+                            }
 
                             lstEventos.Add(oEvento);
                         }
@@ -494,7 +549,15 @@ namespace WhatWeDo.Servicios.Implementacion
                                 oUbicacion = await _ServicioUbicacion.GetUbicacion(oUbicacion);
                                 oEvento.UbicacionNombre = oUbicacion.Direccion;
                             }
+                            if (!string.IsNullOrWhiteSpace(dr["HoraInicio"].ToString()))
+                            {
+                                oEvento.HoraIncio = (TimeSpan)dr["HoraInicio"];
+                            }
 
+                            if (!string.IsNullOrWhiteSpace(dr["HoraFin"].ToString()))
+                            {
+                                oEvento.HoraFin = (TimeSpan)dr["HoraFin"];
+                            }
 
                             lstEventos.Add(oEvento);
                         }
@@ -532,6 +595,8 @@ namespace WhatWeDo.Servicios.Implementacion
                     cmd.Parameters.Add(new SqlParameter("@FkIdDescuento", oEvento.FkIdDescuento == null ? (object)DBNull.Value : oEvento.FkIdDescuento));
                     cmd.Parameters.Add(new SqlParameter("@ValorEnPuntos", oEvento.ValorEnPuntos));
                     cmd.Parameters.Add(new SqlParameter("@IdEmpresa", idEmpresa));
+                    cmd.Parameters.Add(new SqlParameter("@HoraInicio", oEvento.HoraIncio));
+                    cmd.Parameters.Add(new SqlParameter("@HoraFin", oEvento.HoraFin));
 
                     conexion.Open();
                     await cmd.ExecuteNonQueryAsync();
@@ -564,6 +629,8 @@ namespace WhatWeDo.Servicios.Implementacion
                     cmd.Parameters.Add(new SqlParameter("@FkIdCategoria", oEvento.FkIdCategoria));
                     cmd.Parameters.Add(new SqlParameter("@FkIdDescuento", oEvento.FkIdDescuento));
                     cmd.Parameters.Add(new SqlParameter("@ValorEnPuntos", oEvento.ValorEnPuntos));
+                    cmd.Parameters.Add(new SqlParameter("@HoraInicio", oEvento.HoraIncio));
+                    cmd.Parameters.Add(new SqlParameter("@HoraFin", oEvento.HoraFin));
                     conexion.Open();
                     await cmd.ExecuteNonQueryAsync();    
                 }
