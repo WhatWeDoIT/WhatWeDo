@@ -34,6 +34,11 @@ namespace WhatWeDo.Models
 
         public int ValorEnPuntos { get; set; }
 
+        public TimeSpan HoraIncio { get; set; }
+
+        public TimeSpan HoraFin { get; set; }
+
+
         //para saber si el usuario lo ha reservado
         public bool Reservado { get; set; } 
 
