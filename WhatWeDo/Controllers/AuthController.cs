@@ -38,7 +38,7 @@ namespace WhatWeDo.Controllers
             return View();
         }
 
-        public async Task<IActionResult> GetPreferences(Usuario usuario) { 
+        public IActionResult GetPreferences(Usuario usuario) { 
             return RedirectToAction("Eventos", "Home");
         }
 
