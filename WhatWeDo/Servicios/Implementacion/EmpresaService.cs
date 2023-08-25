@@ -163,7 +163,41 @@ namespace WhatWeDo.Servicios.Implementacion
                 throw new Exception(ex.Message);
             }
         }
+        public async Task<Empresa> GetEmpresaPorIdEvento(int IdEvento)
+        {
+            Empresa oEmpresa = new Empresa();
+            try
+            {
+                using (SqlConnection conexion = new SqlConnection(_conexion.CadenaBBDD))
+                {
+                    SqlCommand cmd = new SqlCommand("sp_GetEmpresaPorIdEvento", conexion);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add(new SqlParameter("@IdEvento", IdEvento));
 
-       
+                    conexion.Open();
+                    using (SqlDataReader dr = await cmd.ExecuteReaderAsync())
+                    {
+                        while (await dr.ReadAsync())
+                        {
+                            
+                            oEmpresa.IdEmpresa = Convert.ToInt32(dr["IdEmpresa"]);
+                            oEmpresa.Nombre = dr["Nombre"].ToString();
+                            oEmpresa.Pass = dr["Pass"].ToString();
+                            oEmpresa.Direccion = dr["Direccion"].ToString();
+                            oEmpresa.Mail = dr["Mail"].ToString();
+                        }
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+
+            }
+            return oEmpresa;
+        }
+
+
     }
 }

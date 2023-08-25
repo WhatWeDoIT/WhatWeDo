@@ -4,6 +4,7 @@ namespace WhatWeDo.Servicios.Contratos
 {
     public interface IUsuarioService
     {
+        Task<Usuario> GetUsuario(string mail);
         Task<Usuario> GetUsuario(Usuario oUsuario);
 
         Task<Usuario> LoginUsuario(string sEmail, string sPassword);
@@ -14,5 +15,8 @@ namespace WhatWeDo.Servicios.Contratos
 
         Task DeleteUsuario(Usuario oUsuario);
 
+        Task PagarEvento(int idUsuario, int idEmpresa, double precio, int puntos);
+
+        Task DevolucionEventoPago(int idUsuario, int idEmpresa, double precio, int puntos);
     }
 }
