@@ -10,21 +10,8 @@
         border-color: #22d3ee;
     }
 
-    .Header1 {
-        background: linear-gradient(1deg, #acd8f3, #5586df24);
-    }
-
-    .Body1 {
-        background: linear-gradient(45deg, transparent, #acd8f3);
-    }
-
-    .Footer1 {
-        background: linear-gradient(1deg, #acd8f3, #5586df24);
-    }
-
-    .Button1 {
-        background: linear-gradient(1deg, #acd8f3, #5586df24);
-        border-color: #3f3c3c45 !important;
+    .Category1{
+        color: #22d3ee; /* Color para la categoría "Ocio" */
     }
 
     /*Gastronomia */
@@ -34,21 +21,8 @@
         border-color: #fb7185;
     }
 
-    .Header2 {
-        background: linear-gradient(1deg, #FFB3BA, #5586df24);
-    }
-
-    .Body2 {
-        background: linear-gradient(45deg, transparent, #FFB3BA);
-    }
-
-    .Footer2 {
-        background: linear-gradient(1deg, #FFB3BA, #5586df24);
-    }
-
-    .Button2 {
-        background: linear-gradient(1deg, #FFB3BA, #5586df24);
-        border-color: #3f3c3c45 !important;
+    .Category2{
+        color: #fb7185; /* Color para la categoría "Gastronomía" */
     }
 
     /*Deportes*/
@@ -58,21 +32,8 @@
         border-color: #fde047;
     }
 
-    .Header3 {
-        background: linear-gradient(1deg, #FFE5B4, #5586df24);
-    }
-
-    .Body3 {
-        background: linear-gradient(45deg, transparent, #FFE5B4);
-    }
-
-    .Footer3 {
-        background: linear-gradient(1deg, #FFE5B4, #5586df24);
-    }
-
-    .Button3 {
-        background: linear-gradient(1deg, #FFE5B4, #5586df24);
-        border-color: #3f3c3c45 !important;
+    .Category3{
+        color: #fde047; /* Color para la categoría "Deportes" */
     }
 
     /* Aire libre */
@@ -82,24 +43,10 @@
         border-color: #4ade80;
     }
 
-    .Header4 {
-        background: linear-gradient(1deg, #85c19a, #5586df24);
+    .Category4{
+        color: #4ade80; /* Color para la categoría "Al aire libre" */
     }
-
-    .Body4 {
-        background: linear-gradient(45deg, transparent, #85c19a);
-    }
-
-    .Footer4 {
-        background: linear-gradient(1deg, #85c19a, #5586df24);
-    }
-
-    .Button4 {
-        background: linear-gradient(1deg, #85c19a, #5586df24);
-        border-color: #3f3c3c45 !important;
-    }
-
-
+  
     /*Arte y Cultura*/
     .arteCulturaButton {
         background: #fb923c;
@@ -107,21 +54,8 @@
         border-color: #fb923c;
     }
 
-    .Header5 {
-        background: linear-gradient(1deg, #c2a5cf, #5586df24);
-    }
-
-    .Body5 {
-        background: linear-gradient(45deg, transparent, #CBB4D5);
-    }
-
-    .Footer5 {
-        background: linear-gradient(1deg, #c2a5cf, #5586df24);
-    }
-
-    .Button5 {
-        background: linear-gradient(1deg, #c2a5cf, #5586df24);
-        border-color: #3f3c3c45 !important;
+    .Category5{
+        color: #fb923c; /* Color para la categoría "Arte y Cultura" */
     }
 
     /*Tecnologia y ciencia */
@@ -129,46 +63,15 @@
         background: #f1a875;
         color: white;
         border-color: #f1a875;
+    }  
+    .Category6{
+        color: #f1a875; /* Color para la categoría "Tecnología y Ciencia" */
     }
-
-    .Header6 {
-        background: linear-gradient(1deg, #f1a875, #5586df24);
-    }
-
-    .Body6 {
-        background: linear-gradient(45deg, transparent, #f1a875);
-    }
-
-    .Footer6 {
-        background: linear-gradient(1deg, #f1a875, #5586df24);
-    }
-
-    .Button6 {
-        background: linear-gradient(1deg, #f1a875, #5586df24);
-        border-color: #3f3c3c45 !important;
-    }   
 
     .buttonCaption {
         color: white;
         font-size: 1.25rem;
         font-family: sans-serif;
-    }
-
-    #style-2::-webkit-scrollbar-track {
-        -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-        border-radius: 10px;
-        background-color: #F5F5F5;
-    }
-
-    #style-2::-webkit-scrollbar {
-        width: 12px;
-        background-color: #F5F5F5;
-    }
-
-    #style-2::-webkit-scrollbar-thumb {
-        border-radius: 10px;
-        -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
-        background: linear-gradient(-40deg,#001122, #001122);
     }
 
     /*Botones de paginación*/
@@ -177,117 +80,595 @@
         background-color: #ffa500;
         border:none;
     }
+
+
+    /* Personaliza los estilos de la card */
+    .card-horizontal {
+        max-width: 60em;
+        height: auto;
+        background-color: #001122;
+        color: white;
+        border: none;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0px 10px 20px rgba(255, 255, 255, 0.1); /* Cambia la sombra a blanca */
+        transition: transform 0.3s; /* Agrega una transición de transformación */
+    }
+
+    .card-horizontal:hover {
+        transform: translateY(-10px); /* Efecto de elevación al pasar el mouse */
+    }
+
+    .card-horizontal img {
+        max-width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    /*@@keyframes pulse {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.5); }
+    }*/
+    
+    /*.category-icon {
+        animation: pulse 1s ease-in-out infinite; 
+    }*/
+
+    /*Boton de reservar*/
+    .btn-reservar {
+        position: relative;
+        font-size: 0.75em;
+        text-transform: uppercase;
+        text-decoration: none;
+        padding: 0.5em 1em;
+        display: inline-block;
+        border-radius: 5px;
+        transition: all .2s;
+        border: none;
+        font-family: inherit;
+        font-weight: 500;
+        color: white;
+        background-color: #001122;
+        height:60px;
+        border: 1px solid white;
+    }
+
+    .btn-reservar:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .btn-reservar:active {
+        transform: translateY(-1px);
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .btn-reservar::after {
+        content: "";
+        display: inline-block;
+        height: 100%;
+        width: 100%;
+        border-radius: 5px;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: -1;
+        transition: all .4s;
+    }
+
+    .btn-reservar::after {
+        background-color: white;
+    }
+
+    .btn-reservar:hover::after {
+        transform: scaleX(1.4) scaleY(1.6);
+        opacity: 0;
+    }
+
+    /* Estilo para el contenedor con scroll horizontal */
+    .scroll-horizontal {
+        white-space: nowrap; /* Evita que los elementos se envuelvan */
+        overflow-x: auto; /* Añade scroll horizontal cuando los elementos exceden el ancho del contenedor */
+        -webkit-overflow-scrolling: touch; /* Mejora el desplazamiento en dispositivos móviles */
+        position: relative; /* Agrega posición relativa para posicionar el icono o el texto */
+    }
+
+    .scroll-horizontal::-webkit-scrollbar {
+        display: none;
+    }
+
+    /*Estilos Radio buttons*/
+    .radio-inputs {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        /*max-width: 350px;*/
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+
+    .radio-inputs > * {
+        margin: 13px;
+    }
+
+
+    .radio-tile {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 120px;
+        min-height: 120px;
+        border-radius: 0.5rem;
+        border: 2px solid #001122;
+        background-color: #001122;
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        transition: 0.15s ease;
+        cursor: pointer;
+        position: relative;
+    }
+
+    .radio-tile:before {
+        content: "";
+        position: absolute;
+        display: block;
+        width: 0.75rem;
+        height: 0.75rem;
+        border: 2px solid #001122;
+        background-color: #001122;
+        border-radius: 50%;
+        top: 0.25rem;
+        left: 0.25rem;
+        opacity: 0;
+        transform: scale(0);
+        transition: 0.25s ease;
+    }
+
+    .radio-tile:hover {
+        border-color: #2260ff;
+    }
+
+    .radio-tile:hover:before {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    .radio-icon i {
+        color: white;
+        margin-bottom:3px;
+    }
+
+    .radio-label {
+        color:  white;
+        transition: 0.375s ease;
+        text-align: center;
+        font-size: 13px;
+    }
+
+    .radio-input {
+        clip: rect(0 0 0 0);
+        -webkit-clip-path: inset(100%);
+        clip-path: inset(100%);
+        height: 1px;
+        overflow: hidden;
+        position: absolute;
+        white-space: nowrap;
+        width: 1px;
+    }
+
+        
+
+    /*Radio buttons clases*/
+    /*Ocio*/
+    .radio-ocio:checked + .radio-tile {
+        border-color: #22d3ee;
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        color: #22d3ee;
+    }
+
+    .radio-ocio:checked + .radio-tile:before {
+        transform: scale(1);
+        opacity: 1;
+        background-color: #22d3ee;
+        border-color: #22d3ee;
+    }
+
+    .radio-ocio:checked + .radio-tile .radio-icon i {
+        color: #22d3ee;
+    }
+
+    .radio-ocio:checked + .radio-tile .radio-label {
+        color: #22d3ee;
+    }
+
+    .radio-ocio:focus + .radio-tile {
+        border-color: #22d3ee;
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1), 0 0 0 4px #22d3ee;
+    }
+
+    .radio-ocio:focus + .radio-tile:before {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    /*Gastronomia*/
+    .radio-gastronomia:checked + .radio-tile {
+        border-color: #fb7185;
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        color: #fb7185;
+    }
+
+    .radio-gastronomia:checked + .radio-tile:before {
+        transform: scale(1);
+        opacity: 1;
+        background-color: #fb7185;
+        border-color: #fb7185;
+    }
+
+    .radio-gastronomia:checked + .radio-tile .radio-icon i {
+        color: #fb7185;
+    }
+
+    .radio-gastronomia:checked + .radio-tile .radio-label {
+        color: #fb7185;
+    }
+
+    .radio-gastronomia:focus + .radio-tile {
+        border-color: #fb7185;
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1), 0 0 0 4px #fb7185;
+    }
+
+    .radio-gastronomia:focus + .radio-tile:before {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    /*Al aire libre*/
+    .radio-aAireLibre:checked + .radio-tile {
+        border-color: #4ade80;
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        color: #4ade80;
+    }
+
+    .radio-aAireLibre:checked + .radio-tile:before {
+        transform: scale(1);
+        opacity: 1;
+        background-color: #4ade80;
+        border-color: #4ade80;
+    }
+
+    .radio-aAireLibre:checked + .radio-tile .radio-icon i {
+        color: #4ade80;
+    }
+
+    .radio-aAireLibre:checked + .radio-tile .radio-label {
+        color: #4ade80;
+    }
+
+    .radio-aAireLibre:focus + .radio-tile {
+        border-color: #4ade80;
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1), 0 0 0 4px #4ade80;
+    }
+
+    .radio-aAireLibre:focus + .radio-tile:before {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    /*Arte y cultura*/
+    .radio-arteycultura:checked + .radio-tile {
+        border-color: #fb923c;
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        color: #fb923c;
+    }
+
+    .radio-arteycultura:checked + .radio-tile:before {
+        transform: scale(1);
+        opacity: 1;
+        background-color: #fb923c;
+        border-color: #fb923c;
+    }
+
+    .radio-arteycultura:checked + .radio-tile .radio-icon i {
+        color: #fb923c;
+    }
+
+    .radio-arteycultura:checked + .radio-tile .radio-label {
+        color: #fb923c;
+    }
+
+    .radio-arteycultura:focus + .radio-tile {
+        border-color: #fb923c;
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1), 0 0 0 4px #fb923c;
+    }
+
+    .radio-arteycultura:focus + .radio-tile:before {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    /*Tegnologia y Ciencia*/
+    .radio-ityciencia:checked + .radio-tile {
+        border-color: #f1a875;
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        color: #f1a875;
+    }
+
+    .radio-ityciencia:checked + .radio-tile:before {
+        transform: scale(1);
+        opacity: 1;
+        background-color: #f1a875;
+        border-color: #f1a875;
+    }
+
+    .radio-ityciencia:checked + .radio-tile .radio-icon i {
+        color: #f1a875;
+    }
+
+    .radio-ityciencia:checked + .radio-tile .radio-label {
+            color: #f1a875;
+    }
+
+    .radio-ityciencia:focus + .radio-tile {
+        border-color: #f1a875;
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1), 0 0 0 4px #f1a875;
+    }
+
+    .radio-ityciencia:focus + .radio-tile:before {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    /*Deportes*/
+    .radio-deporte:checked + .radio-tile {
+        border-color: #fde047;
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        color: #fde047;
+    }
+
+    .radio-deporte:checked + .radio-tile:before {
+        transform: scale(1);
+        opacity: 1;
+        background-color: #fde047;
+        border-color: #fde047;
+    }
+
+    .radio-deporte:checked + .radio-tile .radio-icon i {
+        color: #fde047;
+    }
+
+    .radio-deporte:checked + .radio-tile .radio-label {
+        color: #fde047;
+    }
+
+    .radio-deporte:focus + .radio-tile {
+        border-color: #fde047;
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1), 0 0 0 4px #fde047;
+    }
+
+    .radio-deporte:focus + .radio-tile:before {
+        transform: scale(1);
+        opacity: 1;
+    }
 </style>
+<hr style="background-color:#001122"/>
 
-<h1 class="display-4 mb-5">Eventos</h1>
-
-<hr class="mb-3"/>
-
-<div class="row p-2 m-1 d-flex justify-content-center" @*style="border-radius:5px; background-color:#001122;"*@>
-    <div class="col-md-auto col-sm-auto">
-        <a href="eventosporcategoria?categoria=1" class="btn m-1 text-truncate ocioButton buttonCaption">Ocio</a>
-    </div>
-    <div class="col-md-auto col-sm-auto">
-        <a href="eventosporcategoria?categoria=2" class="btn m-1 text-truncate gastronomiaButton buttonCaption">Gastronomía</a>
-    </div>
-    <div class="col-md-auto col-sm-auto">
-        <a href="eventosporcategoria?categoria=4" class="btn m-1 text-truncate aireLibreButton buttonCaption">Al aire libre</a>
-    </div>
-    <div class="col-md-auto col-sm-auto">
-        <a href="eventosporcategoria?categoria=5" class="btn m-1 text-truncate arteCulturaButton buttonCaption">Arte y Cultura</a>
-    </div>
-    <div class="col-md-auto col-sm-auto">
-        <a href="eventosporcategoria?categoria=6" class="btn m-1 text-truncate tecnologiaCienciaButton buttonCaption">Tecnología y Ciencia</a>
-    </div>
-    <div class="col-md-auto col-sm-auto">
-        <a href="eventosporcategoria?categoria=3" class="btn m-1 text-truncate DeportesButton buttonCaption">Deportes</a>
+<div class="row d-flex m-0 justify-content-center">
+    <!-- Este div solo se muestra en pantallas pequeñas (sm y xs) -->
+    <div class="col-md-auto m-0 col-sm-auto d-md-none d-lg-block d-lg-none d-xl-block d-xl-none">
+        <div class="scroll-horizontal">
+            <label id="labelOcio">
+                <input class="radio-input radio-ocio" type="radio" name="filtro" value="ocio">
+                <span class="radio-tile">
+                    <span class="radio-icon">
+                        <i class="fa-solid fa-martini-glass-citrus fa-2x"></i>
+                    </span>
+                    <span class="radio-label text-center">Ocio</span>
+                </span>
+            </label>
+            <label>
+                <input class="radio-input radio-gastronomia" type="radio" name="filtro" value="gastronomia">
+                <span class="radio-tile">
+                    <span class="radio-icon">
+                        <i class="fa-solid fa-pizza-slice fa-2x"></i>
+                    </span>
+                    <span class="radio-label text-center">Gastronomía</span>
+                </span>
+            </label>
+            <label>
+                <input class="radio-input radio-aAireLibre" type="radio" name="filtro" value="aAireLibre">
+                <span class="radio-tile">
+                    <span class="radio-icon">
+                        <i class="fa-solid fa-tree fa-2x"></i>
+                    </span>
+                    <span class="radio-label text-center">Al aire libre</span>
+                </span>
+            </label>
+            <label>
+                <input class="radio-input radio-arteycultura" type="radio" name="filtro" value="arteycultura">
+                <span class="radio-tile">
+                    <span class="radio-icon">
+                        <i class="fa-solid fa-masks-theater fa-2x"></i>
+                    </span>
+                    <span class="radio-label text-center">Arte y Cultura</span>
+                </span>
+            </label>
+            <label>
+                <input class="radio-input radio-ityciencia" type="radio" name="filtro" value="tegyciencia">
+                <span class="radio-tile">
+                    <span class="radio-icon">
+                        <i class="fa-solid fa-microchip fa-2x"></i>
+                    </span>
+                    <span class="radio-label text-center">Tegnología y Ciencia</span>
+                </span>
+            </label>
+            <label>
+                <input class="radio-input radio-deporte" type="radio" name="filtro" value="deportes">
+                <span class="radio-tile">
+                    <span class="radio-icon">
+                        <i class="fa-solid fa-volleyball fa-2x"></i>
+                    </span>
+                    <span class="radio-label text-center">Deportes</span>
+                </span>
+            </label>
+        </div>
     </div>
 </div>
-<hr />
 
-@*<div class="col">
-        <hr Categorias/>
-        <div class ="col d-flex justify-content-center">
-            <a href="eventosporcategoria?categoria=1" class="btn m-1 text-truncate ocioButton buttonCaption">Ocio</a>
-            <a href="eventosporcategoria?categoria=2" class="btn m-1 text-truncate gastronomiaButton buttonCaption">Gastronomía</a>
-            <a href="eventosporcategoria?categoria=4" class="btn m-1 text-truncate aireLibreButton buttonCaption">Al aire libre</a>
-            <a href="eventosporcategoria?categoria=5" class="btn m-1 text-truncate arteCulturaButton buttonCaption">Arte y Cultura</a>
-            <a href="eventosporcategoria?categoria=6" class="btn m-1 text-truncate tecnologiaCienciaButton buttonCaption">Tecnología y Ciencia</a>
-            <a href="eventosporcategoria?categoria=3" class="btn m-1 text-truncate DeportesButton buttonCaption">Deportes</a>
-        </div>
-        <hr />
-    </div>*@
+<div class="row d-flex justify-content-center radio-inputs">
+    <!-- Este div solo se muestra en pantallas que no sean pequeñas (md, lg, xl) -->
+    <div class="col-md-auto col-sm-auto d-none d-sm-block d-sm-none d-md-block">
+        <label id="labelOcio">
+            <input class="radio-input radio-ocio" type="radio" name="filtro" value="ocio">
+            <span class="radio-tile">
+                <span class="radio-icon">
+                    <i class="fa-solid fa-martini-glass-citrus fa-2x"></i>
+                </span>
+                <span class="radio-label text-center">Ocio</span>
+            </span>
+        </label>
+    </div>
+    <div class="col-md-auto col-sm-auto d-none d-sm-block d-sm-none d-md-block">
+        <label>
+            <input class="radio-input radio-gastronomia" type="radio" name="filtro" value="gastronomia">
+            <span class="radio-tile">
+                <span class="radio-icon">
+                    <i class="fa-solid fa-pizza-slice fa-2x"></i>
+                </span>
+                <span class="radio-label text-center">Gastronomía</span>
+            </span>
+        </label>
+    </div>
+    <div class="col-md-auto col-sm-auto d-none d-sm-block d-sm-none d-md-block">
+        <label>
+            <input class="radio-input radio-aAireLibre" type="radio" name="filtro" value="aAireLibre">
+            <span class="radio-tile">
+                <span class="radio-icon">
+                    <i class="fa-solid fa-tree fa-2x"></i>
+                </span>
+                <span class="radio-label text-center">Al aire libre</span>
+            </span>
+        </label>
+    </div>
+    <div class="col-md-auto col-sm-auto d-none d-sm-block d-sm-none d-md-block">
+        <label>
+            <input class="radio-input radio-arteycultura" type="radio" name="filtro" value="arteycultura">
+            <span class="radio-tile">
+                <span class="radio-icon">
+                    <i class="fa-solid fa-masks-theater fa-2x"></i>
+                </span>
+                <span class="radio-label text-center">Arte y Cultura</span>
+            </span>
+        </label>
+    </div>
+    <div class="col-md-auto col-sm-auto d-none d-sm-block d-sm-none d-md-block">
+        <label>
+            <input class="radio-input radio-ityciencia" type="radio" name="filtro" value="tegyciencia">
+            <span class="radio-tile">
+                <span class="radio-icon">
+                    <i class="fa-solid fa-microchip fa-2x"></i>
+                </span>
+                <span class="radio-label text-center">Tegnología y Ciencia</span>
+            </span>
+        </label>
+    </div>
+    <div class="col-md-auto col-sm-auto d-none d-sm-block d-sm-none d-md-block">
+        <label>
+            <input class="radio-input radio-deporte" type="radio" name="filtro" value="deportes">
+            <span class="radio-tile">
+                <span class="radio-icon">
+                    <i class="fa-solid fa-volleyball fa-2x"></i>
+                </span>
+                <span class="radio-label text-center">Deportes</span>
+            </span>
+        </label>
+    </div>
+</div>
 
-<div class="overflow-visible" id="style-2" style="height: 100%;">
-    @foreach (Evento oEvento in @Model)
-    {
+<hr style="background-color:#001122" />
+
+<div class="row overflow-visible m-5"  style="height: 100%;">
+    @foreach(Evento oEvento in @Model){
         if (!oEvento.Reservado)
         {
-            string idHeader = "Header" + oEvento.FkIdCategoria.ToString();
-            string idBody = "Body" + oEvento.FkIdCategoria.ToString();
-            string idFooter = "Footer" + oEvento.FkIdCategoria.ToString();
-            string idButton = "Button" + oEvento.FkIdCategoria.ToString();
+            <div class="col-12 mb-4 d-flex justify-content-center">
+                <div class="card card-horizontal" style="width:100%; border: 0.1px solid #c6c6c6;min-width: 350px;">
+                    <div class="row g-0 h-100">
+                        <div class="col event-image bg-white">
+                            <img src=@oEvento.Imagen class="img-fluid">
+                        </div>
+                        <div class="col-md-8 event-info">
+                            <!-- Encabezado del card -->
+                            <div class="card-header py-3" style="border-bottom-color:white;">
+                                <div class="row align-items-center justify-content-center">
+                                    <div class="col-2 d-flex align-items-center justify-content-center">
+                                        <i class="fas fa-circle  category-icon fa-2x @("Category" + oEvento.FkIdCategoria)" title="@oEvento.CategoriaNombre"></i>
+                                    </div>
+                                    <div class="col-7 d-flex align-items-start">
+                                        <h4 class="mb-0 text-left">@oEvento.Titulo</h4>
+                                    </div>
+                                    <div class="col-3 d-flex align-items-center justify-content-end">
+                                        @if (oEvento.Precio == 0)
+                                        {
+                                            <p class="mb-0 font-weight-bold"><i class="fas fa-dollar-sign" style="color: #2c8c2f;"></i> Gratis!</p>
+                                        }
+                                        else
+                                        {
+                                            <p class="mb-0 font-weight-bold"><i class="fas fa-dollar-sign" style="color: #2c8c2f;"></i> @oEvento.Precio</p>
+                                        }
 
-            <div class="col-12 mb-4">
-                <div class="card">
-                    <div class="card-header  @idHeader">
-                        <h5 class="text-center card-title">
-                            @oEvento.Titulo -
-                            @if (oEvento.Precio == 0)
-                            {
-                                <label class="form-label">Gratis</label>
-                            }
-                            else
-                            {
-                                <label class="form-label">@oEvento.Precio €</label>
-                            }
-                            (@oEvento.ValorEnPuntos Ptos)
-                        </h5>
-                    </div>
-                    <div class="card-body @idBody">
-                        <div class="row">
-                            <img src=@oEvento.Imagen
-                                 class="rounded align-self-center" style="width: 155px;height: 155px;">
-
-                            <div class="col">
-                                <p class="card-text"> @oEvento.Descripcion</p>
-                            </div>
-                            <div class="col-lg-1 col-md-1 col align-self-end">
-                                <div class="d-flex justify-content-end">
-                                    <strong class="form-label" style="white-space:nowrap">Fecha de inicio: </strong>
-                                    <label class="form-label" style="margin-left:1%">@oEvento.FechaInicio.ToShortDateString()</label>
-                                </div>
-                                <div class="d-flex justify-content-end">
-                                    <strong class="form-label" style="white-space:nowrap">Fecha de finalizaci&oacute;n: </strong>
-                                    <label class="form-label" style="margin-left:1%">@oEvento.FechaFin.ToShortDateString()</label>
+                                        <p class="mb-0 ms-2 font-weight-bold"><i class="fas fa-coins" style="color:#ff2a5c"></i> @oEvento.ValorEnPuntos</p>
+                                    </div>
                                 </div>
                             </div>
+                            <!-- Cuerpo del card -->
+                            <div class="card-body">
+                                <!-- Descripción del evento -->
+                                <div class="mb-3">
+                                    <p class="mb-0 text-muted">@oEvento.Descripcion</p>
+                                </div>
+                                <hr>
+                                <div class="row "> @*Fila oculta en sm*@
+                                    <div class="col-12 d-none d-sm-block d-sm-none d-md-block">
+                                        <!-- Fechas y ubicación -->
+                                        <p><i class="far fa-calendar-alt"></i> Inicio: @oEvento.FechaInicio.ToShortDateString()</p>
+                                        <p><i class="far fa-calendar-alt"></i> Fin: @oEvento.FechaFin.ToShortDateString()</p>
+                                        <p><i class="far fa-clock"></i> Hora: 19:00 - 23:00</p>
+                                    </div>
+                                    <div class="col mb-3 d-md-none d-lg-block d-lg-none d-xl-block d-xl-none">
+                                        <img src=@oEvento.Imagen class="img-fluid" style="width:70%;">
+                                    </div>
+                                    <div class="col-6 d-md-none d-lg-block d-lg-none d-xl-block d-xl-none">
+                                        <!-- Fechas y ubicación -->
+                                        <p><i class="far fa-calendar-alt"></i> Inicio: @oEvento.FechaInicio.ToShortDateString()</p>
+                                        <p><i class="far fa-calendar-alt"></i> Fin: @oEvento.FechaFin.ToShortDateString()</p>
+                                        <p><i class="far fa-clock"></i> Hora: 19:00 - 23:00</p>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            @if (User.IsInRole("Empresa") || User.IsInRole("Usuario"))
+                            {
+                                <!-- Pie del card -->
+                                <div class="card-footer" style="border-top-color:white">
+                                    <div class="row">
+                                        <div class="col-lg-8 col-md-6 col-sm-6 col-6 d-flex align-items-center">
+                                            <a href="https://www.google.es/maps/place/@oEvento.UbicacionNombre" target="_blank" class="link-primary text-truncate" style="margin-left:1%"><i class="fas fa-map-marker-alt me-1"></i>@oEvento.UbicacionNombre</a>
+                                        </div>
+                                        <div class="col d-flex justify-content-end">
+                                            <button href="reservarevento?idEvento=@oEvento.IdEvento" class=" btn-reservar ">
+                                                Reservar
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
                         </div>
                     </div>
-                    @if (User.IsInRole("Empresa") || User.IsInRole("Usuario"))
-                    {
-                        <div class="card-footer @idFooter">
-                            <div class="row">
-                                <div class="col d-flex align-self-center">
-                                    <strong>Categoria: </strong>
-                                    <label class="form-label text-truncate" style="margin-left:1%">@oEvento.CategoriaNombre</label>
-                                    <strong style="margin-left:2%">Direcci&oacute;n: </strong>
-                                    <a href="https://www.google.es/maps/place/@oEvento.UbicacionNombre" target="_blank" class="link-primary text-truncate" style="margin-left:1%">@oEvento.UbicacionNombre</a>
-                                    <strong style="margin-left:2%">Entradas: </strong>
-                                    <label class="form-label" style="margin-left:1%">@oEvento.PlazasMaximas</label>
-                                </div>
-                                <div class="col d-flex justify-content-end">
-                                    @if (User.IsInRole("Usuario"))
-                                    {
-                                        <a href="reservarevento?idEvento=@oEvento.IdEvento" class="btn m-1 @idButton">Reservar</a>
-                                    }
-                                </div>
-                            </div>
-                        </div>
-                    }
                 </div>
             </div>
-        }        
+        }    
     }
 </div>
 
@@ -310,5 +691,3 @@
         <a href="@Url.Action("Eventos", new { page = ViewBag.PaginaActual + 1 })" class="btn btn-primary pagination-button">Siguiente</a>
     }
 </div>
-
-
