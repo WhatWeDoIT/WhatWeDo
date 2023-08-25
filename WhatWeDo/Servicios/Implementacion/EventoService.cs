@@ -9,6 +9,8 @@ using WhatWeDo.Models;
 using System.Data.SqlTypes;
 using Firebase.Auth;
 using System.Security.Claims;
+using WhatWeDo.Recursos;
+using static WhatWeDo.Recursos.CargasCombo;
 
 namespace WhatWeDo.Servicios.Implementacion
 {
@@ -80,6 +82,15 @@ namespace WhatWeDo.Servicios.Implementacion
                                 oUbicacion = await _ServicioUbicacion.GetUbicacion(oUbicacion);
                                 oEvento.UbicacionNombre = oUbicacion.Direccion;
                             }
+                            if (!string.IsNullOrWhiteSpace(dr["HoraInicio"].ToString()))
+                            {
+                                oEvento.HoraIncio = (TimeSpan)dr["HoraInicio"];
+                            }
+
+                            if (!string.IsNullOrWhiteSpace(dr["HoraFin"].ToString()))
+                            {
+                                oEvento.HoraFin = (TimeSpan)dr["HoraFin"];
+                            }                            
 
                             oEvento.Reservado = await GetReservado(idUsuario, oEvento.IdEvento);
 
@@ -149,7 +160,18 @@ namespace WhatWeDo.Servicios.Implementacion
 
                                 oUbicacion = await _ServicioUbicacion.GetUbicacion(oUbicacion);
                                 oEvento.UbicacionNombre = oUbicacion.Direccion;
-                            }                        }
+                            }
+                            if (!string.IsNullOrWhiteSpace(dr["HoraInicio"].ToString()))
+                            {
+                                oEvento.HoraIncio = (TimeSpan)dr["HoraInicio"];
+                            }
+
+                            if (!string.IsNullOrWhiteSpace(dr["HoraFin"].ToString()))
+                            {
+                                oEvento.HoraFin = (TimeSpan)dr["HoraFin"];
+                            }
+
+                        }
                     }
                 }
 
@@ -160,6 +182,45 @@ namespace WhatWeDo.Servicios.Implementacion
 
             }
             return oEvento;
+        }
+
+        public async Task<EventoPago> GetEventoPago(int idEvento, int idUsuario)
+        {
+            EventoPago oEventoPago = new EventoPago();
+
+            try
+            {
+                using (SqlConnection conexion = new SqlConnection(_conexion.CadenaBBDD))
+                {
+                    SqlCommand cmd = new SqlCommand("sp_GetEventoPago", conexion);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add(new SqlParameter("@IdEvento", idEvento));
+                    cmd.Parameters.Add(new SqlParameter("@IdUsuario", idUsuario));
+
+                    conexion.Open();
+                    using (SqlDataReader dr = await cmd.ExecuteReaderAsync())
+                    {
+                        while (await dr.ReadAsync())
+                        {
+                            oEventoPago.IdEventoPago = Convert.ToInt32(dr["IdEventoPago"]);
+                            oEventoPago.FkIdEvento = Convert.ToInt32(dr["FkIdEvento"]);
+                            oEventoPago.FkIdUsuario = Convert.ToInt32(dr["FkIdUsuario"]);
+                            oEventoPago.FkIdEmpresa = Convert.ToInt32(dr["FkIdEmpresa"]);
+                            oEventoPago.FechaAsistencia = (DateTime)dr["FechaAsistencia"];
+                            oEventoPago.Miembros = Convert.ToInt32(dr["Miembros"]);
+                            oEventoPago.PrecioTotal = double.Parse(dr["PrecioTotal"].ToString());
+                            oEventoPago.PuntosAsignados = Convert.ToInt32(dr["PuntosAsignados"]);
+                        }
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+
+            }
+            return oEventoPago;
         }
 
         public async Task<List<Evento>> GetEventosPorCategoria(int nCategoria)
@@ -217,6 +278,15 @@ namespace WhatWeDo.Servicios.Implementacion
                                 oEvento.UbicacionNombre = oUbicacion.Direccion;
                             }
 
+                            if (!string.IsNullOrWhiteSpace(dr["HoraInicio"].ToString()))
+                            {
+                                oEvento.HoraIncio = (TimeSpan)dr["HoraInicio"];
+                            }
+
+                            if (!string.IsNullOrWhiteSpace(dr["HoraFin"].ToString()))
+                            {
+                                oEvento.HoraFin = (TimeSpan)dr["HoraFin"];
+                            }
 
                             lstEventos.Add(oEvento);
                         }
@@ -285,7 +355,15 @@ namespace WhatWeDo.Servicios.Implementacion
                                 oUbicacion = await _ServicioUbicacion.GetUbicacion(oUbicacion);
                                 oEvento.UbicacionNombre = oUbicacion.Direccion;
                             }
+                            if (!string.IsNullOrWhiteSpace(dr["HoraInicio"].ToString()))
+                            {
+                                oEvento.HoraIncio = (TimeSpan)dr["HoraInicio"];
+                            }
 
+                            if (!string.IsNullOrWhiteSpace(dr["HoraFin"].ToString()))
+                            {
+                                oEvento.HoraFin = (TimeSpan)dr["HoraFin"];
+                            }
 
                             lstEventos.Add(oEvento);
                         }
@@ -354,6 +432,15 @@ namespace WhatWeDo.Servicios.Implementacion
 
                                 oUbicacion = await _ServicioUbicacion.GetUbicacion(oUbicacion);
                                 oEvento.UbicacionNombre = oUbicacion.Direccion;
+                            }
+                            if (!string.IsNullOrWhiteSpace(dr["HoraInicio"].ToString()))
+                            {
+                                oEvento.HoraIncio = (TimeSpan)dr["HoraInicio"];
+                            }
+
+                            if (!string.IsNullOrWhiteSpace(dr["HoraFin"].ToString()))
+                            {
+                                oEvento.HoraFin = (TimeSpan)dr["HoraFin"];
                             }
 
 
@@ -425,6 +512,15 @@ namespace WhatWeDo.Servicios.Implementacion
                                 oEvento.UbicacionNombre = oUbicacion.Direccion;
                             }
 
+                            if (!string.IsNullOrWhiteSpace(dr["HoraInicio"].ToString()))
+                            {
+                                oEvento.HoraIncio = (TimeSpan)dr["HoraInicio"];
+                            }
+
+                            if (!string.IsNullOrWhiteSpace(dr["HoraFin"].ToString()))
+                            {
+                                oEvento.HoraFin = (TimeSpan)dr["HoraFin"];
+                            }
 
                             lstEventos.Add(oEvento);
                         }
@@ -494,7 +590,15 @@ namespace WhatWeDo.Servicios.Implementacion
                                 oUbicacion = await _ServicioUbicacion.GetUbicacion(oUbicacion);
                                 oEvento.UbicacionNombre = oUbicacion.Direccion;
                             }
+                            if (!string.IsNullOrWhiteSpace(dr["HoraInicio"].ToString()))
+                            {
+                                oEvento.HoraIncio = (TimeSpan)dr["HoraInicio"];
+                            }
 
+                            if (!string.IsNullOrWhiteSpace(dr["HoraFin"].ToString()))
+                            {
+                                oEvento.HoraFin = (TimeSpan)dr["HoraFin"];
+                            }
 
                             lstEventos.Add(oEvento);
                         }
@@ -509,7 +613,7 @@ namespace WhatWeDo.Servicios.Implementacion
             }
             return lstEventos;
         }
-
+    
         public async Task InsertEvento(Evento oEvento, int idEmpresa)
         {
             try
@@ -532,6 +636,8 @@ namespace WhatWeDo.Servicios.Implementacion
                     cmd.Parameters.Add(new SqlParameter("@FkIdDescuento", oEvento.FkIdDescuento == null ? (object)DBNull.Value : oEvento.FkIdDescuento));
                     cmd.Parameters.Add(new SqlParameter("@ValorEnPuntos", oEvento.ValorEnPuntos));
                     cmd.Parameters.Add(new SqlParameter("@IdEmpresa", idEmpresa));
+                    cmd.Parameters.Add(new SqlParameter("@HoraInicio", oEvento.HoraIncio));
+                    cmd.Parameters.Add(new SqlParameter("@HoraFin", oEvento.HoraFin));
 
                     conexion.Open();
                     await cmd.ExecuteNonQueryAsync();
@@ -541,6 +647,32 @@ namespace WhatWeDo.Servicios.Implementacion
             {
                 throw new Exception(ex.Message);
             }           
+        }
+
+        public async Task InsertEventoPago(EventoPago oEventoPago)
+        {
+            try
+            {
+                using (SqlConnection conexion = new SqlConnection(_conexion.CadenaBBDD))
+                {
+                    SqlCommand cmd = new SqlCommand("sp_InsertEventoPago", conexion);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add(new SqlParameter("@FechaAsistencia", oEventoPago.FechaAsistencia));
+                    cmd.Parameters.Add(new SqlParameter("@Miembros", oEventoPago.Miembros));
+                    cmd.Parameters.Add(new SqlParameter("@PrecioTotal", oEventoPago.PrecioTotal));
+                    cmd.Parameters.Add(new SqlParameter("@PuntosAsignados", oEventoPago.PuntosAsignados));
+                    cmd.Parameters.Add(new SqlParameter("@FkIdEmpresa", oEventoPago.FkIdEmpresa));
+                    cmd.Parameters.Add(new SqlParameter("@FkIdUsuario", oEventoPago.FkIdUsuario));
+                    cmd.Parameters.Add(new SqlParameter("@FkIdEvento", oEventoPago.FkIdEvento));
+
+                    conexion.Open();
+                    await cmd.ExecuteNonQueryAsync();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
         public async Task UpdateEvento(Evento oEvento)
@@ -564,6 +696,8 @@ namespace WhatWeDo.Servicios.Implementacion
                     cmd.Parameters.Add(new SqlParameter("@FkIdCategoria", oEvento.FkIdCategoria));
                     cmd.Parameters.Add(new SqlParameter("@FkIdDescuento", oEvento.FkIdDescuento));
                     cmd.Parameters.Add(new SqlParameter("@ValorEnPuntos", oEvento.ValorEnPuntos));
+                    cmd.Parameters.Add(new SqlParameter("@HoraInicio", oEvento.HoraIncio));
+                    cmd.Parameters.Add(new SqlParameter("@HoraFin", oEvento.HoraFin));
                     conexion.Open();
                     await cmd.ExecuteNonQueryAsync();    
                 }
@@ -628,7 +762,7 @@ namespace WhatWeDo.Servicios.Implementacion
             return bReservado;
         }
 
-        public async Task ReservarEvento (int idEvento, int idUsuario)
+        public async Task ReservarEvento (int idEvento, int idUsuario, DateTime fecha, int miembros)
         {
             try
             {
@@ -638,12 +772,12 @@ namespace WhatWeDo.Servicios.Implementacion
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.Add(new SqlParameter("@FkIdUsuario", idUsuario));
                     cmd.Parameters.Add(new SqlParameter("@FkIdEvento", idEvento));
-                    cmd.Parameters.Add(new SqlParameter("@FechaPlan", DateTime.Now));
+                    cmd.Parameters.Add(new SqlParameter("@FechaPlan", fecha));
                    
                     conexion.Open();
                     await cmd.ExecuteNonQueryAsync();
                     Evento oEvento = await GetEventoPorId(idEvento);
-                    await ModificarPlazasEvento(oEvento, true);
+                    await ModificarPlazasEvento(oEvento, true, miembros);
                 }
             }
             catch (Exception ex)
@@ -652,7 +786,7 @@ namespace WhatWeDo.Servicios.Implementacion
             }
         }
 
-        public async Task AnularReservaEvento(int idEvento, int idUsuario)
+        public async Task AnularReservaEvento(int idEvento, int idUsuario, int miembros)
         {
             try
             {
@@ -666,7 +800,7 @@ namespace WhatWeDo.Servicios.Implementacion
                     conexion.Open();
                     await cmd.ExecuteNonQueryAsync();
                     Evento oEvento = await GetEventoPorId(idEvento);
-                    await ModificarPlazasEvento(oEvento, false);
+                    await ModificarPlazasEvento(oEvento, false, miembros);
                 }
             }
             catch (Exception ex)
@@ -675,7 +809,7 @@ namespace WhatWeDo.Servicios.Implementacion
             }
         }
 
-        public async Task ModificarPlazasEvento(Evento oEvento, bool bReservar)
+        public async Task ModificarPlazasEvento(Evento oEvento, bool bReservar, int Miembros)
         {
             try
             {
@@ -685,13 +819,13 @@ namespace WhatWeDo.Servicios.Implementacion
                     cmd.CommandType = CommandType.StoredProcedure;
                     if (bReservar)
                     {
-                        cmd.Parameters.Add(new SqlParameter("@PlazasActuales", oEvento.PlazasActuales + 1));
-                        cmd.Parameters.Add(new SqlParameter("@PlazasMaximas", oEvento.PlazasMaximas - 1));
+                        cmd.Parameters.Add(new SqlParameter("@PlazasActuales", oEvento.PlazasActuales + Miembros));
+                        cmd.Parameters.Add(new SqlParameter("@PlazasMaximas", oEvento.PlazasMaximas - Miembros));
                     }
                     else
                     {
-                        cmd.Parameters.Add(new SqlParameter("@PlazasActuales", oEvento.PlazasActuales - 1));
-                        cmd.Parameters.Add(new SqlParameter("@PlazasMaximas", oEvento.PlazasMaximas + 1));
+                        cmd.Parameters.Add(new SqlParameter("@PlazasActuales", oEvento.PlazasActuales - Miembros));
+                        cmd.Parameters.Add(new SqlParameter("@PlazasMaximas", oEvento.PlazasMaximas + Miembros));
                     }
                     
                     cmd.Parameters.Add(new SqlParameter("@IdEvento", oEvento.IdEvento));
@@ -705,5 +839,57 @@ namespace WhatWeDo.Servicios.Implementacion
             }
         }
 
+        public async Task<List<FechasEvento>> GetFechasEvento(DateTime dFechaInicio, DateTime dFechaFin)
+        {
+            List<FechasEvento> lstFechasEvento = new List<FechasEvento>();
+            try
+            {
+                using (SqlConnection conexion = new SqlConnection(_conexion.CadenaBBDD))
+                {
+                    SqlCommand cmd = new SqlCommand("sp_GetComboFechas", conexion);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add(new SqlParameter("@FechaInicio", dFechaInicio));
+                    cmd.Parameters.Add(new SqlParameter("@FechaFin", dFechaFin));
+
+                    conexion.Open();
+                    using (SqlDataReader dr = await cmd.ExecuteReaderAsync())
+                    {
+                        int nContador = 1;
+                        while (await dr.ReadAsync())
+                        {
+                            FechasEvento oFechaEvento = new FechasEvento();
+                            oFechaEvento.IdListaFecha = nContador;
+                            oFechaEvento.ItemFecha = (DateTime)dr["FechaEvento"];
+                            oFechaEvento.ItemFechaFormateada = oFechaEvento.ItemFecha.ToShortDateString();
+                            lstFechasEvento.Add(oFechaEvento);
+                            nContador++;
+                        }
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+
+            }
+            return lstFechasEvento;
+        }
+
+        public List<MiembrosEvento> GetMiembrosEvento(EventoPago oEventoPago)
+        {
+            List<MiembrosEvento> lstMiembros = new List<MiembrosEvento>();
+
+            for (int i = 0; i < oEventoPago.Evento.PlazasMaximas; i++)
+            {
+                MiembrosEvento oMiembro = new MiembrosEvento();
+                oMiembro.IdListaMiembro = i + 1;
+                oMiembro.ItemMiembro = i + 1;
+
+                lstMiembros.Add(oMiembro);
+            }
+
+            return lstMiembros;
+        }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System.Diagnostics;
 using System.Security.Claims;
 using WhatWeDo.Models;
@@ -11,7 +12,7 @@ namespace WhatWeDo.Controllers
     {
 
         private readonly IEventoService _ServicioEvento;
-        
+   
         static List<Evento> lstEventosCategorizados = new List<Evento>();
         static bool bBuscarPorCategoria = false;
 
@@ -19,7 +20,7 @@ namespace WhatWeDo.Controllers
 
         public HomeController(IEventoService servicioEvento)
         {
-            _ServicioEvento = servicioEvento;          
+            _ServicioEvento = servicioEvento;
         }
 
         public IActionResult Inicio()
@@ -53,40 +54,13 @@ namespace WhatWeDo.Controllers
             return View(paginatedEvents);
         }
 
-        //public async Task <IActionResult> Eventos()
-        //{
-        //    List<Evento> lstEventos = new List<Evento>();          
-
-        //    //Para redirigir a los eventos por categoria
-        //    if (bBuscarPorCategoria)
-        //    {
-        //        lstEventos = lstEventosCategorizados;
-        //        bBuscarPorCategoria = false;
-        //    }              
-        //    else
-        //    {
-        //        lstEventos = await _ServicioEvento.GetEventos(Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier)));
-        //    }           
-
-        //    return View(lstEventos);
-        //}
-
         public async Task<IActionResult> EventosPorCategoria(int categoria)
         {
             bBuscarPorCategoria = true;
             lstEventosCategorizados = await _ServicioEvento.GetEventosPorCategoria(categoria);
 
             return RedirectToAction("Eventos", "Home");
-        }       
-        
-        [Authorize(Roles = "Usuario")]
-        public async Task<IActionResult> ReservarEvento(int idEvento)
-        {
-            await _ServicioEvento.ReservarEvento(idEvento, Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier)));
-
-            return RedirectToAction("MisReservas", "Reservas");
-        }
-      
+        }     
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
