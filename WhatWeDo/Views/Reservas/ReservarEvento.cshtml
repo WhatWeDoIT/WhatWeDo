@@ -202,7 +202,7 @@
         <input id="PuntosAsignados" asp-for="@Model.PuntosAsignados" type="number" class="form-control"/>
     </div>
     <div class="row justify-content-center">
-        <div class="col-lg-11 col mb-2">
+        <div class="col-lg-11 col">
             <h2>Reservar evento</h2>
         </div>
     </div>
@@ -278,7 +278,7 @@
         <div class="col-lg-2 col-sm-12 col-xs-12 mb-2">
             <div class="form-floating mb-3 position-relative">
                 @Html.DropDownList("miembros", null, "Seleccionar...", new{@class="form-select"} )
-                <label>Miembros</label>
+                <label>Nº Reservas</label>
             </div>
         </div>
         <div class="col-lg-2 col-md-12 col-sm-12  mb-2">
