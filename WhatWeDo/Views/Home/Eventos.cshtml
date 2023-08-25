@@ -77,8 +77,16 @@
     /*Botones de paginación*/
     .pagination-button {
         margin-right: 10px; 
-        background-color: #ffa500;
+        background-color: #001122;
         border:none;
+        font-weight: bold;
+    }
+
+    /* Estilo para los botones seleccionados */
+    .pagination-button.active {
+        background-color: white; 
+        color: #001122 ; 
+        font-weight:bold;
     }
 
 
@@ -452,7 +460,7 @@
         opacity: 1;
     }
 </style>
-<hr style="background-color:#001122"/>
+<hr style="background-color:white"/>
 
 <div class="row d-flex m-0 justify-content-center">
     <!-- Este div solo se muestra en pantallas pequeñas (sm y xs) -->
@@ -586,7 +594,7 @@
     </div>
 </div>
 
-<hr style="background-color:#001122" />
+<hr style="background-color:white" />
 
 <div class="row overflow-visible m-5"  style="height: 100%;">
     @foreach(Evento oEvento in @Model){
@@ -648,7 +656,7 @@
                                 </div>
                                 
                             </div>
-                            @if (User.IsInRole("Empresa") || User.IsInRole("Usuario"))
+                            @if (User.IsInRole("Usuario"))
                             {
                                 <!-- Pie del card -->
                                 <div class="card-footer" style="border-top-color:white">
@@ -657,9 +665,9 @@
                                             <a href="https://www.google.es/maps/place/@oEvento.UbicacionNombre" target="_blank" class="link-primary text-truncate" style="margin-left:1%"><i class="fas fa-map-marker-alt me-1"></i>@oEvento.UbicacionNombre</a>
                                         </div>
                                         <div class="col d-flex justify-content-end">
-                                            <button href="reservarevento?idEvento=@oEvento.IdEvento" class=" btn-reservar ">
+                                            <a href="../Reservas/ReservarEvento?idEvento=@oEvento.IdEvento" class="btn-reservar">
                                                 Reservar
-                                            </button>
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
