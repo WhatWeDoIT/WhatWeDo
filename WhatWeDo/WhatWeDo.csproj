@@ -9,9 +9,11 @@
   <ItemGroup>
     <Content Remove="wwwroot\js\event.js" />
     <Content Remove="wwwroot\js\register.js" />
+    <Content Remove="wwwroot\js\reservas.js" />
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\js\reservas.js" />
     <None Include="wwwroot\js\event.js" />
     <None Include="wwwroot\js\register.js" />
   </ItemGroup>

@@ -12,7 +12,7 @@ namespace WhatWeDo.Controllers
     {
 
         private readonly IEventoService _ServicioEvento;
-        
+   
         static List<Evento> lstEventosCategorizados = new List<Evento>();
         static bool bBuscarPorCategoria = false;
 
@@ -20,7 +20,7 @@ namespace WhatWeDo.Controllers
 
         public HomeController(IEventoService servicioEvento)
         {
-            _ServicioEvento = servicioEvento;          
+            _ServicioEvento = servicioEvento;
         }
 
         public IActionResult Inicio()
@@ -54,47 +54,13 @@ namespace WhatWeDo.Controllers
             return View(paginatedEvents);
         }
 
-        //public async Task <IActionResult> Eventos()
-        //{
-        //    List<Evento> lstEventos = new List<Evento>();          
-
-        //    //Para redirigir a los eventos por categoria
-        //    if (bBuscarPorCategoria)
-        //    {
-        //        lstEventos = lstEventosCategorizados;
-        //        bBuscarPorCategoria = false;
-        //    }              
-        //    else
-        //    {
-        //        lstEventos = await _ServicioEvento.GetEventos(Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier)));
-        //    }           
-
-        //    return View(lstEventos);
-        //}
-
         public async Task<IActionResult> EventosPorCategoria(int categoria)
         {
             bBuscarPorCategoria = true;
             lstEventosCategorizados = await _ServicioEvento.GetEventosPorCategoria(categoria);
 
             return RedirectToAction("Eventos", "Home");
-        }       
-        
-        [Authorize(Roles = "Usuario")]
-        public async Task<IActionResult> ReservarEvento(int idEvento)
-        {
-            //await _ServicioEvento.ReservarEvento(idEvento, Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier)));
-            EventoPago oEventoPago = new EventoPago();
-            Evento oEvento = new Evento();
-            oEvento.IdEvento = idEvento;
-            oEventoPago.Evento = oEvento;
-
-            var miObjeto = oEventoPago;
-            TempData["Objeto"] = JsonConvert.SerializeObject(miObjeto);
-
-            return RedirectToAction("EventoPago", "Pago");
-        }
-      
+        }     
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
