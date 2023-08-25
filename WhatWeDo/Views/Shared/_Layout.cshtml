@@ -18,13 +18,13 @@
             @*nav bar*@
             <div class="col" style="padding: 0;">
                 <header>
-                    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar navbar-dark bg-dark border-bottom box-shadow mb-3" style="background:linear-gradient(-40deg, #001122, #001122);">
+                    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar navbar-dark bg-dark border-bottom box-shadow shadow-lg mb-3" style="background:linear-gradient(-40deg, #001122, #001122);">
                         <div class="container-fluid" style="padding: 0px;">     
                             <div class="input-group navbar-toggler" style="border: none;">
                                 <div class="d-flex align-self-center">
-                                    <a class="navbar-brand" style="margin-left: 10%;" asp-area="" asp-controller="Home" asp-action="Eventos">WhatWeDo</a>
+                                    <a class="navbar-brand text-white" style="margin-left: 10%;" asp-area="" asp-controller="Home" asp-action="Eventos"><strong>WhatWeDo</strong></a>
                                 </div>
-                                <div class="d-flex justify-content-end" style="width:70%;">
+                                <div class="d-flex justify-content-end" style="width:68%;">
                                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                                             aria-expanded="false" aria-label="Toggle navigation" style="margin-left: 5px;">
                                         <span class="navbar-toggler-icon"></span>
@@ -34,35 +34,39 @@
                             <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">                               
                                 <ul class="navbar-nav flex-grow-1" style="margin-left: 10%;">
                                     <li class="nav-item d-flex align-self-center d-none d-sm-block">
-                                        <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Eventos">WhatWeDo</a>
+                                        <a class="navbar-brand text-white" asp-area="" asp-controller="Home" asp-action="Eventos">WhatWeDo</a>
                                     </li>
                                     @if (User.IsInRole("Usuario"))
                                     {
                                         <li class="nav-item">
-                                            <a class="nav-link text-light" asp-controller="Reservas" asp-action="MisReservas">Mis reservas</a>
+                                            <a class="nav-link text-white" asp-controller="Reservas" asp-action="MisReservas">Mis reservas</a>
                                         </li>
                                     }
                                     @if (User.IsInRole("Empresa"))
                                     {
                                         <li class="nav-item">
-                                            <a class="nav-link text-light" asp-controller="EventosEmpresa" asp-action="MisEventosEmpresa">Mis eventos</a>
+                                            <a class="nav-link text-white" asp-controller="EventosEmpresa" asp-action="MisEventosEmpresa">Mis eventos</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link text-light" asp-area="" asp-controller="EventosEmpresa" asp-action="CrearEvento">Crear evento</a>
+                                            <a class="nav-link text-white" asp-area="" asp-controller="EventosEmpresa" asp-action="CrearEvento">Crear evento</a>
                                         </li>
                                     }                                    
                                 </ul>
 
-                                
-
                                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">                                    
                                     <div class="navbar-nav flex-grow-1 justify-content-end" style="margin-right: 10%;margin-left: 10%;">
+                                        
+                                        <div class="d-sm-inline-flex justify-content-end me-5">
+                                            <label class="text-white" style="font-weight:bold;" title="Cartera"><i class="fa-solid fa-wallet" style="color: #2c8c2f;"></i> 999.999</label>
+                                        </div>
+
                                         @if (!User.IsInRole("Empresa"))
                                         {
                                             <div class="d-sm-inline-flex justify-content-end me-5">
-                                                <label style="color:white; font-weight:bold;" title="Puntos"><i class="fa-solid fa-coins" style="color:#ff2a5c"></i> 999.999</label>
+                                                <label class="text-white" style=" font-weight:bold;" title="Puntos"><i class="fa-solid fa-coins" style="color:#ff2a5c"></i> 999.999</label>
                                             </div>
                                         }
+
                                         <div class="dropdown">
                                             <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
                                                 @*<img src="https://cdn-icons-png.flaticon.com/512/17/17004.png" alt="" width="32" height="32" class="rounded-circle me-2 d-none d-sm-block">*@
@@ -74,13 +78,13 @@
                                                     <i class="fa-solid fa-user-tie rounded-circle me-2 d-none d-sm-block" style="color: #ff2a5c;" width="32" height="32"></i>
                                                 }
 
-                                                <strong>Mi cuenta</strong>
+                                                <strong class="text-white">Mi cuenta</strong>
                                             </a>
-                                            <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1" style="">
+                                            <ul class="dropdown-menu dropdown-menu text-small shadow " aria-labelledby="dropdownUser1" style="background-color:#001122">
                                                 @if (!User.IsInRole("Empresa") && !User.IsInRole("Usuario"))
                                                 {
-                                                    <li>                                                       
-                                                       <a class="dropdown-item" asp-controller="Auth" asp-action="Login">Login</a>
+                                                    <li>
+                                                        <a class="dropdown-item text-white" asp-controller="Auth" asp-action="Login">Login</a>
                                                     </li>
                                                 }
                                                 else
@@ -88,18 +92,18 @@
                                                     @if (User.IsInRole("Empresa"))
                                                     {
                                                         <li>
-                                                            <a class="dropdown-item" asp-controller="User" asp-action="MisDatosEmpresa"><i class="fa-solid fa-user-pen" style="color:#ff2a5c"></i> Mis datos</a>
+                                                            <a class="dropdown-item text-white" asp-controller="User" asp-action="MisDatosEmpresa"><i class="fa-solid fa-user-pen" style="color:#ff2a5c"></i> Mis datos</a>
                                                         </li>
                                                     }
                                                     else
                                                     {
                                                         <li>
-                                                            <a class="dropdown-item" asp-controller="User" asp-action="MisDatosUsuario"><i class="fa-solid fa-user-pen" style="color:#ff8125"></i> Mis datos</a>
+                                                            <a class="dropdown-item text-white" asp-controller="User" asp-action="MisDatosUsuario"><i class="fa-solid fa-user-pen" style="color:#ff8125"></i> Mis datos</a>
                                                         </li>
                                                     }
                                                     <li><hr class="dropdown-divider"></li>
                                                     <li>
-                                                        <a class="dropdown-item" asp-controller="Auth" asp-action="CerrarSesion"><i class="fa-solid fa-right-from-bracket text-danger"></i> Cerrar sesión</a>
+                                                        <a class="dropdown-item text-white" asp-controller="Auth" asp-action="CerrarSesion"><i class="fa-solid fa-right-from-bracket text-danger"></i> Cerrar sesión</a>
                                                     </li>
                                                 }                                                
                                             </ul>
