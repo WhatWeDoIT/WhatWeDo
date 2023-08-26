@@ -1,0 +1,42 @@
+﻿@using System.Web;
+@{
+    ViewData["Title"] = "Maps";
+}
+
+<h1 class="display-4"><strong style="color:white">@ViewBag.Titulo</strong></h1>
+<hr style="background-color:white" />
+<div class="row" style="height: 75vh;">
+    
+    <div id="map-container">
+        <iframe id="map-iframe" frameborder="0" style="border:0; width:100%; height:100%;"
+                src="https://www.google.com/maps/embed/v1/place?q=@Html.Raw(HttpUtility.UrlEncode(ViewBag.Direccion))&key=AIzaSyBLcdjG09SvqzMVe5OFh3lUEu8U_1eHF9s" allowfullscreen>
+        </iframe>
+    </div>
+</div>
+<hr style="background-color:white" />
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyBLcdjG09SvqzMVe5OFh3lUEu8U_1eHF9s&callback=initAutocomplete" async defer></script>
+    <script>
+        var autocomplete;
+
+        function initAutocomplete() {
+            var input = $('#autocomplete')[0];
+            autocomplete = new google.maps.places.Autocomplete(input);
+
+            const myButton = $('#myButton');
+            myButton.on('click', function () {
+                var place = autocomplete.getPlace();
+                if (place && place.formatted_address) {
+                    getGoogleMapsIframe(place.formatted_address);
+                }
+            });
+        }
+
+        function getGoogleMapsIframe(address) {
+            var iframeUrl = 'https://www.google.com/maps/embed/v1/place?q=' + encodeURIComponent(address) + '&key=AIzaSyBLcdjG09SvqzMVe5OFh3lUEu8U_1eHF9s';
+            $('#map-iframe').attr('src', iframeUrl);
+        }
+    </script>
+}
