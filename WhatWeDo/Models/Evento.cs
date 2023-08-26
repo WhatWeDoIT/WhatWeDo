@@ -38,6 +38,9 @@ namespace WhatWeDo.Models
 
         public TimeSpan HoraFin { get; set; }
 
+        public DateTime FechaReserva { get; set; }
+
+        public int Miembros { get; set; }
 
         //para saber si el usuario lo ha reservado
         public bool Reservado { get; set; } 
@@ -56,5 +59,7 @@ namespace WhatWeDo.Models
 
         //Cargar ubicacion en targeta
         public string UbicacionNombre { get; set; }
+
+
     }
 }
