@@ -67,9 +67,12 @@ namespace WhatWeDo.Controllers
             ViewBag.TotalPaginas = totalPages;
 
             //actualizamos el saldo de la empresa
-            Empresa oEmpresa = await _ServicioEmpresa.GetEmpresa(User.FindFirstValue(ClaimTypes.Email));
+            if (User.IsInRole("Empresa"))
+            {
+                Empresa oEmpresa = await _ServicioEmpresa.GetEmpresa(User.FindFirstValue(ClaimTypes.Email));
 
-            await ActualizarSaldoEmpresa(oEmpresa);
+                await ActualizarSaldoEmpresa(oEmpresa);
+            }
 
             return View(paginatedEvents);
         }
@@ -127,9 +130,12 @@ namespace WhatWeDo.Controllers
 
 
             //actualizamos el saldo de la empresa
-            Empresa oEmpresa = await _ServicioEmpresa.GetEmpresa(User.FindFirstValue(ClaimTypes.Email));
+            if (User.IsInRole("Empresa"))
+            {
+                Empresa oEmpresa = await _ServicioEmpresa.GetEmpresa(User.FindFirstValue(ClaimTypes.Email));
 
-            await ActualizarSaldoEmpresa(oEmpresa);
+                await ActualizarSaldoEmpresa(oEmpresa);
+            }
 
             return View();
         }
@@ -155,9 +161,12 @@ namespace WhatWeDo.Controllers
 
 
             //actualizamos el saldo de la empresa
-            Empresa oEmpresa = await _ServicioEmpresa.GetEmpresa(User.FindFirstValue(ClaimTypes.Email));
+            if (User.IsInRole("Empresa"))
+            {
+                Empresa oEmpresa = await _ServicioEmpresa.GetEmpresa(User.FindFirstValue(ClaimTypes.Email));
 
-            await ActualizarSaldoEmpresa(oEmpresa);
+                await ActualizarSaldoEmpresa(oEmpresa);
+            }
 
             return View(oEvento);
         }

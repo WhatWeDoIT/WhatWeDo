@@ -67,7 +67,7 @@ namespace WhatWeDo.Controllers
 
             Usuario oUsuario = await _ServicioUsuario.GetUsuario(User.FindFirstValue(ClaimTypes.Email));
 
-            return RedirectToAction("ModificarSaldoUsuario", "Auth", oUsuario);
+            return RedirectToAction("ActualizarSaldo", "Auth", oUsuario);
         }
 
         [Authorize(Roles = "Usuario")]

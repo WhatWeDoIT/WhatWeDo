@@ -62,11 +62,14 @@ namespace WhatWeDo.Controllers
             ViewBag.PaginaActual = page;
             ViewBag.TotalPaginas = totalPages;
 
+            if (User.IsInRole("Empresa"))
+            {
+                //actualizamos el saldo de la empresa
+                Empresa oEmpresa = await _ServicioEmpresa.GetEmpresa(User.FindFirstValue(ClaimTypes.Email));
 
-            //actualizamos el saldo de la empresa
-            Empresa oEmpresa = await _ServicioEmpresa.GetEmpresa(User.FindFirstValue(ClaimTypes.Email));
+                await ActualizarSaldoEmpresa(oEmpresa);
 
-            await ActualizarSaldoEmpresa(oEmpresa);
+            }
 
             return View(paginatedEvents);
         }
