@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Data;
 using System.Security.Claims;
@@ -35,10 +37,35 @@ namespace WhatWeDo.Controllers
         {
             empresa.Mail = User.FindFirstValue(ClaimTypes.Email);
             await _ServicioEmpresa.GetEmpresa(empresa);
+            Empresa oEmpresa = await _ServicioEmpresa.GetEmpresa(User.FindFirstValue(ClaimTypes.Email));
 
+            await ActualizarSaldoEmpresa(oEmpresa);
             return View(empresa);
         }
+        public async Task ActualizarSaldoEmpresa(Empresa empresa)
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
 
+            string rol = "Empresa";
+
+            Empresa oEmpresa = await _ServicioEmpresa.GetEmpresa(empresa.Mail);
+            empresa.Nombre = oEmpresa.Nombre;
+            empresa.IdEmpresa = oEmpresa.IdEmpresa;
+            empresa.Saldo = oEmpresa.Saldo;
+
+            List<Claim> claims = new List<Claim>()
+            {
+                new Claim(ClaimTypes.Name, empresa.Nombre),
+                new Claim(ClaimTypes.Email, empresa.Mail),
+                new Claim(ClaimTypes.Role, rol),
+                new Claim(ClaimTypes.NameIdentifier, empresa.IdEmpresa.ToString()),
+                new Claim("saldo", empresa.Saldo.ToString() + " €")
+            };
+
+            ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+
+            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
+        }
         [Authorize(Roles = "Usuario")]
         public async Task<IActionResult> ModificarUsuario(Usuario usuario)
         {

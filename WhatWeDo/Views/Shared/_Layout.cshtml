@@ -55,16 +55,24 @@
 
                                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">                                    
                                     <div class="navbar-nav flex-grow-1 justify-content-end" style="margin-right: 10%;margin-left: 10%;">
-                                        
-                                        <div class="d-sm-inline-flex justify-content-end me-5">
-                                            <label class="text-white" style="font-weight:bold;" title="Cartera"><i class="fa-solid fa-wallet" style="color: #2c8c2f;"></i> 999.999</label>
-                                        </div>
-
-                                        @if (!User.IsInRole("Empresa"))
+                                        @if (User.IsInRole("Empresa") || User.IsInRole("Usuario"))
                                         {
-                                            <div class="d-sm-inline-flex justify-content-end me-5">
-                                                <label class="text-white" style=" font-weight:bold;" title="Puntos"><i class="fa-solid fa-coins" style="color:#ff2a5c"></i> 999.999</label>
+                                            <div id="saldoContainer" class="d-sm-inline-flex justify-content-end me-5">
+                                                <label class="text-white" style="font-weight:bold;" title="Cartera">
+                                                    <i class="fa-solid fa-wallet" style="color: #2c8c2f;"></i>
+                                                    @User.Claims.FirstOrDefault(c => c.Type == "saldo")?.Value
+                                                </label>
                                             </div>
+
+                                            @if (!User.IsInRole("Empresa"))
+                                            {
+                                                <div class="d-sm-inline-flex justify-content-end me-5">
+                                                    <label class="text-white" style="font-weight:bold;" title="Cartera">
+                                                        <i class="fa-solid fa-coins" style="color:#ff2a5c"></i>
+                                                        @User.Claims.FirstOrDefault(c => c.Type == "puntos")?.Value
+                                                    </label>
+                                                </div>
+                                            }
                                         }
 
                                         <div class="dropdown">
