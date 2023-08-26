@@ -39,7 +39,10 @@ namespace WhatWeDo.Servicios.Implementacion
                             oUsuario.Mail = dr["Mail"].ToString();
                             oUsuario.Miembros = Convert.ToInt32(dr["Miembros"]);
                             oUsuario.PuntosUsuario = Convert.ToInt32(dr["PuntosUsuario"]);
-                            oUsuario.Saldo = Convert.ToDouble(dr["Saldo"]);
+                            if (!Convert.IsDBNull(dr["Saldo"]))
+                                oUsuario.Saldo = Convert.ToDouble(dr["Saldo"]);
+                            else
+                                oUsuario.Saldo = 0;
                         }
                     }
                 }
@@ -75,7 +78,10 @@ namespace WhatWeDo.Servicios.Implementacion
                             oUsuario.Mail = dr["Mail"].ToString();
                             oUsuario.Miembros = Convert.ToInt32(dr["Miembros"]);
                             oUsuario.PuntosUsuario = Convert.ToInt32(dr["PuntosUsuario"]);
-                            oUsuario.Saldo = Convert.ToDouble(dr["Saldo"]);
+                            if (!Convert.IsDBNull(dr["Saldo"]))
+                                oUsuario.Saldo = Convert.ToDouble(dr["Saldo"]);
+                            else
+                                oUsuario.Saldo = 0;
                         }
                     }
                 }
@@ -113,7 +119,10 @@ namespace WhatWeDo.Servicios.Implementacion
                             oUsuario.Mail = dr["Mail"].ToString();
                             oUsuario.Miembros = Convert.ToInt32(dr["Miembros"]);
                             oUsuario.PuntosUsuario = Convert.ToInt32(dr["PuntosUsuario"]);
-                            oUsuario.Saldo = Convert.ToDouble(dr["Saldo"]);
+                            if (!Convert.IsDBNull(dr["Saldo"]))
+                                oUsuario.Saldo = Convert.ToDouble(dr["Saldo"]);
+                            else
+                                oUsuario.Saldo = 0;
                         }
                     }
                 }

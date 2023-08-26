@@ -9,7 +9,7 @@
         public string Mail { get; set; }
         public int Miembros { get; set; }
         public int PuntosUsuario { get; set; }
-        public double Saldo { get; set; }
+        public double? Saldo { get; set; }
 
         public string ConfirmPass { get; set; } //para validar la contraseña
         public bool EsEmpresa { get; set; } //para asignar rol en el login y registro

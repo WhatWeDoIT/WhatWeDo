@@ -110,8 +110,8 @@ namespace WhatWeDo.Controllers
             lstEventosCategorizados = await _ServicioEvento.GetEventosPorUsuarioCategoria(Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier)), categoria);
             //Enviamos la cetegoria al controller siguiente
             TempData["CategoriaSeleccionada"] = categoria.ToString();
-
-            return RedirectToAction("ActualizarSaldo", "Reservas");
+          
+            return RedirectToAction("MisReservas", "Reservas");
         }      
        
         [Authorize(Roles = "Usuario")]

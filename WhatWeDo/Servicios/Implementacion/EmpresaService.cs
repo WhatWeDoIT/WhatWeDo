@@ -38,7 +38,10 @@ namespace WhatWeDo.Servicios.Implementacion
                             oEmpresa.Pass = dr["Pass"].ToString();
                             oEmpresa.Direccion = dr["Direccion"].ToString();
                             oEmpresa.Mail = dr["Mail"].ToString();
-                            oEmpresa.Saldo = Convert.ToDouble(dr["Saldo"]);
+                            if (!Convert.IsDBNull(dr["Saldo"]))
+                                oEmpresa.Saldo = Convert.ToDouble(dr["Saldo"]);
+                            else
+                                oEmpresa.Saldo = 0;
                         }
                     }
                 }
@@ -73,7 +76,10 @@ namespace WhatWeDo.Servicios.Implementacion
                             oEmpresa.Pass = dr["Pass"].ToString();
                             oEmpresa.Direccion = dr["Direccion"].ToString();
                             oEmpresa.Mail = dr["Mail"].ToString();
-                            oEmpresa.Saldo = Convert.ToDouble(dr["Saldo"]);
+                            if (!Convert.IsDBNull(dr["Saldo"]))
+                                oEmpresa.Saldo = Convert.ToDouble(dr["Saldo"]);
+                            else
+                                oEmpresa.Saldo = 0;
                         }
                     }
                 }
@@ -109,7 +115,10 @@ namespace WhatWeDo.Servicios.Implementacion
                             oEmpresa.Pass = dr["Pass"].ToString();
                             oEmpresa.Direccion = dr["Direccion"].ToString();
                             oEmpresa.Mail = dr["Mail"].ToString();
-                            oEmpresa.Saldo = Convert.ToDouble(dr["Saldo"]);
+                            if (!Convert.IsDBNull(dr["Saldo"]))
+                                oEmpresa.Saldo = Convert.ToDouble(dr["Saldo"]);
+                            else
+                                oEmpresa.Saldo = 0;
                         }
                     }
                 }
@@ -220,7 +229,10 @@ namespace WhatWeDo.Servicios.Implementacion
                             oEmpresa.Pass = dr["Pass"].ToString();
                             oEmpresa.Direccion = dr["Direccion"].ToString();
                             oEmpresa.Mail = dr["Mail"].ToString();
-                            oEmpresa.Saldo = Convert.ToDouble(dr["Saldo"]);
+                            if (!Convert.IsDBNull(dr["Saldo"]))
+                                oEmpresa.Saldo = Convert.ToDouble(dr["Saldo"]);
+                            else
+                                oEmpresa.Saldo = 0;
                         }
                     }
                 }
