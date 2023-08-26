@@ -1,10 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Security.Claims;
 using WhatWeDo.Models;
+using WhatWeDo.Recursos;
 using WhatWeDo.Servicios.Contratos;
-using static WhatWeDo.Recursos.CargasCombo;
 
 namespace WhatWeDo.Controllers
 {
@@ -18,13 +19,15 @@ namespace WhatWeDo.Controllers
         static List<Evento> lstEventosCategorizados = new List<Evento>();
         static bool bBuscarPorCategoria = false;
 
+        private const int PageSize = 3; // Número de eventos por página
+
         public ReservasController(IEventoService servicioEvento
                                 , IEmpresaService servicioEmpresa
                                 , IUsuarioService servicioUsuario)
         {
             _ServicioEvento = servicioEvento;
             _ServicioEmpresa = servicioEmpresa;
-            _ServicioUsuario = servicioUsuario;
+            _ServicioUsuario = servicioUsuario;           
         }
 
         [Authorize(Roles = "Usuario")]
@@ -62,11 +65,13 @@ namespace WhatWeDo.Controllers
             await _ServicioUsuario.PagarEvento(eventoPago.FkIdUsuario, eventoPago.FkIdEmpresa
                                              , eventoPago.PrecioTotal, eventoPago.PuntosAsignados);
 
-            return RedirectToAction("MisReservas", "Reservas");
+            Usuario oUsuario = await _ServicioUsuario.GetUsuario(User.FindFirstValue(ClaimTypes.Email));
+
+            return RedirectToAction("ActualizarSaldo", "Auth", oUsuario);
         }
 
         [Authorize(Roles = "Usuario")]
-        public async Task<IActionResult> MisReservas()
+        public async Task<IActionResult> MisReservas(int page = 1)
         {
             List<Evento> lstEventos = new List<Evento>();
 
@@ -74,6 +79,12 @@ namespace WhatWeDo.Controllers
             if (bBuscarPorCategoria)
             {
                 lstEventos = lstEventosCategorizados;
+                string categoriaSeleccionada = TempData["CategoriaSeleccionada"] as string;
+
+                if (categoriaSeleccionada != null)
+                {
+                    ViewData["CetegoriaRecibida"] = categoriaSeleccionada;
+                }
                 bBuscarPorCategoria = false;
             }
             else
@@ -81,7 +92,15 @@ namespace WhatWeDo.Controllers
                 lstEventos = await _ServicioEvento.GetEventosPorUsuario(Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier)));
             }
 
-            return View(lstEventos);
+            // Implementar la paginación
+            int totalEventos = lstEventos.Count;
+            int totalPages = (int)Math.Ceiling((double)totalEventos / PageSize);
+            var paginatedEvents = lstEventos.Skip((page - 1) * PageSize).Take(PageSize).ToList();
+
+            ViewBag.PaginaActual = page;
+            ViewBag.TotalPaginas = totalPages;
+
+            return View(paginatedEvents);
         }
 
         [Authorize(Roles = "Usuario")]
@@ -89,8 +108,10 @@ namespace WhatWeDo.Controllers
         {
             bBuscarPorCategoria = true;
             lstEventosCategorizados = await _ServicioEvento.GetEventosPorUsuarioCategoria(Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier)), categoria);
+            //Enviamos la cetegoria al controller siguiente
+            TempData["CategoriaSeleccionada"] = categoria.ToString();
 
-            return RedirectToAction("MisReservas", "Reservas");
+            return RedirectToAction("ActualizarSaldo", "Reservas");
         }      
        
         [Authorize(Roles = "Usuario")]
@@ -103,7 +124,9 @@ namespace WhatWeDo.Controllers
             
             await _ServicioEvento.AnularReservaEvento(oEventoPago.FkIdEvento, oEventoPago.FkIdUsuario, oEventoPago.Miembros);
 
-            return RedirectToAction("MisReservas", "Reservas");
+            Usuario oUsuario = await _ServicioUsuario.GetUsuario(User.FindFirstValue(ClaimTypes.Email));
+
+            return RedirectToAction("ActualizarSaldo", "Auth", oUsuario);
         }
     }
 }

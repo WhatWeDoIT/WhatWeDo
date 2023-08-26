@@ -7,7 +7,7 @@
         public string Pass { get; set; }
         public string Direccion { get; set; }
         public string Mail { get; set; }
-
+        public double Saldo { get; set; }
         public string ConfirmPass { get; set; } //para validar la contraseña
 
         public Empresa()

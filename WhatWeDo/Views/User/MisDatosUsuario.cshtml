@@ -195,8 +195,8 @@
 
 <form asp-controller="User" asp-action="ModificarUsuario" id="modifyForm" method="post">
     <div>
-        <h2>Modifica tus datos.</h2>
-        <hr />
+        <h1 class="display-4"><strong style="color:white">Modifica tus datos</strong></h1>
+        <hr style="background-color:white" />
         <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
         <div class="d-none">
             <input id="IdUsuario" asp-for="IdUsuario" class="form-control" aria-required="true" placeholder="id usuario" />
@@ -238,12 +238,13 @@
                 <i id="exclamationConfirmPass" class="fas fa-exclamation-circle" style="color: red;" data-toggle="tooltip" data-placement="top" title="Las contraseñas no coinciden"></i>
             </div>
         </div>
+        <hr style="background-color:white" />
         <div class="row">
             <div class="col-3 mb-3">
-                <button id="registerSubmit" type="submit" class="w-100 btn btn-sm btn-success">Modificar</button>
+                <button id="registerSubmit" type="submit" class="w-100 btn btn-sm btn-warning">Modificar</button>
             </div>
             <div class="col-3 mb-3">
-                <a class="w-100 btn btn-sm btn-danger" asp-controller="User" asp-action="Cancelar">Cancelar</a>
+                <a class="w-100 btn btn-sm btn-warning" asp-controller="User" asp-action="Cancelar">Cancelar</a>
             </div>
        
             @if (ViewBag.Alert != null)
