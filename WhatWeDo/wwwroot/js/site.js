@@ -3,6 +3,46 @@
 
 // Write your JavaScript code.
 $(document).ready(function () {
+   
+    var categoria = $("#CategoriaRecibida").text();
+
+    switch (categoria) {
+        case '1':
+            // Código a ejecutar para la opción 1
+            var valorASeleccionar = "ocio";
+            $('input[name="filtro"][value="' + valorASeleccionar + '"]').prop('checked', true);
+            break;
+
+        case "2":
+            // Código a ejecutar para la opción 2
+            var valorASeleccionar = "gastronomia";
+            $('input[name="filtro"][value="' + valorASeleccionar + '"]').prop('checked', true);
+            break;
+
+        case "3":
+            // Código a ejecutar para la opción 3
+            var valorASeleccionar = "deportes";
+            $('input[name="filtro"][value="' + valorASeleccionar + '"]').prop('checked', true);
+            break;
+
+        case "4":
+            var valorASeleccionar = "aAireLibre";
+            $('input[name="filtro"][value="' + valorASeleccionar + '"]').prop('checked', true);
+            break;
+
+        case "5":
+            // Código a ejecutar para la opción 5
+            var valorASeleccionar = "arteycultura";
+            $('input[name="filtro"][value="' + valorASeleccionar + '"]').prop('checked', true);
+            break;
+
+        case "6":
+            var valorASeleccionar = "tegyciencia";
+            $('input[name="filtro"][value="' + valorASeleccionar + '"]').prop('checked', true);
+            // Código a ejecutar para la opción 6
+            break;
+    }
+
     $('input[name="filtro"]').click(function () {
         var selectedValue = $('input[name="filtro"]:checked').val();
         if (selectedValue === "ocio") {
