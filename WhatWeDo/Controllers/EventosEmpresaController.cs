@@ -4,12 +4,11 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using System.Drawing.Printing;
 using System.Security.Claims;
 using WhatWeDo.Models;
 using WhatWeDo.Servicios.Contratos;
+using System.Drawing;
 
 namespace WhatWeDo.Controllers
 {
@@ -221,12 +220,13 @@ namespace WhatWeDo.Controllers
         [Authorize(Roles = "Empresa")]
         public async Task<string> SubirImagen(Stream archivo, string nombre)
         {
-            //credenciales firebase
+            // Credenciales de Firebase
             string sEmail = "whatwedo@gmail.com";
             string sClave = "123454321";
             string sRuta = "whatwedoimgs.appspot.com";
             string sApiKey = "AIzaSyClTyWsO6enTmcRuElffSSUYzHYcpQuCP8";
-            //asignamos nombre random
+
+            // Asignamos nombre aleatorio
             Random random = new Random();
             nombre = nombre.Trim() + random.Next(1, 100000).ToString();
 
@@ -235,22 +235,36 @@ namespace WhatWeDo.Controllers
 
             var cancellation = new CancellationTokenSource();
 
-            var task = new FirebaseStorage(
-                sRuta,
-                new FirebaseStorageOptions
+            // Leer la imagen del stream y redimensionarla
+            using (var originalImage = Image.FromStream(archivo))
+            using (var resizedImage = new Bitmap(626, 417))
+            using (var graphics = Graphics.FromImage(resizedImage))
+            {
+                graphics.DrawImage(originalImage, 0, 0, 626, 417);
+
+                // Guardar la imagen redimensionada en un nuevo stream
+                using (var resizedStream = new MemoryStream())
                 {
-                    AuthTokenAsyncFactory = () => Task.FromResult(a.FirebaseToken),
-                    ThrowOnCancel = true
+                    resizedImage.Save(resizedStream, originalImage.RawFormat);
+                    resizedStream.Seek(0, SeekOrigin.Begin);
 
-                })
-                .Child("Fotos_Evento")
-                .Child(nombre)
-                .PutAsync(archivo, cancellation.Token);
+                    var task = new FirebaseStorage(
+                        sRuta,
+                        new FirebaseStorageOptions
+                        {
+                            AuthTokenAsyncFactory = () => Task.FromResult(a.FirebaseToken),
+                            ThrowOnCancel = true
 
-            var downloadURL = await task;
+                        })
+                        .Child("Fotos_Evento")
+                        .Child(nombre)
+                        .PutAsync(resizedStream, cancellation.Token);
 
-            return downloadURL;
+                    var downloadURL = await task;
 
+                    return downloadURL;
+                }
+            }
         }
     }
 }
