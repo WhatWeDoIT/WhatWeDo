@@ -54,6 +54,8 @@ namespace WhatWeDo.Controllers
                     oUsuario = await _ServicioUsuario.LoginUsuario(usuario.Mail, Utilidades.EncriptarPassword(usuario.Pass));
                     usuario.Nombre = oUsuario.Nombre;
                     usuario.IdUsuario = oUsuario.IdUsuario;
+                    usuario.Saldo = oUsuario.Saldo;
+                    usuario.PuntosUsuario = oUsuario.PuntosUsuario;
                 }
 
                 if (oUsuario.IdUsuario == 0)
@@ -73,6 +75,7 @@ namespace WhatWeDo.Controllers
                     oEmpresa = await _ServicioEmpresa.LoginEmpresa(oEmpresa.Mail, Utilidades.EncriptarPassword(oEmpresa.Pass));
                     usuario.Nombre = oEmpresa.Nombre;
                     usuario.IdUsuario = oEmpresa.IdEmpresa;
+                    usuario.Saldo = oEmpresa.Saldo;
                 }
 
                 if (oEmpresa.IdEmpresa == 0)
@@ -82,13 +85,14 @@ namespace WhatWeDo.Controllers
                 }
                 rol = "Empresa";
             }
-
             List<Claim> claims = new List<Claim>()
             {
                 new Claim(ClaimTypes.Name, usuario.Nombre),
                 new Claim(ClaimTypes.Email, usuario.Mail),
                 new Claim(ClaimTypes.Role, rol),
-                new Claim(ClaimTypes.NameIdentifier, usuario.IdUsuario.ToString())
+                new Claim(ClaimTypes.NameIdentifier, usuario.IdUsuario.ToString()),
+                new Claim("saldo", usuario.Saldo.ToString() + " €"),
+                new Claim("puntos", usuario.PuntosUsuario.ToString() + " ptos.")
             };
 
             ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
@@ -96,11 +100,39 @@ namespace WhatWeDo.Controllers
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
 
             //LLeva al usuario a la vista de seleccion de preferencias en el caso de que no sea una empresa.
-            if(!usuario.EsEmpresa)
+            if (!usuario.EsEmpresa)
                 return RedirectToAction("Preferences", "Auth");
             else
                 return RedirectToAction("Eventos", "Home");
         }
+
+        public async Task<IActionResult> ActualizarSaldo(Usuario usuario)
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);           
+            
+            string rol = "Usuario"; 
+
+            Usuario oUsuario = await _ServicioUsuario.GetUsuario(usuario.Mail);
+            usuario.Nombre = oUsuario.Nombre;
+            usuario.IdUsuario = oUsuario.IdUsuario;
+            usuario.Saldo = oUsuario.Saldo;               
+           
+            List<Claim> claims = new List<Claim>()
+            {
+                new Claim(ClaimTypes.Name, usuario.Nombre),
+                new Claim(ClaimTypes.Email, usuario.Mail),
+                new Claim(ClaimTypes.Role, rol),
+                new Claim(ClaimTypes.NameIdentifier, usuario.IdUsuario.ToString()),
+                new Claim("saldo", usuario.Saldo.ToString() + " €"),
+                new Claim("puntos", usuario.PuntosUsuario.ToString() + " ptos.")
+            };
+
+            ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+
+            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
+            
+            return RedirectToAction("Eventos", "Home");
+        }        
 
         public async Task<IActionResult> CrearUsuario(Usuario usuario)
         {

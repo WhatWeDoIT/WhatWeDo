@@ -38,6 +38,7 @@ namespace WhatWeDo.Servicios.Implementacion
                             oEmpresa.Pass = dr["Pass"].ToString();
                             oEmpresa.Direccion = dr["Direccion"].ToString();
                             oEmpresa.Mail = dr["Mail"].ToString();
+                            oEmpresa.Saldo = Convert.ToDouble(dr["Saldo"]);
                         }
                     }
                 }
@@ -51,6 +52,39 @@ namespace WhatWeDo.Servicios.Implementacion
             return oEmpresa;
         }
 
+        public async Task<Empresa> GetEmpresa(string mail)
+        {
+            Empresa oEmpresa = new Empresa();
+            try
+            {
+                using (SqlConnection conexion = new SqlConnection(_conexion.CadenaBBDD))
+                {
+                    SqlCommand cmd = new SqlCommand("sp_GetEmpresaPorMail", conexion);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add(new SqlParameter("@Mail", mail));
+
+                    conexion.Open();
+                    using (SqlDataReader dr = await cmd.ExecuteReaderAsync())
+                    {
+                        while (await dr.ReadAsync())
+                        {
+                            oEmpresa.IdEmpresa = Convert.ToInt32(dr["IdEmpresa"]);
+                            oEmpresa.Nombre = dr["Nombre"].ToString();
+                            oEmpresa.Pass = dr["Pass"].ToString();
+                            oEmpresa.Direccion = dr["Direccion"].ToString();
+                            oEmpresa.Mail = dr["Mail"].ToString();
+                            oEmpresa.Saldo = Convert.ToDouble(dr["Saldo"]);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+
+            }
+            return oEmpresa;
+        }
 
         public async Task<Empresa> LoginEmpresa(string sMail, string sPass)
         {
@@ -75,6 +109,7 @@ namespace WhatWeDo.Servicios.Implementacion
                             oEmpresa.Pass = dr["Pass"].ToString();
                             oEmpresa.Direccion = dr["Direccion"].ToString();
                             oEmpresa.Mail = dr["Mail"].ToString();
+                            oEmpresa.Saldo = Convert.ToDouble(dr["Saldo"]);
                         }
                     }
                 }
@@ -185,6 +220,7 @@ namespace WhatWeDo.Servicios.Implementacion
                             oEmpresa.Pass = dr["Pass"].ToString();
                             oEmpresa.Direccion = dr["Direccion"].ToString();
                             oEmpresa.Mail = dr["Mail"].ToString();
+                            oEmpresa.Saldo = Convert.ToDouble(dr["Saldo"]);
                         }
                     }
                 }

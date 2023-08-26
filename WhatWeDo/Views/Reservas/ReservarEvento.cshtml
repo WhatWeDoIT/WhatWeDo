@@ -1,6 +1,6 @@
 ﻿@model EventoPago
 @{
-    ViewData["Title"] = "ReservarEvento";
+    ViewData["Title"] = "Reservar evento";
 }
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 <style>
@@ -203,19 +203,16 @@
     </div>
     <div class="row justify-content-center">
         <div class="col-lg-11 col">
-            <h2>Reservar evento</h2>
+            <h1 class="display-4"><strong style="color:white">Reservar evento</strong></h1>
+            <hr style="background-color:white" />
         </div>
     </div>
-    <div class="row justify-content-center">
-        <div class="col-lg-11 col mb-2">
-            <hr />
-        </div>
-    </div>    
+      
     <div class="row justify-content-center">
         <div class="col-lg-10 col mb-2">
             <div class="input-group">
-                <h4>@Model.Evento.Titulo</h4>
-                <label style="color:Black;font-weight:bold;margin-left: 1%;" title="Puntos">
+                <h4 style="color:white">@Model.Evento.Titulo</h4>
+                <label style="color:white;font-weight:bold;margin-left: 1%;" title="Puntos">
                     (
                     <i class="fa-solid fa-coins" style="color:#ff2a5c"></i>
                     <label id="PuntosEvento">@Model.Evento.ValorEnPuntos</label>
@@ -271,7 +268,7 @@
     </div>
     <div class="row justify-content-center">
         <div class="col-lg-11 col mb-2">
-            <hr />
+            <hr style="background-color:white" />
         </div>
     </div>
     <div class="row justify-content-center">

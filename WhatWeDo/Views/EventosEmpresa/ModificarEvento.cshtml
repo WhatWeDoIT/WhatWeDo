@@ -73,8 +73,8 @@
 
 <form asp-controller="EventosEmpresa" asp-action="UpdateEvento" id="crearEventoForm" method="post" enctype="multipart/form-data">
     <div>
-        <h2>Modificar evento</h2>
-        <hr />
+        <h1 class="display-4"><strong style="color:white">Modificar evento</strong></h1>
+        <hr style="background-color:white" />
     </div>
     <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
     <div class="d-none">
@@ -208,17 +208,13 @@
                 <label>Categoria</label>
             </div>
         </div>
+        <hr style="background-color:white" />
     </div>
     <div class="row">
         <div class="input-group">
-            <div class="col-lg-2 col d-flex justify-content-start">
-                <button id="insertEventoSubmit" type="submit" class="btn btn-sm btn-warning">Aceptar</button>
-            </div>
-            <div class="col-lg-2 col d-flex justify-content-end ">
-                <a class="btn btn-sm btn-warning" asp-controller="User" asp-action="Cancelar">Cancelar</a>
-            </div>
+            <button id="updateSubmit" type="submit" class=" btn btn-sm btn-warning">Aceptar</button>
+            <a style="margin-left:10px" class="btn btn-sm btn-warning" asp-controller="User" asp-action="Cancelar">Cancelar</a>
         </div>
-
         @if (ViewBag.Alert != null)
         {
             <div class="alert alert-dismissable alert-danger" style="margin-top:10px">

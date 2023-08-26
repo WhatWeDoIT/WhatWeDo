@@ -38,6 +38,8 @@ namespace WhatWeDo.Servicios.Implementacion
                             oUsuario.Pass = dr["Pass"].ToString();
                             oUsuario.Mail = dr["Mail"].ToString();
                             oUsuario.Miembros = Convert.ToInt32(dr["Miembros"]);
+                            oUsuario.PuntosUsuario = Convert.ToInt32(dr["PuntosUsuario"]);
+                            oUsuario.Saldo = Convert.ToDouble(dr["Saldo"]);
                         }
                     }
                 }
@@ -72,6 +74,8 @@ namespace WhatWeDo.Servicios.Implementacion
                             oUsuario.Pass = dr["Pass"].ToString();
                             oUsuario.Mail = dr["Mail"].ToString();
                             oUsuario.Miembros = Convert.ToInt32(dr["Miembros"]);
+                            oUsuario.PuntosUsuario = Convert.ToInt32(dr["PuntosUsuario"]);
+                            oUsuario.Saldo = Convert.ToDouble(dr["Saldo"]);
                         }
                     }
                 }
@@ -108,6 +112,8 @@ namespace WhatWeDo.Servicios.Implementacion
                             oUsuario.Pass = dr["Pass"].ToString();
                             oUsuario.Mail = dr["Mail"].ToString();
                             oUsuario.Miembros = Convert.ToInt32(dr["Miembros"]);
+                            oUsuario.PuntosUsuario = Convert.ToInt32(dr["PuntosUsuario"]);
+                            oUsuario.Saldo = Convert.ToDouble(dr["Saldo"]);
                         }
                     }
                 }
