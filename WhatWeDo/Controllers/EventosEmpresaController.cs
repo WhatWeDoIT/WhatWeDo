@@ -10,6 +10,7 @@ using WhatWeDo.Models;
 using WhatWeDo.Servicios.Contratos;
 using System.Drawing;
 using Newtonsoft.Json;
+using System.Reflection;
 
 namespace WhatWeDo.Controllers
 {
@@ -203,6 +204,11 @@ namespace WhatWeDo.Controllers
                 await ActualizarSaldoEmpresa(oEmpresa);
             }
 
+            // Serializa el objeto Evento a formato JSON
+            string eventoAnteriorJson = JsonConvert.SerializeObject(oEvento);
+
+            TempData["EventoAntTemp"] = eventoAnteriorJson;
+
             return View(oEvento);
         }
 
@@ -348,28 +354,49 @@ namespace WhatWeDo.Controllers
                 sMensaje += "La descripción del evento es obligatoria\n";
             }
 
-            if (oEvento.FechaInicio == DateTime.MinValue)
+            if (!bVieneModificar)
             {
-                sMensaje += "La fecha de inicio es obligatoria\n";
-            } 
-            else if (oEvento.FechaInicio < DateTime.Today || (oEvento.FechaInicio == DateTime.Today && oEvento.HoraInicio < DateTime.Now.TimeOfDay))
-            {
-                sMensaje += "La fecha y hora de inicio no pueden ser anteriores al momento actual\n";
+                if (oEvento.FechaInicio == DateTime.MinValue)
+                {
+                    sMensaje += "La fecha de inicio es obligatoria\n";
+                }
+                else if (oEvento.FechaInicio < DateTime.Today || (oEvento.FechaInicio == DateTime.Today && oEvento.HoraInicio < DateTime.Now.TimeOfDay))
+                {
+                    sMensaje += "La fecha y hora de inicio no pueden ser anteriores al momento actual\n";
+                }
             }
+            else
+            {
+                if (TempData.ContainsKey("EventoAntTemp"))
+                {
+                    string eventoJson = TempData["EventoAntTemp"] as string;
+                    var valorAnteriorFecha = JsonConvert.DeserializeObject<Evento>(eventoJson).FechaInicio;
+                    var valorAnteriorHora = JsonConvert.DeserializeObject<Evento>(eventoJson).HoraInicio;
 
+                    if (oEvento.FechaInicio < valorAnteriorFecha || (oEvento.FechaInicio == valorAnteriorFecha && oEvento.HoraInicio < valorAnteriorHora))
+                    {
+                        sMensaje += "La fecha y hora de inicio no pueden ser anteriores a las que se insertaron al crear el evento\n";
+                    }
+                }               
+
+            }            
+            
             if (oEvento.FechaInicio > oEvento.FechaFin.Value || (oEvento.FechaInicio == oEvento.FechaFin.Value && oEvento.HoraInicio > oEvento.HoraFin))
             {
                 sMensaje += "La fecha y hora de inicio no pueden ser posteriores a la fecha y hora de finalización\n";
             }
 
-            if (oEvento.FechaFin.Value == DateTime.MinValue)
+            if (!bVieneModificar)
             {
-                sMensaje += "La fecha de finalización es obligatoria\n";
-            } 
-            else if (oEvento.FechaFin.Value < DateTime.Today || (oEvento.FechaFin.Value == DateTime.Today && oEvento.HoraFin < DateTime.Now.TimeOfDay))
-            {
-                sMensaje += "La fecha y hora de finalización no pueden ser anteriores al momento actual\n";
-            }                 
+                if (oEvento.FechaFin.Value == DateTime.MinValue)
+                {
+                    sMensaje += "La fecha de finalización es obligatoria\n";
+                }
+                else if (oEvento.FechaFin.Value < DateTime.Today || (oEvento.FechaFin.Value == DateTime.Today && oEvento.HoraFin < DateTime.Now.TimeOfDay))
+                {
+                    sMensaje += "La fecha y hora de finalización no pueden ser anteriores al momento actual\n";
+                }
+            }
 
             if (oEvento.FechaFin.Value < oEvento.FechaInicio || (oEvento.FechaFin.Value == oEvento.FechaInicio && oEvento.HoraFin < oEvento.HoraInicio))
             {
