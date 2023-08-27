@@ -1,4 +1,6 @@
-﻿@model List<Evento>
+﻿@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+@model List<Evento>
 @{
     ViewData["Title"] = "Eventos";
 }
@@ -509,7 +511,7 @@
                     <span class="radio-icon">
                         <i style="color:#a361e9" class="fa-solid fa-microchip fa-2x"></i>
                     </span>
-                    <span style="color:#a361e9" class="radio-label text-center">Tec. & Ci</span>
+                    <span style="color:#a361e9" class="radio-label text-center">Tecnología</span>
                 </span>
             </label>
             <label>
@@ -578,7 +580,7 @@
                 <span class="radio-icon">
                     <i style="color:#a361e9" class="fa-solid fa-microchip fa-2x"></i>
                 </span>
-                <span style="color:#a361e9" class="radio-label text-center">Tec. & Ci</span>
+                <span style="color:#a361e9" class="radio-label text-center">Tecnología</span>
             </span>
         </label>
     </div>
@@ -597,8 +599,14 @@
 
 <hr style="background-color:white" />
 <div class="d-none">
-    <p id="CategoriaRecibida">@ViewData["CetegoriaRecibida"]</p>
+    <p id="CategoriaRecibida">@ViewData["CategoriaRecibida"]</p>
 </div>
+@{
+    //obtener el valor de la paginacion por categoria
+    var paginacionCategoria = HttpContextAccessor.HttpContext.Request.Query["paginacionCategoria"];
+    var categoria = HttpContextAccessor.HttpContext.Request.Query["idCategoria"];
+}
+
 <div class="row overflow-visible m-5"  style="height: 100%;">
     @foreach(Evento oEvento in @Model){
         if (!oEvento.Reservado)
@@ -643,32 +651,31 @@
                                 <div class="row "> @*Fila oculta en sm*@
                                     <div class="col-12 d-none d-sm-block d-sm-none d-md-block">
                                         <!-- Fechas y ubicación -->
-                                        @if (@oEvento.FechaInicio.ToShortDateString() == @oEvento.FechaFin.ToShortDateString())
+                                        @if (@oEvento.FechaInicio.Value.ToShortDateString() == @oEvento.FechaFin.Value.ToShortDateString())
                                         {
-                                            <p><i class="far fa-calendar-alt"></i> Día: @oEvento.FechaInicio.ToShortDateString()</p>
+                                            <p><i class="far fa-calendar-alt"></i> Día: @oEvento.FechaInicio.Value.ToShortDateString()</p>
                                         }
                                         else
                                         {
-                                            <p><i class="far fa-calendar-alt"></i> Inicio: @oEvento.FechaInicio.ToShortDateString()</p>
-                                            <p><i class="far fa-calendar-alt"></i> Fin: @oEvento.FechaFin.ToShortDateString()</p>
+                                            <p><i class="far fa-calendar-alt"></i> Día: @oEvento.FechaInicio.Value.ToShortDateString() - @oEvento.FechaFin.Value.ToShortDateString()</p>
                                         }
-                                        <p><i class="far fa-clock"></i> Hora: @oEvento.HoraIncio.ToString(@"hh\:mm") - @oEvento.HoraFin.ToString(@"hh\:mm")</p>
+                                        <p><i class="far fa-clock"></i> Hora: @oEvento.HoraInicio.Value.ToString(@"hh\:mm") - @oEvento.HoraFin.Value.ToString(@"hh\:mm")</p>
                                     </div>
                                     <div class="col mb-3 d-md-none d-lg-block d-lg-none d-xl-block d-xl-none">
                                         <img src=@oEvento.Imagen class="img-fluid" style="width:70%;">
                                     </div>
                                     <div class="col-6 d-md-none d-lg-block d-lg-none d-xl-block d-xl-none">
                                         <!-- Fechas y ubicación -->
-                                        @if (@oEvento.FechaInicio.ToShortDateString() == @oEvento.FechaFin.ToShortDateString())
+                                        @if (@oEvento.FechaInicio.Value.ToShortDateString() == @oEvento.FechaFin.Value.ToShortDateString())
                                         {
-                                            <p><i class="far fa-calendar-alt"></i> Día: @oEvento.FechaInicio.ToShortDateString()</p>
+                                            <p><i class="far fa-calendar-alt"></i> Día: @oEvento.FechaInicio.Value.ToShortDateString()</p>
                                         }
                                         else
                                         {
-                                            <p><i class="far fa-calendar-alt"></i> Inicio: @oEvento.FechaInicio.ToShortDateString()</p>
-                                            <p><i class="far fa-calendar-alt"></i> Fin: @oEvento.FechaFin.ToShortDateString()</p>
+                                            <p><i class="far fa-calendar-alt"></i> Día: @oEvento.FechaInicio.Value.ToShortDateString()</p>
+                                            <p><i class="far fa-calendar-alt"></i> Fin: @oEvento.FechaFin.Value.ToShortDateString()</p>
                                         }
-                                        <p><i class="far fa-clock"></i> Hora: @oEvento.HoraIncio.ToString(@"hh\:mm") - @oEvento.HoraFin.ToString(@"hh\:mm")</p>
+                                        <p><i class="far fa-clock"></i> Hora: @oEvento.HoraInicio.Value.ToString(@"hh\:mm") - @oEvento.HoraFin.Value.ToString(@"hh\:mm")</p>
                                     </div>
                                 </div>
                                 
@@ -703,16 +710,39 @@
 <div class="d-flex justify-content-center mt-4 mb-3">
     @if (ViewBag.PaginaActual > 1)
     {
-        <a href="@Url.Action("Eventos", new { page = ViewBag.PaginaActual - 1 })" class="btn btn-primary pagination-button">Anterior</a>
+        @if (!string.IsNullOrEmpty(paginacionCategoria))
+        {
+            <a href="@Url.Action("Eventos", new { paginacionCategoria = ViewBag.PaginaActual - 1, idCategoria= categoria, page = ViewBag.PaginaActual - 1 })" class="btn btn-primary pagination-button">Anterior</a>
+        }
+        else
+        {
+            <a href="@Url.Action("Eventos", new { page = ViewBag.PaginaActual - 1 })" class="btn btn-primary pagination-button">Anterior</a>
+        }
+        
     }
 
     @for (int i = 1; i <= ViewBag.TotalPaginas; i++)
     {
-        <a href="@Url.Action("Eventos", new { page = i })" class="btn btn-secondary @(ViewBag.PaginaActual == i ? "active" : "") pagination-button">@i</a>
+        @if (!string.IsNullOrEmpty(paginacionCategoria))
+        {
+            <a href="@Url.Action("Eventos", new {paginacionCategoria =@i, idCategoria= categoria, page = i })" class="btn btn-secondary @(ViewBag.PaginaActual == i ? "active" : "") pagination-button">@i</a>
+        }
+        else
+        {
+            <a href="@Url.Action("Eventos", new { page = i })" class="btn btn-secondary @(ViewBag.PaginaActual == i ? "active" : "") pagination-button">@i</a>
+        }
+        
     }
 
     @if (ViewBag.PaginaActual < ViewBag.TotalPaginas)
     {
-        <a href="@Url.Action("Eventos", new { page = ViewBag.PaginaActual + 1 })" class="btn btn-primary pagination-button">Siguiente</a>
+        @if (!string.IsNullOrEmpty(paginacionCategoria))
+        {
+            <a href="@Url.Action("Eventos", new {paginacionCategoria = ViewBag.PaginaActual + 1, idCategoria= categoria, page = ViewBag.PaginaActual + 1 })" class="btn btn-primary pagination-button">Siguiente</a>
+        }
+        else
+        {
+            <a href="@Url.Action("Eventos", new { page = ViewBag.PaginaActual + 1 })" class="btn btn-primary pagination-button">Siguiente</a>
+        }
     }
 </div>
