@@ -2,10 +2,13 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Newtonsoft.Json;
+using System.Drawing;
 using System.Security.Claims;
 using WhatWeDo.Models;
 using WhatWeDo.Recursos;
 using WhatWeDo.Servicios.Contratos;
+using static WhatWeDo.Recursos.CargasCombo;
 
 namespace WhatWeDo.Controllers
 {
@@ -31,8 +34,17 @@ namespace WhatWeDo.Controllers
         }
 
         [Authorize(Roles = "Usuario")]
-        public async Task<IActionResult> ReservarEvento(EventoPago eventoPago, int idEvento)
+        public async Task<IActionResult> ReservarEvento(EventoPago eventoPago, int idEvento, string mensajeValidacion)
         {
+            if (mensajeValidacion != null)
+                ViewBag.Alert = mensajeValidacion;
+
+            if (TempData.ContainsKey("EventoPagoTemp"))
+            {
+                string eventoPagoJson = TempData["EventoPagoTemp"] as string;
+                eventoPago = JsonConvert.DeserializeObject<EventoPago>(eventoPagoJson);
+            }
+
             Evento oEvento = await _ServicioEvento.GetEventoPorId(Convert.ToInt32(idEvento));
             Empresa oEmpresa = await _ServicioEmpresa.GetEmpresaPorIdEvento(Convert.ToInt32(idEvento));
             Usuario oUsuario = await _ServicioUsuario.GetUsuario(User.FindFirstValue(ClaimTypes.Email));
@@ -45,11 +57,28 @@ namespace WhatWeDo.Controllers
             eventoPago.PrecioConSimbolo = eventoPago.Evento.Precio.ToString() + "€";
 
             //Carga de combos
-            eventoPago.FechasEvento = await _ServicioEvento.GetFechasEvento(oEvento.FechaInicio, oEvento.FechaFin);
-            ViewBag.fechasEvento = new SelectList(eventoPago.FechasEvento, "IdListaFecha", "ItemFechaFormateada");
+            eventoPago.FechasEvento = await _ServicioEvento.GetFechasEvento(oEvento.FechaInicio.Value, oEvento.FechaFin.Value);
+            if (eventoPago.FechaAsistencia != DateTime.MinValue)
+            {
+                FechasEvento fechaSeleccionada = eventoPago.FechasEvento.FirstOrDefault(f => f.ItemFechaFormateada == eventoPago.FechaAsistencia.ToString("dd/MM/yyyy"));
+                ViewBag.fechasEvento = new SelectList(eventoPago.FechasEvento, "IdListaFecha", "ItemFechaFormateada", fechaSeleccionada.IdListaFecha);
+            }
+            else
+            {
+                ViewBag.fechasEvento = new SelectList(eventoPago.FechasEvento, "IdListaFecha", "ItemFechaFormateada");
+            }
 
             eventoPago.MiembrosEvento = _ServicioEvento.GetMiembrosEvento(eventoPago);
-            ViewBag.miembros = new SelectList(eventoPago.MiembrosEvento, "IdListaMiembro", "ItemMiembro");
+            if (eventoPago.Miembros != 0)
+            {
+                MiembrosEvento miembroSelecciondado = eventoPago.MiembrosEvento.FirstOrDefault(f => f.ItemMiembro == eventoPago.Miembros);
+                ViewBag.miembros = new SelectList(eventoPago.MiembrosEvento, "IdListaMiembro", "ItemMiembro", miembroSelecciondado.IdListaMiembro);
+            }
+            else
+            {
+                ViewBag.miembros = new SelectList(eventoPago.MiembrosEvento, "IdListaMiembro", "ItemMiembro");
+            }
+                
             return View(eventoPago);
             
         }
@@ -57,6 +86,30 @@ namespace WhatWeDo.Controllers
         [Authorize(Roles = "Usuario")]
         public async Task<IActionResult> PagoEvento(EventoPago eventoPago)
         {
+            bool bValidacion = true;
+            string sMensaje = null;
+
+            if (eventoPago.FechaAsistencia == DateTime.MinValue)
+            {
+                sMensaje += "La fecha de asistencia es oligatoria\n";
+                bValidacion = false;
+            }
+
+            if(eventoPago.Miembros == 0)
+            {
+                sMensaje += "El nº de reservas es obligatorio\n";
+                bValidacion = false;
+            }
+
+            if (!bValidacion)
+            {
+                // Serializa el objeto EventoPago a formato JSON
+                string eventoPagoJson = JsonConvert.SerializeObject(eventoPago);
+
+                TempData["EventoPagoTemp"] = eventoPagoJson;
+                return RedirectToAction("ReservarEvento", new { mensajeValidacion = sMensaje, idEvento = eventoPago.FkIdEvento });
+            }
+
             await _ServicioEvento.InsertEventoPago(eventoPago);
 
             await _ServicioEvento.ReservarEvento(eventoPago.FkIdEvento, eventoPago.FkIdUsuario
@@ -71,20 +124,32 @@ namespace WhatWeDo.Controllers
         }
 
         [Authorize(Roles = "Usuario")]
-        public async Task<IActionResult> MisReservas(int page = 1)
+        public async Task<IActionResult> MisReservas(int paginacionCategoria, int idCategoria, int page = 1)
         {
             List<Evento> lstEventos = new List<Evento>();
+           
+            bool bPaginacionCategoria = false;
+
+            if (paginacionCategoria != 0)
+                bPaginacionCategoria = true;
 
             //Para redirigir a los eventos por categoria
-            if (bBuscarPorCategoria)
+            if (bBuscarPorCategoria || bPaginacionCategoria)
             {
                 lstEventos = lstEventosCategorizados;
                 string categoriaSeleccionada = TempData["CategoriaSeleccionada"] as string;
 
                 if (categoriaSeleccionada != null)
                 {
-                    ViewData["CetegoriaRecibida"] = categoriaSeleccionada;
+                    ViewData["CategoriaRecibida"] = categoriaSeleccionada;
                 }
+
+
+                if (idCategoria != 0)
+                {
+                    ViewData["CategoriaRecibida"] = idCategoria;
+                }
+
                 bBuscarPorCategoria = false;
             }
             else
@@ -110,8 +175,16 @@ namespace WhatWeDo.Controllers
             lstEventosCategorizados = await _ServicioEvento.GetEventosPorUsuarioCategoria(Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier)), categoria);
             //Enviamos la cetegoria al controller siguiente
             TempData["CategoriaSeleccionada"] = categoria.ToString();
-          
-            return RedirectToAction("MisReservas", "Reservas");
+
+            var routeValues = new RouteValueDictionary
+            {
+                { "paginacionCategoria", categoria },
+                { "idCategoria", categoria }
+            };
+
+
+
+            return RedirectToAction("MisReservas", "Reservas", routeValues);
         }      
        
         [Authorize(Roles = "Usuario")]

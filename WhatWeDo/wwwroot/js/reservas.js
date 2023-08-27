@@ -85,4 +85,5 @@ $(document).ready(function () {
             window.location.href = 'eventosporcategoria?categoria=3';
         }
     });
+
 });

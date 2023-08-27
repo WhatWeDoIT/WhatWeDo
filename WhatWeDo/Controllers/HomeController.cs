@@ -32,19 +32,29 @@ namespace WhatWeDo.Controllers
             return RedirectToAction("Eventos", "Home");
         }
 
-        public async Task<IActionResult> Eventos(int page = 1)
+        public async Task<IActionResult> Eventos(int paginacionCategoria, int idCategoria, int page = 1)
         {
             List<Evento> lstEventos = new List<Evento>();
-
+            
+            bool bPaginacionCategoria = false;
+            
+            if (paginacionCategoria != 0)
+                bPaginacionCategoria = true;         
+          
             // Para redirigir a los eventos por categoría
-            if (bBuscarPorCategoria)
+            if (bBuscarPorCategoria || bPaginacionCategoria)
             {
                 lstEventos = lstEventosCategorizados;
                 string categoriaSeleccionada = TempData["CategoriaSeleccionada"] as string;
 
                 if (categoriaSeleccionada != null)
                 {
-                    ViewData["CetegoriaRecibida"] = categoriaSeleccionada;
+                    ViewData["CategoriaRecibida"] = categoriaSeleccionada;
+                }
+
+                if (idCategoria != 0)
+                {
+                    ViewData["CategoriaRecibida"] = idCategoria;
                 }
 
                 bBuscarPorCategoria = false;
@@ -104,7 +114,13 @@ namespace WhatWeDo.Controllers
             //Enviamos la cetegoria al controller siguiente
             TempData["CategoriaSeleccionada"] = categoria.ToString();
 
-            return RedirectToAction("Eventos", "Home");
+            var routeValues = new RouteValueDictionary
+            {
+                { "paginacionCategoria", categoria },
+                { "idCategoria", categoria }
+            };
+
+            return RedirectToAction("Eventos", "Home", routeValues);
         }
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
