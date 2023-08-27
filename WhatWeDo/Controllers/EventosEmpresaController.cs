@@ -9,6 +9,7 @@ using System.Security.Claims;
 using WhatWeDo.Models;
 using WhatWeDo.Servicios.Contratos;
 using System.Drawing;
+using Newtonsoft.Json;
 
 namespace WhatWeDo.Controllers
 {
@@ -38,20 +39,30 @@ namespace WhatWeDo.Controllers
             _ServicioEmpresa = servicioEmpresa;
         }
         [Authorize(Roles = "Empresa")]
-        public async Task<IActionResult> MisEventosEmpresa(int page = 1)
+        public async Task<IActionResult> MisEventosEmpresa(int paginacionCategoria, int idCategoria, int page = 1)
         {
-            List<Evento> lstEventos = new List<Evento>();            
+            List<Evento> lstEventos = new List<Evento>();
+
+            bool bPaginacionCategoria = false;
+
+            if (paginacionCategoria != 0)
+                bPaginacionCategoria = true;
 
             //Para redirigir a los eventos por categoria
-            if (bBuscarPorCategoria)
+            if (bBuscarPorCategoria || bPaginacionCategoria)
             {
                 lstEventos = lstEventosCategorizados;
                 string categoriaSeleccionada = TempData["CategoriaSeleccionada"] as string;
 
                 if (categoriaSeleccionada != null)
                 {
-                    ViewData["CetegoriaRecibida"] = categoriaSeleccionada;
+                    ViewData["CategoriaRecibida"] = categoriaSeleccionada;
                 }
+                if (idCategoria != 0)
+                {
+                    ViewData["CategoriaRecibida"] = idCategoria;
+                }
+
                 bBuscarPorCategoria = false;
             }
             else
@@ -110,47 +121,32 @@ namespace WhatWeDo.Controllers
             //Enviamos la cetegoria al controller siguiente
             TempData["CategoriaSeleccionada"] = categoria.ToString();
 
-            return RedirectToAction("MisEventosEmpresa", "EventosEmpresa");
-        }
-
-        [Authorize(Roles = "Empresa")]
-        public async Task<IActionResult> CrearEvento()
-        {
-            //Devuelve la vista del formulario
-            Evento oEvento = new Evento();
-            oEvento.lstUbicaciones = await _ServicioUbicacion.GetUbicacionPorEmpresa(User.FindFirstValue(ClaimTypes.Email));
-            ViewBag.direccion = new SelectList(oEvento.lstUbicaciones, "IdUbicacion", "Direccion");
-
-            oEvento.lstCategorias = await _ServicioCategoria.GetCategorias();
-            ViewBag.categoria = new SelectList(oEvento.lstCategorias, "IdCategoria", "Nombre");
-
-            oEvento.lstDescuento = await _ServicioDescuento.GetDescuentos();
-            ViewBag.descuento = new SelectList(oEvento.lstDescuento, "IdDescuento", "MostrarValor");
-
-
-            //actualizamos el saldo de la empresa
-            if (User.IsInRole("Empresa"))
+            //Enviamos la paginacion por categoria
+            var routeValues = new RouteValueDictionary
             {
-                Empresa oEmpresa = await _ServicioEmpresa.GetEmpresa(User.FindFirstValue(ClaimTypes.Email));
+                { "paginacionCategoria", categoria },
+                { "idCategoria", categoria }
+            };
 
-                await ActualizarSaldoEmpresa(oEmpresa);
-            }
-
-            return View();
+            return RedirectToAction("MisEventosEmpresa", "EventosEmpresa", routeValues);
         }
 
         [Authorize(Roles = "Empresa")]
-        public async Task<IActionResult> ModificarEvento(int idEvento)
+        public async Task<IActionResult> CrearEvento(string mensajeValidacion)
         {
             //Devuelve la vista del formulario
             Evento oEvento = new Evento();
 
-            oEvento = await _ServicioEvento.GetEventoPorId(idEvento);
-
-            oEvento.Titulo = oEvento.Titulo.Replace(User.FindFirstValue(ClaimTypes.Name) + " - ", "");
-
+            if (TempData.ContainsKey("EventoTemp"))
+            {
+                string eventoJson = TempData["EventoTemp"] as string;
+                oEvento = JsonConvert.DeserializeObject<Evento>(eventoJson);
+                ViewBag.Alert = mensajeValidacion;
+            }
+           
             oEvento.lstUbicaciones = await _ServicioUbicacion.GetUbicacionPorEmpresa(User.FindFirstValue(ClaimTypes.Email));
             ViewBag.direccion = new SelectList(oEvento.lstUbicaciones, "IdUbicacion", "Direccion", oEvento.FkIdUbicacion);
+
 
             oEvento.lstCategorias = await _ServicioCategoria.GetCategorias();
             ViewBag.categoria = new SelectList(oEvento.lstCategorias, "IdCategoria", "Nombre", oEvento.FkIdCategoria);
@@ -171,10 +167,60 @@ namespace WhatWeDo.Controllers
         }
 
         [Authorize(Roles = "Empresa")]
+        public async Task<IActionResult> ModificarEvento(int idEvento, string mensajeValidacion)
+        {
+            //Devuelve la vista del formulario
+            Evento oEvento = new Evento();
+
+            if (TempData.ContainsKey("EventoTemp"))
+            {
+                string eventoJson = TempData["EventoTemp"] as string;
+                oEvento = JsonConvert.DeserializeObject<Evento>(eventoJson);
+                ViewBag.Alert = mensajeValidacion;
+            }
+            else
+            {
+                oEvento = await _ServicioEvento.GetEventoPorId(idEvento);
+            }
+
+            oEvento.Titulo = oEvento.Titulo.Replace(User.FindFirstValue(ClaimTypes.Name) + " - ", "");
+
+            oEvento.lstUbicaciones = await _ServicioUbicacion.GetUbicacionPorEmpresa(User.FindFirstValue(ClaimTypes.Email));
+            ViewBag.direccion = new SelectList(oEvento.lstUbicaciones, "IdUbicacion", "Direccion", oEvento.FkIdUbicacion);
+
+
+            oEvento.lstCategorias = await _ServicioCategoria.GetCategorias();
+            ViewBag.categoria = new SelectList(oEvento.lstCategorias, "IdCategoria", "Nombre", oEvento.FkIdCategoria);
+
+            oEvento.lstDescuento = await _ServicioDescuento.GetDescuentos();
+            ViewBag.descuento = new SelectList(oEvento.lstDescuento, "IdDescuento", "MostrarValor", oEvento.FkIdDescuento);
+
+            //actualizamos el saldo de la empresa
+            if (User.IsInRole("Empresa"))
+            {
+                Empresa oEmpresa = await _ServicioEmpresa.GetEmpresa(User.FindFirstValue(ClaimTypes.Email));
+
+                await ActualizarSaldoEmpresa(oEmpresa);
+            }
+
+            return View(oEvento);
+        }
+
+        [Authorize(Roles = "Empresa")]
         public async Task<IActionResult> InsertEvento(Evento oEvento, IFormFile Imagen
                                                     , string categoria, string direccion
                                                     , string descuento)
         {
+            string sMensaje = ValidarFormCrearEvento(oEvento, Imagen, categoria, direccion, descuento, false);
+            if (!string.IsNullOrEmpty(sMensaje))
+            {
+                // Serializa el objeto Evento a formato JSON
+                string eventoJson = JsonConvert.SerializeObject(oEvento);
+
+                TempData["EventoTemp"] = eventoJson;
+                return RedirectToAction("CrearEvento", new { mensajeValidacion = sMensaje});
+            }
+
             //Accion de crear evento
             Stream imagen = Imagen.OpenReadStream();
             string sUrlImagen = await SubirImagen(imagen, Imagen.FileName);
@@ -199,6 +245,15 @@ namespace WhatWeDo.Controllers
                                                    , string categoria, string direccion
                                                    , string descuento)
         {
+            string sMensaje = ValidarFormCrearEvento(oEvento, Imagen, categoria, direccion, descuento,true);
+            if (!string.IsNullOrEmpty(sMensaje))
+            {
+                // Serializa el objeto Evento a formato JSON
+                string eventoJson = JsonConvert.SerializeObject(oEvento);
+
+                TempData["EventoTemp"] = eventoJson;
+                return RedirectToAction("ModificarEvento", new { mensajeValidacion = sMensaje });
+            }
             //Accion de modificar evento
             if (Imagen != null)
             {
@@ -265,6 +320,97 @@ namespace WhatWeDo.Controllers
                     return downloadURL;
                 }
             }
+        }
+
+        public string ValidarFormCrearEvento(Evento oEvento, IFormFile Imagen
+                                        , string categoria, string direccion
+                                        , string descuento, bool bVieneModificar)
+        {
+           
+            string sMensaje = null;
+
+            if (string.IsNullOrEmpty(oEvento.Titulo)) 
+            {
+                sMensaje += "El titulo del evento es obligatorio\n";
+            }
+
+            if (string.IsNullOrEmpty(direccion))
+            {
+                sMensaje += "La dirección del evento es obligatoria\n";
+            }
+            else
+            {
+                oEvento.FkIdUbicacion = Convert.ToInt32(direccion);
+            }
+
+            if (string.IsNullOrEmpty(oEvento.Descripcion))
+            {
+                sMensaje += "La descripción del evento es obligatoria\n";
+            }
+
+            if (oEvento.FechaInicio == DateTime.MinValue)
+            {
+                sMensaje += "La fecha de inicio es obligatoria\n";
+            } 
+            else if (oEvento.FechaInicio < DateTime.Today || (oEvento.FechaInicio == DateTime.Today && oEvento.HoraInicio < DateTime.Now.TimeOfDay))
+            {
+                sMensaje += "La fecha y hora de inicio no pueden ser anteriores al momento actual\n";
+            }
+
+            if (oEvento.FechaInicio > oEvento.FechaFin.Value || (oEvento.FechaInicio == oEvento.FechaFin.Value && oEvento.HoraInicio > oEvento.HoraFin))
+            {
+                sMensaje += "La fecha y hora de inicio no pueden ser posteriores a la fecha y hora de finalización\n";
+            }
+
+            if (oEvento.FechaFin.Value == DateTime.MinValue)
+            {
+                sMensaje += "La fecha de finalización es obligatoria\n";
+            } 
+            else if (oEvento.FechaFin.Value < DateTime.Today || (oEvento.FechaFin.Value == DateTime.Today && oEvento.HoraFin < DateTime.Now.TimeOfDay))
+            {
+                sMensaje += "La fecha y hora de finalización no pueden ser anteriores al momento actual\n";
+            }                 
+
+            if (oEvento.FechaFin.Value < oEvento.FechaInicio || (oEvento.FechaFin.Value == oEvento.FechaInicio && oEvento.HoraFin < oEvento.HoraInicio))
+            {
+                sMensaje += "La fecha y hora de finalización no pueden ser anteriores a la fecha y hora de inicio\n";
+            }
+
+            if (oEvento.PlazasMaximas == null) 
+            {
+                sMensaje += "El aforo del evento es obligatorio\n";
+            }
+
+            if (oEvento.Precio == null)
+            {
+                sMensaje += "El precio del evento es obligatorio\n";
+            }
+            if (!bVieneModificar) {
+                if (Imagen == null)
+                {
+                    sMensaje += "La imagen de portada del evento es obligatorio\n";
+                }
+            }
+
+            if (string.IsNullOrEmpty(descuento))
+            {
+                sMensaje += "Debe seleccionar un valor para el descuento del evento\n";
+            }
+            else
+            {
+                oEvento.FkIdDescuento = Convert.ToInt32(descuento);
+            }
+
+            if (string.IsNullOrEmpty(categoria))
+            {
+                sMensaje += "Debe seleccionar una categoria para el evento\n";
+            }
+            else 
+            {
+                oEvento.FkIdCategoria = Convert.ToInt32(categoria);
+            }
+
+            return sMensaje;
         }
     }
 }

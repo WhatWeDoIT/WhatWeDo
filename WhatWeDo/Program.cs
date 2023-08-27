@@ -16,6 +16,8 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         //option.AccessDeniedPath = "/Home/Index";
     });
 
+builder.Services.AddHttpContextAccessor(); // Agregar esta línea
+
 //Agregamos la conexion a bbdd
 builder.Services.Configure<ConfiguracionConexion>(builder.Configuration.GetSection("ConfiguracionConexion"));
 //Agregamos servicios por tabla

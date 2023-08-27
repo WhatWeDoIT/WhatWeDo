@@ -233,7 +233,7 @@
     <div class="row justify-content-center">
         <div class="col-lg-5 col mb-2">
             <div class="form-floating mb-3">
-                <input id="HoraInicio" asp-for="@Model.Evento.HoraIncio" type="time" class="form-control" aria-required="true" placeholder="Hora inicio" disabled />
+                <input id="HoraInicio" asp-for="@Model.Evento.HoraInicio" type="time" class="form-control" aria-required="true" placeholder="Hora inicio" disabled />
                 <label>Hora de inicio</label>
             </div>
         </div>
@@ -265,13 +265,14 @@
                 <label>Precio por persona</label>
             </div>
         </div>
-    </div>
+    </div>   
     <div class="row justify-content-center">
         <div class="col-lg-11 col mb-2">
             <hr style="background-color:white" />
         </div>
     </div>
-    <div class="row justify-content-center">
+   
+    <div class="row justify-content-center">        
         <div class="col-lg-2 col-sm-12 col-xs-12 mb-2">
             <div class="form-floating mb-3 position-relative">
                 @Html.DropDownList("miembros", null, "Seleccionar...", new{@class="form-select"} )
@@ -288,19 +289,30 @@
             <div class="form-floating mb-3">
                 <input id="RecompensaPuntos" type="text" class="form-control" aria-required="true" placeholder="Precio por persona" disabled />             
                 <label>Puntos <i class="fa-solid fa-coins" style="color:#ff2a5c"></i></label>                
-            </div>
-        </div>
-
-             
+            </div>            
+        </div>       
+      
         <div class="col-lg-5 col-md-12 col-sm-12 mb-2 d-flex justify-content-end">
             <div class="form-floating mb-3">
                 <button id="submit" name="submit" class="btn btn-warning btn-sm">Aceptar</button>
                 <a href="../home/eventos" id="cancel" name="cancel" class="btn btn-warning btn-sm">Cancelar</a>
             </div>
         </div>
-        
+        @if (ViewBag.Alert != null)
+        {
+
+            <div class="alert alert-dismissable alert-danger col-11" style="margin-top:10px">
+                <div class="row">
+                    <strong>¡Error!</strong>
+                </div>
+                <div class="row">
+                    <label class="form-label">@Html.Raw(ViewBag.Alert.Replace("\n", "<br />"))</label>
+                </div>
+            </div>
+
+        }
     </div>
-    
+  
 </form>
 
 <script src="~/lib/jquery/dist/jquery.min.js"></script>

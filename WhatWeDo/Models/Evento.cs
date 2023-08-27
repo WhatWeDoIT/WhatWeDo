@@ -12,15 +12,15 @@ namespace WhatWeDo.Models
 
         public string Descripcion { get; set; }
 
-        public DateTime FechaInicio { get; set; }
+        public DateTime? FechaInicio { get; set; }
 
-        public DateTime FechaFin { get; set; }
+        public DateTime? FechaFin { get; set; }
 
         public int PlazasActuales { get; set; }
 
-        public int PlazasMaximas { get; set; }
+        public int? PlazasMaximas { get; set; }
 
-        public double Precio { get; set; }
+        public double? Precio { get; set; }
 
         public string Imagen { get; set; } //se guarda el path
 
@@ -34,9 +34,9 @@ namespace WhatWeDo.Models
 
         public int ValorEnPuntos { get; set; }
 
-        public TimeSpan HoraIncio { get; set; }
+        public TimeSpan? HoraInicio { get; set; }
 
-        public TimeSpan HoraFin { get; set; }
+        public TimeSpan? HoraFin { get; set; }
 
         public DateTime FechaReserva { get; set; }
 
