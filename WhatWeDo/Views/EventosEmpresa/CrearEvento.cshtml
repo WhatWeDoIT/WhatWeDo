@@ -120,7 +120,14 @@
             <div class="row">
                 <div class="col mb-2">
                     <div class="form-floating mb-3 position-relative">
-                        <input id="FechaInicio" asp-for="FechaInicio" type="date" class="form-control" aria-required="true" placeholder="Fecha inicio" />
+                        @if (Model.FechaFin != null)
+                        {
+                            <input id="FechaInicio" asp-for="FechaInicio" type="date" class="form-control" aria-required="true" placeholder="Fecha inicio"/>
+                        }
+                        else
+                        {
+                            <input id="FechaInicio" asp-for="FechaInicio" type="date" class="form-control" aria-required="true" placeholder="Fecha inicio" value="@DateTime.Today.ToString("yyyy-MM-dd")" />
+                        }
                         <label>Fecha inicio</label>
                         <span class="text-danger"></span>
                         <div class="icon-container ">
@@ -129,7 +136,14 @@
                         </div>
                     </div>
                     <div class="form-floating mb-3 position-relative">
-                        <input id="HoraInicio" asp-for="HoraIncio" type="time" class="form-control" aria-required="true" placeholder="Fecha inicio" />
+                        @if (Model.HoraInicio != null)
+                        {
+                            <input id="HoraInicio" asp-for="HoraInicio" type="time" class="form-control" aria-required="true"/>
+                        }
+                        else
+                        {                           
+                            <input id="HoraInicio" asp-for="HoraInicio" type="time" class="form-control" aria-required="true" value="@TimeSpan.Zero.ToString(@"hh\:mm")" />
+                        }                        
                         <label>Hora inicio</label>
                         <span class="text-danger"></span>
                         <div class="icon-container ">
@@ -140,7 +154,14 @@
                 </div>
                 <div class="col mb-2">
                     <div class="form-floating mb-3">
-                        <input id="FechaFin" asp-for="FechaFin" type="date" class="form-control" aria-required="true" placeholder="Fecha fin" />
+                        @if (Model.FechaFin != null)
+                        {
+                            <input id="FechaFin" asp-for="FechaFin" type="date" class="form-control" aria-required="true" placeholder="Fecha fin"/>
+                        }
+                        else
+                        {
+                            <input id="FechaFin" asp-for="FechaFin" type="date" class="form-control" aria-required="true" placeholder="Fecha fin" value="@DateTime.Today.ToString("yyyy-MM-dd")" />
+                        }
                         <label>Fecha fin</label>
                         <span class="text-danger"></span>
                         <div class="icon-container">
@@ -149,8 +170,15 @@
                         </div>
                     </div>
                     <div class="form-floating mb-3 position-relative">
-                        <input id="HoraFin" asp-for="HoraFin" type="time" class="form-control" aria-required="true" placeholder="Fecha inicio" />
-                        <label>Hora fin</label>
+                        @if (Model.HoraFin != null)
+                        {
+                            <input id="HoraFin" asp-for="HoraFin" type="time" class="form-control" aria-required="true"/>
+                        }
+                        else
+                        {
+                            <input id="HoraFin" asp-for="HoraFin" type="time" class="form-control" aria-required="true" value="@TimeSpan.Zero.ToString(@"hh\:mm")" />
+                        }
+                         <label>Hora fin</label>
                         <span class="text-danger"></span>
                         <div class="icon-container ">
                             <i id="checkHoraFin" class="fas fa-check-circle" style="color: green;" data-toggle="tooltip" data-placement="top" title="Fecha válida"></i>
@@ -212,17 +240,17 @@
     
     <div class="row">
         <div class="input-group">
-            <button id="insertSubmit" type="submit" class=" btn btn-sm btn-warning">Aceptar</button>        
-            <a style="margin-left:10px" class="btn btn-sm btn-warning" asp-controller="User" asp-action="Cancelar">Cancelar</a>
+            <button id="insertSubmit" type="submit" class=" btn btn-sm btn-warning">Aceptar</button>
+            <a style="margin-left:10px" href="../home/eventos" id="cancel" name="cancel" class="btn btn-warning btn-sm">Cancelar</a>
         </div>
         @if (ViewBag.Alert != null)
         {
-            <div class="alert alert-dismissable alert-danger" style="margin-top:10px">
+            <div class="alert alert-dismissable alert-danger col-12" style="margin-top:10px">
                 <div class="row">
                     <strong>¡Error!</strong>
                 </div>
                 <div class="row">
-                    <label class="form-label">@ViewBag.Alert</label>
+                    <label class="form-label">@Html.Raw(ViewBag.Alert.Replace("\n", "<br />"))</label>
                 </div>
             </div>
         }

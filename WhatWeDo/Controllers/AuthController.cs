@@ -103,7 +103,7 @@ namespace WhatWeDo.Controllers
             if (!usuario.EsEmpresa)
                 return RedirectToAction("Preferences", "Auth");
             else
-                return RedirectToAction("Eventos", "Home");
+                return RedirectToAction("MisEventosEmpresa", "EventosEmpresa");
         }
 
         public async Task<IActionResult> ActualizarSaldo(Usuario usuario)

@@ -84,7 +84,7 @@ namespace WhatWeDo.Servicios.Implementacion
                             }
                             if (!string.IsNullOrWhiteSpace(dr["HoraInicio"].ToString()))
                             {
-                                oEvento.HoraIncio = (TimeSpan)dr["HoraInicio"];
+                                oEvento.HoraInicio = (TimeSpan)dr["HoraInicio"];
                             }
 
                             if (!string.IsNullOrWhiteSpace(dr["HoraFin"].ToString()))
@@ -164,7 +164,7 @@ namespace WhatWeDo.Servicios.Implementacion
                             }
                             if (!string.IsNullOrWhiteSpace(dr["HoraInicio"].ToString()))
                             {
-                                oEvento.HoraIncio = (TimeSpan)dr["HoraInicio"];
+                                oEvento.HoraInicio = (TimeSpan)dr["HoraInicio"];
                             }
 
                             if (!string.IsNullOrWhiteSpace(dr["HoraFin"].ToString()))
@@ -281,13 +281,13 @@ namespace WhatWeDo.Servicios.Implementacion
 
                             if (!string.IsNullOrWhiteSpace(dr["HoraInicio"].ToString()))
                             {
-                                oEvento.HoraIncio = (TimeSpan)dr["HoraInicio"];
+                                oEvento.HoraInicio = (TimeSpan)dr["HoraInicio"];
                             }
 
                             if (!string.IsNullOrWhiteSpace(dr["HoraFin"].ToString()))
                             {
                                 oEvento.HoraFin = (TimeSpan)dr["HoraFin"];
-                            }
+                            }                          
 
                             lstEventos.Add(oEvento);
                         }
@@ -358,7 +358,7 @@ namespace WhatWeDo.Servicios.Implementacion
                             }
                             if (!string.IsNullOrWhiteSpace(dr["HoraInicio"].ToString()))
                             {
-                                oEvento.HoraIncio = (TimeSpan)dr["HoraInicio"];
+                                oEvento.HoraInicio = (TimeSpan)dr["HoraInicio"];
                             }
 
                             if (!string.IsNullOrWhiteSpace(dr["HoraFin"].ToString()))
@@ -440,14 +440,16 @@ namespace WhatWeDo.Servicios.Implementacion
                             }
                             if (!string.IsNullOrWhiteSpace(dr["HoraInicio"].ToString()))
                             {
-                                oEvento.HoraIncio = (TimeSpan)dr["HoraInicio"];
+                                oEvento.HoraInicio = (TimeSpan)dr["HoraInicio"];
                             }
 
                             if (!string.IsNullOrWhiteSpace(dr["HoraFin"].ToString()))
                             {
                                 oEvento.HoraFin = (TimeSpan)dr["HoraFin"];
                             }
-
+                            EventoPago eventoPago = await GetEventoPago(oEvento.IdEvento, idUsuario);
+                            oEvento.FechaReserva = eventoPago.FechaAsistencia;
+                            oEvento.Miembros = eventoPago.Miembros;
 
                             lstEventos.Add(oEvento);
                         }
@@ -519,7 +521,7 @@ namespace WhatWeDo.Servicios.Implementacion
 
                             if (!string.IsNullOrWhiteSpace(dr["HoraInicio"].ToString()))
                             {
-                                oEvento.HoraIncio = (TimeSpan)dr["HoraInicio"];
+                                oEvento.HoraInicio = (TimeSpan)dr["HoraInicio"];
                             }
 
                             if (!string.IsNullOrWhiteSpace(dr["HoraFin"].ToString()))
@@ -597,7 +599,7 @@ namespace WhatWeDo.Servicios.Implementacion
                             }
                             if (!string.IsNullOrWhiteSpace(dr["HoraInicio"].ToString()))
                             {
-                                oEvento.HoraIncio = (TimeSpan)dr["HoraInicio"];
+                                oEvento.HoraInicio = (TimeSpan)dr["HoraInicio"];
                             }
 
                             if (!string.IsNullOrWhiteSpace(dr["HoraFin"].ToString()))
@@ -630,7 +632,7 @@ namespace WhatWeDo.Servicios.Implementacion
                     cmd.Parameters.Add(new SqlParameter("@Titulo", oEvento.Titulo));
                     cmd.Parameters.Add(new SqlParameter("@Descripcion", oEvento.Descripcion));
                     cmd.Parameters.Add(new SqlParameter("@FechaInicio", oEvento.FechaInicio));
-                    cmd.Parameters.Add(new SqlParameter("@FechaFin", oEvento.FechaFin));
+                    cmd.Parameters.Add(new SqlParameter("@FechaFin", oEvento.FechaFin.Value));
                     cmd.Parameters.Add(new SqlParameter("@PlazasActuales", oEvento.PlazasActuales));
                     cmd.Parameters.Add(new SqlParameter("@PlazasMaximas", oEvento.PlazasMaximas));
                     cmd.Parameters.Add(new SqlParameter("@Precio", oEvento.Precio));
@@ -641,7 +643,7 @@ namespace WhatWeDo.Servicios.Implementacion
                     cmd.Parameters.Add(new SqlParameter("@FkIdDescuento", oEvento.FkIdDescuento == null ? (object)DBNull.Value : oEvento.FkIdDescuento));
                     cmd.Parameters.Add(new SqlParameter("@ValorEnPuntos", oEvento.ValorEnPuntos));
                     cmd.Parameters.Add(new SqlParameter("@IdEmpresa", idEmpresa));
-                    cmd.Parameters.Add(new SqlParameter("@HoraInicio", oEvento.HoraIncio));
+                    cmd.Parameters.Add(new SqlParameter("@HoraInicio", oEvento.HoraInicio));
                     cmd.Parameters.Add(new SqlParameter("@HoraFin", oEvento.HoraFin));
 
                     conexion.Open();
@@ -692,15 +694,15 @@ namespace WhatWeDo.Servicios.Implementacion
                     cmd.Parameters.Add(new SqlParameter("@Titulo", oEvento.Titulo));
                     cmd.Parameters.Add(new SqlParameter("@Descripcion", oEvento.Descripcion));
                     cmd.Parameters.Add(new SqlParameter("@FechaInicio", oEvento.FechaInicio));
-                    cmd.Parameters.Add(new SqlParameter("@FechaFin", oEvento.FechaFin));                    
+                    cmd.Parameters.Add(new SqlParameter("@FechaFin", oEvento.FechaFin.Value));                    
                     cmd.Parameters.Add(new SqlParameter("@PlazasMaximas", oEvento.PlazasMaximas));
                     cmd.Parameters.Add(new SqlParameter("@Precio", oEvento.Precio));
                     cmd.Parameters.Add(new SqlParameter("@Imagen", oEvento.Imagen));
                     cmd.Parameters.Add(new SqlParameter("@FkIdUbicacion", oEvento.FkIdUbicacion));
                     cmd.Parameters.Add(new SqlParameter("@FkIdCategoria", oEvento.FkIdCategoria));
                     cmd.Parameters.Add(new SqlParameter("@FkIdDescuento", oEvento.FkIdDescuento));
-                    cmd.Parameters.Add(new SqlParameter("@HoraInicio", oEvento.HoraIncio.ToString(@"hh\:mm")));
-                    cmd.Parameters.Add(new SqlParameter("@HoraFin", oEvento.HoraFin.ToString(@"hh\:mm")));
+                    cmd.Parameters.Add(new SqlParameter("@HoraInicio", oEvento.HoraInicio.Value.ToString(@"hh\:mm")));
+                    cmd.Parameters.Add(new SqlParameter("@HoraFin", oEvento.HoraFin.Value.ToString(@"hh\:mm")));
                     conexion.Open();
                     await cmd.ExecuteNonQueryAsync();    
                 }
